@@ -1,4 +1,4 @@
-package it.polimi.group06;
+package it.polimi.group06.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
