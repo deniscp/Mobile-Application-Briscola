@@ -36,7 +36,8 @@ public class DeckOfCards {
     }
 
     /**
-     * @param Input the sorted deck created in the createSortedDeck() class
+     * Input the sorted deck created in the createSortedDeck() class
+     * @param sorteddeck (for example: after creation in createSortedDeck)
      * @return Returns the playing deck (a shuffled sorted deck)
      */
     private static ArrayList<Card> shuffle (ArrayList<Card> sorteddeck) {
@@ -44,6 +45,21 @@ public class DeckOfCards {
         Collections.shuffle(sorteddeck);
         shuffleddeck = sorteddeck;
         return shuffleddeck;
+    }
+
+    /**
+     * A card gets drawn from the deck if there are still card in the deck
+     * @return Last card of the deck
+     */
+    private static Card take (){
+        if(shuffleddeck.size()!=0) {
+            Card returnCard;
+            returnCard = shuffleddeck.get(shuffleddeck.size() - 1);
+            shuffleddeck.remove(shuffleddeck.size() - 1);
+            return returnCard;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
 

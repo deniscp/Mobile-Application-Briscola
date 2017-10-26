@@ -5,9 +5,9 @@ package it.polimi.group06briscola.Model;
  */
 public class Card {
 
-    public Suite suite;
-    public int rank;
-    public int value;
+    private Suite suite;
+    private int rank;
+    private int value;
 
     public Card(Suite suit, int rank, int value) {
         this.suite = suit;
