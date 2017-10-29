@@ -9,11 +9,7 @@ import java.util.Collections;
 public class DeckOfCards {
 
     ArrayList<Card> playingdeck;
-    /**
-     *
-     *
-     *
-     */
+
     DeckOfCards(boolean shuffled){
 
        playingdeck = new ArrayList<Card>();
@@ -40,7 +36,7 @@ public class DeckOfCards {
      * A card gets drawn from the deck if there are still card in the deck
      * @return Last card of the deck
      */
-    private Card take (){
+    public Card takeLastCard(){
         if(playingdeck.size()!=0) {
             Card returnCard;
             returnCard = playingdeck.get(playingdeck.size() - 1);

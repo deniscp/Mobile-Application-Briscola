@@ -7,7 +7,7 @@ public class Card {
 
     private Suit suite;
     private int rank;
-    private int points;
+    private int point;
     private int value;
 
     public Suit getSuite() {
@@ -18,13 +18,51 @@ public class Card {
         return rank;
     }
 
-    public int getPoints() {
-        return points;
+    public int getPoint() {
+        return point;
     }
 
-    public Card(Suit suit, int rank) {
+    public int getValue() {
+        return value;
+    }
+
+    public Card(Suit suit, int value) {
         this.suite = suit;
-        this.rank = rank;
+        this.value = value;
+        this.setRank(value);
+        this.setPoints(value);
+    }
+
+    public int setRank(int value){
+        switch(value){
+            case 1: return 1;
+            case 2: return 10;
+            case 3: return 2;
+            case 4: return 9;
+            case 5: return 8;
+            case 6: return 7;
+            case 7: return 6;
+            case 8: return 5;
+            case 9: return 4;
+            case 10: return 3;
+            default: throw new IllegalArgumentException();
+        }
+    }
+
+    public int setPoints(int value){
+        switch(value){
+            case 1: return 11;
+            case 2: return 0;
+            case 3: return 10;
+            case 4: return 0;
+            case 5: return 0;
+            case 6: return 0;
+            case 7: return 0;
+            case 8: return 2;
+            case 9: return 3;
+            case 10: return 4;
+            default: throw new IllegalArgumentException();
+        }
     }
 
     @Override
