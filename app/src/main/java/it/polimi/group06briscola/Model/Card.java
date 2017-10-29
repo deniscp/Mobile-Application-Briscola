@@ -9,6 +9,18 @@ public class Card {
     private int rank;
     private int value;
 
+    public Suite getSuite() {
+        return suite;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     public Card(Suite suit, int rank, int value) {
         this.suite = suit;
         this.rank = rank;
