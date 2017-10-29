@@ -29,7 +29,7 @@ abstract class Player {
     /**
      * Indicates the tree Cards which the Player has held.
      */
-    private Card[] hand = new Card[3];
+    public Card[] hand = new Card[3];
 
 
     /**
