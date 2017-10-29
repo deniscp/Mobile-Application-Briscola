@@ -7,24 +7,24 @@ package it.polimi.group06briscola.Model;
 
 
 
-/* Table class storing domain objects used during the game
+/** Table class storing domain objects used during the game
  */
 public class Table {
 
-    /* Array of Card on the table that will hold the played cards of the players.
+    /** Array of Card on the table that will hold the played cards of the players.
      * Each Player will have his slot assigned on the table, corresponding on the position where he sits
      */
     private Card[] playedCard;
 
-    /* The "Briscola" set at the beginning of the game is kept here
+    /** The "Briscola" set at the beginning of the game is kept here
      */
     private Card trump;
 
-    /* The deck shuffled at the beginning of the game is kept here
+    /** The deck shuffled at the beginning of the game is kept here
      */
     private DeckOfCards deck;
 
-    /* Constructor of the Table
+    /** Constructor of the Table
      * Initialize an empty array of played card
      * Set the trump and the deck initialized from the Game class
      */
@@ -36,7 +36,7 @@ public class Table {
 
     public Card[] getPlayedCard() { return this.playedCard; }
 
-    /* Collects played cards and remove them from the table
+    /** Collects played cards and remove them from the table
      */
     public Card[] collectPlayedCard() {
         Card[] temp = getPlayedCard();
@@ -50,7 +50,7 @@ public class Table {
 
     public DeckOfCards getDeck() { return this.deck; }
 
-    /* Sets the n-th played card corresponding to the n-th player position
+    /** Sets the n-th played card corresponding to the n-th player position
      */
     public void setNthPlayedCard(int pos, Card playedCard) {
         this.playedCard[pos] = playedCard;

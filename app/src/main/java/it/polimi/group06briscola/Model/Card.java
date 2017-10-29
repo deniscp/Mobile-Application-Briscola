@@ -5,11 +5,12 @@ package it.polimi.group06briscola.Model;
  */
 public class Card {
 
-    private Suite suite;
+    private Suit suite;
     private int rank;
+    private int points;
     private int value;
 
-    public Suite getSuite() {
+    public Suit getSuite() {
         return suite;
     }
 
@@ -17,14 +18,13 @@ public class Card {
         return rank;
     }
 
-    public int getValue() {
-        return value;
+    public int getPoints() {
+        return points;
     }
 
-    public Card(Suite suit, int rank, int value) {
+    public Card(Suit suit, int rank) {
         this.suite = suit;
         this.rank = rank;
-        this.value = value;
     }
 
     @Override

@@ -49,7 +49,7 @@ public class Rules {
         Iterator<Card> pileIterator = playerPile.iterator();
 
         while (pileIterator.hasNext()) {
-            score += pileIterator.next().getValue();
+            score += pileIterator.next().getPoints();
         }
 
         return score;

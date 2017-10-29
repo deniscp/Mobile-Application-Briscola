@@ -3,7 +3,7 @@ package it.polimi.group06briscola.Model;
 /**
  * @author Timo Zandonella
  */
-public enum Suite {
+public enum Suit {
     Batons,
     Swords,
     Cups,
