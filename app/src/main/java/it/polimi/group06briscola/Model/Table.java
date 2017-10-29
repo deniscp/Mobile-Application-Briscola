@@ -36,7 +36,8 @@ public class Table {
 
     public Card[] getPlayedCard() { return this.playedCard; }
 
-    /** Collects played cards and remove them from the table
+    /**
+     *  Collects played cards and remove them from the table
      */
     public Card[] collectPlayedCard() {
         Card[] temp = getPlayedCard();
@@ -50,7 +51,8 @@ public class Table {
 
     public DeckOfCards getDeck() { return this.deck; }
 
-    /** Sets the n-th played card corresponding to the n-th player position
+    /**
+     *  Sets the n-th played card corresponding to the n-th player position
      */
     public void setNthPlayedCard(int pos, Card playedCard) {
         this.playedCard[pos] = playedCard;
