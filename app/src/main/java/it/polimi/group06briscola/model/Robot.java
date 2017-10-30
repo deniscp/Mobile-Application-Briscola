@@ -6,18 +6,20 @@ package it.polimi.group06briscola.model;
  * @author Roza .
  */
 
-public class Robot {
+public class Robot extends Player{
 
     /**
-     * This is a method for robot to play the card in turn based on the logic which has defined in AI Class.
+     * This is a method for robot to play the card in turn based on the logic which has been defined in AI Class.
      */
-    AI strategy = new  AI();
+    AI strategy;
 
 
     /**
-     * Constructor of the class to create a robot as a new object in every game .
-     * Possibility to initialize the proper AI methods which will be used by each Robot.
+     * Constructor of Robot Player which calls the superclass constructor (Player) in order to initialize its objects,
+     * and sets the appropriate strategy of the AI class method
      */
-    public Robot() {
+    public Robot(int id, String username){
+        super(id, username);
+        this.strategy = new  AI();
     }
 }

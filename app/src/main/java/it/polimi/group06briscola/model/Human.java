@@ -8,9 +8,9 @@ package it.polimi.group06briscola.model;
 public class Human extends Player {
 
     /**
-     * Constructor of human class which calls the superclass constructor(Player) in order to initialize its objects .
+     * Constructor of Human Player which calls the superclass constructor (Player) in order to initialize its objects .
      */
-    public Human(int id, String username, int scores) {
-        super(id, username, scores);
+    public Human(int id, String username) {
+        super(id, username);
     }
 }
