@@ -1,4 +1,4 @@
-package it.polimi.group06briscola.Model;
+package it.polimi.group06briscola.model;
 
 /**
  * This class is a subclass of Player class .

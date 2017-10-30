@@ -1,4 +1,4 @@
-package it.polimi.group06briscola.Model;
+package it.polimi.group06briscola.model;
 
 /**
  * This class inherited from the Player class and it is used when a robot plays against a Human player .

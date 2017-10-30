@@ -1,4 +1,4 @@
-package it.polimi.group06briscola.Model;
+package it.polimi.group06briscola.model;
 
 /**
  * Created by denis on 29/10/17.
@@ -11,8 +11,8 @@ public class Game {
     Table table;
 
     Game(){
-        players = {new Human(), new  Robot()};
-        DeckOfCards deck = new DeckOfCards(false);
+        //players = {new Human(), new  Robot()};
+        DeckOfCards deck = new DeckOfCards(false, "");
 
         /** Distribute cards to players
          */
