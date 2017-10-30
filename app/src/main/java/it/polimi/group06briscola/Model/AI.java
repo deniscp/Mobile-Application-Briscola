@@ -11,7 +11,7 @@ class AI {
     /**
      * @return a card which has placed in the first position or 0 position of robot's hand.
      */
-    int cardPositionInHands()
+    int cardPositionInHand()
     {
         return 0;
     }
