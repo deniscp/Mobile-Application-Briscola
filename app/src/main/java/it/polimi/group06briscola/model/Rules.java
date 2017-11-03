@@ -23,17 +23,17 @@ public class Rules {
             throw new IllegalArgumentException("Not all players have played their card yet");
         }
 
-        if(playedCard[0].getSuite() == playedCard[1].getSuite())
+        if(playedCard[0].getSuit() == playedCard[1].getSuit())
             if( playedCard[0].getRank() < playedCard[1].getRank() )
                 return 0;
             else
                 return 1;
 
         else
-            if(playedCard[0].getSuite().equals(trump.getSuite()))
+            if(playedCard[0].getSuit().equals(trump.getSuit()))
                 return 0;
         else
-            if(playedCard[1].getSuite().equals(trump.getSuite()))
+            if(playedCard[1].getSuit().equals(trump.getSuit()))
                 return 1;
         else
             return 0;
@@ -60,5 +60,4 @@ public class Rules {
 
         return score;
     }
-
 }

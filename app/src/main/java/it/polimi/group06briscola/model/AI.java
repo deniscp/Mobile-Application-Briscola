@@ -2,14 +2,14 @@ package it.polimi.group06briscola.model;
 
 
 /**
- * The AI class holds the logic or strategy of the Robot, which means how robot select a card in turn.
+ * The AI class holds the logic or strategy of the Robot, which means how robot select the card to be played in its turn.
  * @author Roza.
  */
 
 class AI {
 
     /**
-     * @return a card which has placed in the first position or 0 position of robot's hand.
+     * @return the card which has placed in the first position or 0 position of robot's hand.
      */
     int cardPositionInHand()
     {

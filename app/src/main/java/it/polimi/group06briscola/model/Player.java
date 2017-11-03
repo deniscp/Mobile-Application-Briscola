@@ -29,7 +29,7 @@ abstract class Player {
     /**
      * Stores the three Cards the Player holds.
      */
-    private Card[] hand = new Card[3];
+    private ArrayList<Card> hand = new ArrayList<Card>();
 
 
     /**
@@ -47,7 +47,8 @@ abstract class Player {
         this.id=id;
         this.username=username;
         this.score=0;
-        playerPile = new ArrayList<Card>();
+        this.playerPile = new ArrayList<Card>();
+        this.hand = new ArrayList<Card>();
     }
 
 
@@ -74,24 +75,32 @@ abstract class Player {
         return score;
     }
 
+    /**
+     * Returns the hand of the player
+     */
+    public ArrayList<Card> getHand() { return hand;}
 
     /**
+     * Returns the pile of the player
+     */
+    public ArrayList<Card> getPlayerPile() { return playerPile; }
+
+    /** Plays a player's card, removing it from his hand
      * @param position the position of the card that has been selected by a player to play.
      * @return card selected from hand of player.
      */
-    Card selectCard(int position) {
-        if( position<0 || position>2 || hand[position]==null)
+    Card playCard(int position) {
+        if( position<0 || position >= hand.size())
             throw new IllegalArgumentException("Selected Card is not available");
-        return hand[position];
+        return hand.remove(position);
     }
 
-    /**
-     * @param position the position of the card to be replaced
+    /** Adds a card to player's hand
      * @param card card to be replaced.
      */
-    public void setNthCardInHand(Card card, int position) {
-        if (position<0 || position>2)
-            throw new IllegalArgumentException("Selected Card cannot be replaced");
-        this.hand[position] = card;
+    public void takeCardInHand(Card card) {
+        if (this.hand.size()>3)
+            throw new IllegalArgumentException("Cannot take more than 3 cards");
+        this.hand.add(card);
     }
 }

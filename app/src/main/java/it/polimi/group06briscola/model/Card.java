@@ -5,7 +5,7 @@ package it.polimi.group06briscola.model;
  */
 public class Card {
 
-    private Suit suite;
+    private Suit suit;
     private int rank;
     private int point;
     private int value;
@@ -17,13 +17,13 @@ public class Card {
      */
     public Card(int value, Suit suit) {
         this.value = value;
-        this.suite = suit;
+        this.suit = suit;
         this.setRank(value);
         this.setPoints(value);
     }
 
-    public Suit getSuite() {
-        return suite;
+    public Suit getSuit() {
+        return suit;
     }
 
     public int getRank() {
@@ -70,36 +70,21 @@ public class Card {
         }
     }
 
-    /**
-     * Takes a String, return an object card from a String
-     * @param stringcard
-     * @return
-     */
-    public Card parseToCard(String stringcard){
-        String value = stringcard.substring(0,0);
-            switch (value){
-                case "K": value = "10";
-                case "H": value = "9";
-                case "J": value = "8";
-            }
-        int valueInt = Integer.parseInt(value);
-        Suit suit = Suit.valueOf(stringcard.substring(1,1));
-        return new Card(valueInt, suit);
-    }
+
 
     @Override
     public String toString() {
-        switch(rank) {
-            case 1: return "1" + suite;
-            case 2: return "3" + suite;
-            case 3: return "K" + suite;
-            case 4: return "H" + suite;
-            case 5: return "J" + suite;
-            case 6: return "7" + suite;
-            case 7: return "6" + suite;
-            case 8: return "5" + suite;
-            case 9: return "4" + suite;
-            case 10: return "2" + suite;
+        switch(value) {
+            case 1: return "1" + suit;
+            case 2: return "2" + suit;
+            case 3: return "3" + suit;
+            case 4: return "4" + suit;
+            case 5: return "5" + suit;
+            case 6: return "6" + suit;
+            case 7: return "7" + suit;
+            case 8: return "J" + suit;
+            case 9: return "H" + suit;
+            case 10: return "K" + suit;
 
             default: throw new IllegalArgumentException();
         }
