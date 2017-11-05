@@ -1,9 +1,8 @@
 package it.polimi.group06briscola.model.test;
 
-import java.util.PriorityQueue;
+import java.util.ArrayList;
 
 import it.polimi.group06briscola.model.Card;
-import it.polimi.group06briscola.model.DeckOfCards;
 import it.polimi.group06briscola.model.Suit;
 
 /**
@@ -14,18 +13,22 @@ public class Parser {
 
     public static void main(String[] argv){
 
-        String test0 = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B..JCKG2B.1CKS3G..";
+        String test0 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..1B3B5B.2B4B6B..";
+        String test1 = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..";
+        String test2 = "1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C";
 
-        Parser parser = new Parser(test0);
+//        Parser parser = new Parser(test0);
+        Parser parser = new Parser(test1);
 
-//        System.out.println("Print: " + new Parser().parseToCard("7G").toString());
-//        System.out.println("Print deck: " + new Parser().parseToDeck("JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS"));
-//        System.out.println("Print deck: "+ Parser.parseToDeck("JBHBKB1C2C3C4C5C6C7CJCHCKC1GKB"));
+        System.out.println(parser.toString());
+
+//        Parser parser1= new Parser(test1);
+//        System.out.println("Print: " + parser1.parseToCard("7G").toString());
     }
 
-    private String startingPlayer;
-    private String trumpSuit;
-    private String deck;
+    private String currentPlayer;
+    private String trumpS;
+    private String deckString;
     private String trumpCard;
     private String cardOnSurface;
     private String cardInHandP0;
@@ -35,68 +38,117 @@ public class Parser {
 
     public Parser(String configuration) {
         int i,j;
-        this.startingPlayer = configuration.substring(0, 1);
-        this.trumpSuit = configuration.substring(1, 2);
+        this.currentPlayer = configuration.substring(0, 1);
+        this.trumpS = configuration.substring(1, 2);
 
         for (i = 2; configuration.charAt(i) != '.'; i++) ;
-        this.deck = configuration.substring(2,i);
-
-        System.out.println("First i: "+i);
-        System.out.println("Deck: '"+this.deck+"'");
-
+        this.deckString = configuration.substring(2,i);
 
         for(j=++i; configuration.charAt(i) != '.' && i<configuration.length(); i++);
-        System.out.println("New i: "+i);
         this.cardOnSurface = configuration.substring(j,i);
-        System.out.println("Card on surface: '"+this.cardOnSurface+"'");
 
         for(j=++i; configuration.charAt(i) != '.' && i<configuration.length(); i++);
-        System.out.println("New i: "+i);
         this.cardInHandP0 = configuration.substring(j,i);
-        System.out.println("Card in hand of Player0: '"+this.cardInHandP0+"'");
 
         for(j=++i; configuration.charAt(i) != '.' && i<configuration.length(); i++);
-        System.out.println("New i: "+i);
         this.cardInHandP1 = configuration.substring(j,i);
-        System.out.println("Card in hand of Player1: '"+this.cardInHandP1+"'");
 
         for(j=++i; configuration.charAt(i) != '.' && i<configuration.length(); i++);
-        System.out.println("New i: "+i);
         this.pileP0 = configuration.substring(j,i);
-        System.out.println("Pile of Player0: '"+this.pileP0+"'");
 
         j=++i;
-        System.out.println("New i: "+i);
         this.pileP1 = configuration.substring(j,configuration.length());
-        System.out.println("Pile of Player1: '"+this.pileP1+"'");
 
 
+//        System.out.println("Current player: "+this.currentPlayer);
+//        System.out.println("Trump suit: "+this.trumpS);
+//        System.out.println("Deck: '"+this.deckString +"'");
+//        System.out.println("Card on surface: '"+this.cardOnSurface+"'");
+//        System.out.println("Card in hand of Player0: '"+this.cardInHandP0+"'");
+//        System.out.println("Card in hand of Player1: '"+this.cardInHandP1+"'");
+//        System.out.println("Pile of Player0: '"+this.pileP0+"'");
+//        System.out.println("Pile of Player1: '"+this.pileP1+"'");
+    }
 
-        System.out.println("Starting player: "+this.startingPlayer);
-        System.out.println("Trump suit: "+this.trumpSuit);
+    public int startingPlayer(){
+        if(cardOnSurface.length()==2)
+            return ( Integer.parseInt(this.currentPlayer)) ^ 1;
+        else
+            return Integer.valueOf(currentPlayer);
+    }
 
+    public int currentPlayer(){
+        return Integer.parseInt(this.currentPlayer);
+    }
 
+    public Suit trumpSuit(){
+        switch (trumpS){
+            case "B":
+                return Suit.Batons;
+            case "C":
+                return Suit.Cups;
+            case "G":
+                return Suit.Golds;
+            case "S":
+                return Suit.Swords;
+            default:
+                throw new IllegalArgumentException("Illegal string card parameter: briscola suit not acceptable");
+        }
+    }
+
+    public ArrayList<Card> deck() {
+        String temp;
+        if (deckString.length() >= 2)
+            temp = deckString.substring(0, deckString.length() - 2);
+        else
+            temp = "";
+        return parseCards(temp);
+    }
+
+    public Card briscola(){
+        if(deckString.length()>=2)
+            return parseToCard(deckString.substring(deckString.length()-2));
+        else
+            return null;
+    }
+
+    public ArrayList<Card> surface(){
+        return parseCards(cardOnSurface);
+    }
+
+    public ArrayList<Card>[] hands(){
+        ArrayList<Card>[] hand = new ArrayList[2];
+        hand[0] = parseCards(cardInHandP0);
+        hand[1] = parseCards(cardInHandP1);
+        return hand;
     }
 
 
-
-    static public DeckOfCards parseToDeck(String stringDeck) {
-        DeckOfCards deck = new DeckOfCards();
-        int size = stringDeck.length();
-        if (size % 2 != 0)
-            throw new IllegalArgumentException("Configuration string is odd");
-        for (int i = 0; i < size; i += 2)
-            deck.addCard(parseToCard(stringDeck.substring(i, i + 2)));
-        return deck;
+    public ArrayList<Card>[] piles(){
+        ArrayList<Card>[] pile = new ArrayList[2];
+        pile[0] = parseCards(pileP0);
+        pile[1] = parseCards(pileP1);
+        return pile;
     }
 
+    public int round(){
+        return (this.pileP0.length()/2 + this.pileP1.length()/2) +1;
+    }
+
+
+    private ArrayList<Card> parseCards(String cardString){
+        ArrayList<Card> cards = new ArrayList<Card>();
+        for (int i = 0; i < cardString.length(); i += 2)
+            cards.add(parseToCard(cardString.substring(i, i + 2)));
+        return cards;
+    }
 
     /**
      * Takes a String, return an object card from a String
      * @param stringCard string representing a card, e.g. "1C","KG", "7B"
      * @return new Card object represented by the input string
      */
-    static public Card parseToCard(String stringCard){
+    private Card parseToCard(String stringCard){
         if(stringCard.length()!=2)
             throw new IllegalArgumentException("Illegal string card parameter: length not acceptable");
 
@@ -146,14 +198,30 @@ public class Parser {
                 suit = Suit.Cups;
                 break;
             case "G":
-                suit=Suit.Golds;
+                suit = Suit.Golds;
                 break;
             case "S":
-                suit=Suit.Swords;
+                suit = Suit.Swords;
                 break;
             default:
                 throw new IllegalArgumentException("Illegal string card parameter: suit substring not acceptable");
         }
         return new Card(value, suit);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Starting player : " + this.startingPlayer());
+        stringBuilder.append("\nTrump suit : " + this.trumpSuit());
+        stringBuilder.append("\nDeck : " + this.deck());
+        stringBuilder.append("\nBriscola : " + this.briscola());
+        stringBuilder.append("\nCards on surface : " + this.surface());
+        stringBuilder.append("\nCards in hand of player0 : " + this.hands()[0]);
+        stringBuilder.append("\nCards in hand of player1 : " + this.hands()[1]);
+        stringBuilder.append("\nPile of player0 : " + this.piles()[0]);
+        stringBuilder.append("\nPile of player1 : " + this.piles()[1]);
+        return stringBuilder.toString();
     }
 }

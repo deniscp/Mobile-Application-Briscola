@@ -1,17 +1,21 @@
 package it.polimi.group06briscola.model;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.Iterator;
+
+import it.polimi.group06briscola.model.test.Parser;
 
 /**
  * Created by denis on 29/10/17.
  */
 
 public class Game {
-    Player[] players;
-    int round;
-    int startingPlayer;
-    Table table;
-    Suit briscola;
+    private Player[] players;
+    private int round;
+    private int startingPlayer;
+    private int currentPlayer;
+    private Table table;
+    private Suit briscola;
 
     public Game(){
 
@@ -32,47 +36,77 @@ public class Game {
         this.table = new Table(deck.takeCard(), deck);
 
         /**
-         * Set the suit briscola for easier further accesses
+         * Set the briscola suit for easier further accesses
          */
-        briscola = this.table.getTrump().getSuit();
+        this.briscola = this.table.getTrump().getSuit();
 
-        /** 20 rounds in a 2-player briscola game
+        /** first of 20 rounds in a 2-player briscola game
          */
-        this.round = 20;
+        this.round = 1;
 
         /** Human player always starts first
          */
         this.startingPlayer = 0;
+
+        /** At the beginning of the game the current player is the starting player
+         */
+        this.currentPlayer=this.startingPlayer;
 
     }
 
-    public Game(String conf){
+    public Game(String conf) {
         this.players = new Player[2];
-        this.players[0] = new Human(0,"Group06");
-        this.players[1] = new  Robot(1,"Robot00");
+        this.players[0] = new Human(0, "Group06");
+        this.players[1] = new Robot(1, "Robot00");
+        Parser parser = new Parser(conf);
         DeckOfCards deck = new DeckOfCards();
 
-//        parseToDeck(conf.substring(2,));
-
-        /** Distribute cards to players
+        /* Creating the deck
          */
-        int i,j;
-        for(i=0;i<3;i++)
-            for(j=0;j<players.length;j++)
-                players[j].takeCardInHand(deck.takeCard());
+        for (Iterator<Card> card = parser.deck().iterator(); card.hasNext(); )
+            deck.addCard(card.next());
 
-        /** Set a table with the 7th card as briscola and the remaining deck
+
+        /* Set hands of players
          */
-        this.table = new Table(deck.takeCard(), deck);
+        for (int i=0; i<2; i++)
+            for (Iterator<Card> cardIterator = parser.hands()[i].iterator(); cardIterator.hasNext(); )
+                players[i].takeCardInHand(cardIterator.next());
+
+        /* Set pile of players
+         */
+        for (int i=0; i<2; i++)
+            for (Iterator<Card> cardIterator = parser.piles()[i].iterator(); cardIterator.hasNext(); )
+                players[i].getPlayerPile().add(cardIterator.next());
+
+
+        /** Set a table with the briscola and the deck
+         */
+        this.table = new Table(parser.briscola(), deck);
+
+        /* Set the played card on surface
+         */
+        for (Iterator<Card> cardIterator = parser.surface().iterator(); cardIterator.hasNext(); )
+            this.table.setPlayedCard(cardIterator.next());
+
+
+        /**
+         * Set the briscola suit for easier further accesses
+         */
+        this.briscola = parser.briscola().getSuit();
+
 
         /** 20 rounds in a 2-player briscola game
          */
-        this.round = 20;
+        this.round = parser.round();
 
-        /** Human player always starts first
+        /** The player who started the turn
          */
-        this.startingPlayer = 0;
+        this.startingPlayer = parser.startingPlayer();
 
+        /** At the beginning of the game the current player is the starting player
+         */
+        this.currentPlayer=parser.currentPlayer();
     }
 
     /**
@@ -82,33 +116,43 @@ public class Game {
     public String toConfiguration(){
         StringBuilder conf = new StringBuilder();
 
-        conf.append(startingPlayer).append(this.briscola);
+        conf.append(currentPlayer).append(this.briscola);
         conf.append(this.table);
 
         for(int i=0; i<2 ; i++) {
-            for (Iterator c = this.players[i].getHand().iterator(); c.hasNext(); ) {
+            for (Iterator<Card> c = this.players[i].getHand().iterator(); c.hasNext(); )
                 conf.append(c.next().toString());
-            }
             conf.append(".");
         }
-        for (Iterator i = this.players[0].getPlayerPile().iterator(); i.hasNext();){
-            conf.append(i.next().toString());
-        }
+
+        for(Iterator<Card> c = this.players[0].getPlayerPile().iterator(); c.hasNext();)
+            conf.append(c.next().toString());
+
         conf.append(".");
 
-        for (Iterator i = this.players[1].getPlayerPile().iterator(); i.hasNext();){
-            conf.append(i.next().toString());
-        }
+        for(Iterator<Card> c = this.players[1].getPlayerPile().iterator(); c.hasNext();)
+            conf.append(c.next().toString());
+
         return conf.toString();
     }
 
     public static void main(String[] argv){
         Game game = new Game();
         System.out.println(game.toConfiguration());
+
+        Game game0 = new Game(new Game().toConfiguration());
+        System.out.println(game0.toConfiguration());
+
+        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
+        System.out.println(game1.toConfiguration());
+
+        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
+        System.out.println(game2.toConfiguration());
+
 //        game.players[0].takeCardInHand(game.table.getDeck().takeCard());
 //        System.out.println(game.toConfiguration());
-        game.table.setPlayedCard(game.players[0].playCard(1));
-        System.out.println(game.toConfiguration());
+//        game.table.setPlayedCard(game.players[0].playCard(1));
+//        System.out.println(game.toConfiguration());
 
     }
 }
