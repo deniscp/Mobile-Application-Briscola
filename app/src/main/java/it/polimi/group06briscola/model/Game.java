@@ -1,6 +1,5 @@
 package it.polimi.group06briscola.model;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.Iterator;
 
 import it.polimi.group06briscola.model.test.Parser;
@@ -87,7 +86,7 @@ public class Game {
         /* Set the played card on surface
          */
         for (Iterator<Card> cardIterator = parser.surface().iterator(); cardIterator.hasNext(); )
-            this.table.setPlayedCard(cardIterator.next());
+            this.table.placeCard(cardIterator.next());
 
 
         /**
@@ -136,6 +135,27 @@ public class Game {
         return conf.toString();
     }
 
+    /** Checks if there are still turns to play
+     *
+     * @return True if there is no turn left to be played
+     *          False if the game is not over
+     */
+    public boolean isOver(){
+        if (this.round == 21 )
+            return true;
+        else
+            return false;
+    }
+
+    /** Plays a card of a player
+     * @param playerNum the id of player that plays the card
+     * @param cardPos the position of the card in the hand of the player
+     */
+
+    public void playerPlaysCard(int playerNum, int cardPos){
+        this.table.placeCard( this.players[playerNum].throwCard(cardPos) );
+    }
+
     public static void main(String[] argv){
         Game game = new Game();
         System.out.println(game.toConfiguration());
@@ -143,15 +163,19 @@ public class Game {
         Game game0 = new Game(new Game().toConfiguration());
         System.out.println(game0.toConfiguration());
 
+        System.out.println();
+
+
         Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
         System.out.println(game1.toConfiguration());
 
         Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
         System.out.println(game2.toConfiguration());
 
+
 //        game.players[0].takeCardInHand(game.table.getDeck().takeCard());
 //        System.out.println(game.toConfiguration());
-//        game.table.setPlayedCard(game.players[0].playCard(1));
+//        game.table.placeCard(game.players[0].throwCard(1));
 //        System.out.println(game.toConfiguration());
 
     }

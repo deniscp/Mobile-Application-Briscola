@@ -86,10 +86,10 @@ abstract class Player {
     public ArrayList<Card> getPlayerPile() { return playerPile; }
 
     /** Plays a player's card, removing it from his hand
-     * @param position the position of the card that has been selected by a player to play.
+     * @param position the position of the card that has been selected by a player to be played.
      * @return card selected from hand of player.
      */
-    Card playCard(int position) {
+    Card throwCard(int position) {
         if( position<0 || position >= hand.size())
             throw new IllegalArgumentException("Selected Card is not available");
         return hand.remove(position);
