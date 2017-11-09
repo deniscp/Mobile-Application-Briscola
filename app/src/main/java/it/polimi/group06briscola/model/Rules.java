@@ -14,29 +14,29 @@ public class Rules {
 
 
     /**
-     *  Returns the position (in case of just two players, 0 or 1) of the winner of the current turn
-     * given the played cards at the end of a turn and given the current briscola
+     *  Returns the position (in case of just two players, 0 or 1) of the winner of the current round
+     * given the played cards at the end of a round, the current briscola and the starting player
      */
-    static int returnTurnWinner (Card[] playedCard, Card trump){
+    static int roundWinner(ArrayList<Card> playedCard, Suit trump, int starting){
 
-        if(playedCard[0]==null || playedCard[1]==null){
+        if(playedCard.get(0)==null || playedCard.get(1)==null)
             throw new IllegalArgumentException("Not all players have played their card yet");
-        }
 
-        if(playedCard[0].getSuit() == playedCard[1].getSuit())
-            if( playedCard[0].getRank() < playedCard[1].getRank() )
-                return 0;
+
+        if(playedCard.get(0).getSuit() == playedCard.get(1).getSuit())
+            if( playedCard.get(0).getRank() < playedCard.get(1).getRank() )
+                return (0 + starting) % 2;
             else
-                return 1;
+                return (1 + starting) % 2;
 
         else
-            if(playedCard[0].getSuit().equals(trump.getSuit()))
-                return 0;
+            if(playedCard.get(0).getSuit().equals(trump))
+                return (0 + starting) % 2;
         else
-            if(playedCard[1].getSuit().equals(trump.getSuit()))
-                return 1;
+            if(playedCard.get(1).getSuit().equals(trump))
+                return (1 + starting) % 2;
         else
-            return 0;
+            return (0 + starting) % 2;
     }
 
     /**
@@ -54,9 +54,8 @@ public class Rules {
 
         Iterator<Card> pileIterator = playerPile.iterator();
 
-        while (pileIterator.hasNext()) {
+        while (pileIterator.hasNext())
             score += pileIterator.next().getPoint();
-        }
 
         return score;
     }

@@ -18,8 +18,8 @@ public class Card {
     public Card(int value, Suit suit) {
         this.value = value;
         this.suit = suit;
-        this.setRank(value);
-        this.setPoints(value);
+        this.rank = this.setRank(value);
+        this.point = this.setPoints(value);
     }
 
     public Suit getSuit() {

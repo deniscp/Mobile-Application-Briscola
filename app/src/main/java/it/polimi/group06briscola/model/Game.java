@@ -69,14 +69,12 @@ public class Game {
         /* Set hands of players
          */
         for (int i=0; i<2; i++)
-            for (Iterator<Card> cardIterator = parser.hands()[i].iterator(); cardIterator.hasNext(); )
-                players[i].takeCardInHand(cardIterator.next());
+            players[i].getHand().addAll(parser.hands()[i]);
 
         /* Set pile of players
          */
         for (int i=0; i<2; i++)
-            for (Iterator<Card> cardIterator = parser.piles()[i].iterator(); cardIterator.hasNext(); )
-                players[i].getPlayerPile().add(cardIterator.next());
+            players[i].getPlayerPile().addAll(parser.piles()[i]);
 
 
         /** Set a table with the briscola and the deck
@@ -85,14 +83,13 @@ public class Game {
 
         /* Set the played card on surface
          */
-        for (Iterator<Card> cardIterator = parser.surface().iterator(); cardIterator.hasNext(); )
-            this.table.placeCard(cardIterator.next());
+        this.table.getPlayedCards().addAll(parser.surface());
 
 
         /**
          * Set the briscola suit for easier further accesses
          */
-        this.briscola = parser.briscola().getSuit();
+        this.briscola = parser.trumpSuit();
 
 
         /** 20 rounds in a 2-player briscola game
@@ -106,6 +103,26 @@ public class Game {
         /** At the beginning of the game the current player is the starting player
          */
         this.currentPlayer=parser.currentPlayer();
+    }
+
+    public int getStartingPlayer() {
+        return startingPlayer;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public Player[] getPlayers() {
+        return this.players;
     }
 
     /**
@@ -135,13 +152,26 @@ public class Game {
         return conf.toString();
     }
 
-    /** Checks if there are still turns to play
+    /** Checks if there are still rounds to play
      *
-     * @return True if there is no turn left to be played
+     * @return True if there is no round left to be played
      *          False if the game is not over
      */
-    public boolean isOver(){
+    public boolean gameIsOver(){
         if (this.round == 21 )
+            return true;
+        else
+            return false;
+    }
+
+    /** Checks if there are not cards yet to be played in the current round
+     *
+     *
+     * @return True if all players have already played their card
+     *          False otherwise
+     */
+    public boolean roundIsOver(){
+        if (this.table.getPlayedCards().size() == 2 )
             return true;
         else
             return false;
@@ -154,6 +184,46 @@ public class Game {
 
     public void playerPlaysCard(int playerNum, int cardPos){
         this.table.placeCard( this.players[playerNum].throwCard(cardPos) );
+        this.currentPlayer = ( this.getCurrentPlayer() +1 ) %2;
+    }
+
+    /** Initializes a new round by defining the current round winner,
+     *  assigning the played cards to the winning player,
+     *  distributing new cards if still any,
+     *  advancing the round number,
+     *  and updating the starting and the current player
+     */
+    public void newRound(){
+        int winningPlayer;  //the winner of the current round
+
+        winningPlayer=Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
+
+        this.players[winningPlayer].getPlayerPile().addAll(this.table.collectPlayedCard());
+
+        if(round <= 17) {
+            players[winningPlayer].takeCardInHand(this.table.getDeck().takeCard());
+
+            if (round == 17)
+                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.takeTrump());
+            else
+                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.getDeck().takeCard());
+        }
+
+        this.round++;
+        this.startingPlayer = this.currentPlayer = winningPlayer;
+    }
+
+    public int returnWinner() {
+
+        for (int i = 0; i < 2; i++)
+            getPlayers()[i].setPlayerPoints( Rules.computeScore(this.players[i].getPlayerPile() ) );
+
+        if (getPlayers()[0].getPlayerPoints() > getPlayers()[1].getPlayerPoints())
+            return 0;
+        else if (getPlayers()[1].getPlayerPoints() > getPlayers()[0].getPlayerPoints())
+            return 1;
+        else
+            return -1;
     }
 
     public static void main(String[] argv){

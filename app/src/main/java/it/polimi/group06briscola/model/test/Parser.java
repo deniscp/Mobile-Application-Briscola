@@ -16,9 +16,13 @@ public class Parser {
         String test0 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..1B3B5B.2B4B6B..";
         String test1 = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..";
         String test2 = "1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C";
+        String test3 = "0B..1B3B5B.2B4B6B..JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B";
+        String test4 = "0B.....JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B1B3B5B2B4B6B";
+        String test5 = "1B.5B..6B.4B3B.JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B7BKS2B1B"; // 42 cards!
+        String test6 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKSKS7B..1B3B5B.2B4B6B..";   // 41 cards!
 
 //        Parser parser = new Parser(test0);
-        Parser parser = new Parser(test1);
+        Parser parser = new Parser(test6);
 
         System.out.println(parser.toString());
 
@@ -71,10 +75,10 @@ public class Parser {
     }
 
     public int startingPlayer(){
-        if(cardOnSurface.length()==2)
-            return ( Integer.parseInt(this.currentPlayer)) ^ 1;
+        if(cardOnSurface.length() /2 == 1) //if one card is already on the table
+            return (currentPlayer() + 1) %2 ;
         else
-            return Integer.valueOf(currentPlayer);
+            return currentPlayer();
     }
 
     public int currentPlayer(){
@@ -132,7 +136,7 @@ public class Parser {
     }
 
     public int round(){
-        return (this.pileP0.length()/2 + this.pileP1.length()/2) +1;
+        return (this.pileP0.length()/2 + this.pileP1.length()/2)/2 +1;
     }
 
 
@@ -213,15 +217,16 @@ public class Parser {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Starting player : " + this.startingPlayer());
+        stringBuilder.append("Round : " + this.round());
+        stringBuilder.append("\nStarting player : " + this.startingPlayer());
         stringBuilder.append("\nTrump suit : " + this.trumpSuit());
         stringBuilder.append("\nDeck : " + this.deck());
         stringBuilder.append("\nBriscola : " + this.briscola());
         stringBuilder.append("\nCards on surface : " + this.surface());
         stringBuilder.append("\nCards in hand of player0 : " + this.hands()[0]);
         stringBuilder.append("\nCards in hand of player1 : " + this.hands()[1]);
-        stringBuilder.append("\nPile of player0 : " + this.piles()[0]);
-        stringBuilder.append("\nPile of player1 : " + this.piles()[1]);
+        stringBuilder.append("\nPile of player0 : " + this.piles()[0] + " (" + this.piles()[0].size() + " cards)");
+        stringBuilder.append("\nPile of player1 : " + this.piles()[1] + " (" + this.piles()[1].size() + " cards)");
         return stringBuilder.toString();
     }
 }

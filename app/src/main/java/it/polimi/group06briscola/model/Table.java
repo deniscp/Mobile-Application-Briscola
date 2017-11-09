@@ -48,6 +48,15 @@ public class Table {
     }
     public Card getTrump() { return this.trump; }
 
+    /** Takes the trump removing it from the table
+     * @return the trump on the table
+     */
+    public Card takeTrump() {
+        Card temp = this.getTrump();
+        this.setTrump(null);
+        return temp;
+    }
+
     public DeckOfCards getDeck() { return this.deck; }
 
     /**
@@ -70,7 +79,7 @@ public class Table {
         StringBuilder tableToString = new StringBuilder();
 
         tableToString.append(this.getDeck().toString());
-        tableToString.append(this.getTrump().toString());
+        if(this.getTrump() != null) {tableToString.append(this.getTrump().toString());}
         tableToString.append(".");
 
         for (Iterator i = this.getPlayedCards().iterator(); i.hasNext();){

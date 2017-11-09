@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Roza.
  */
 
-abstract class Player {
+abstract public class Player {
     /**
      * Username of the player.
      */
@@ -74,6 +74,11 @@ abstract class Player {
     public int getPlayerPoints(){
         return score;
     }
+
+    /**
+     * Sets the score of the player
+     */
+    public void setPlayerPoints(int score) { this.score = score; }
 
     /**
      * Returns the hand of the player
