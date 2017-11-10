@@ -5,7 +5,6 @@ package it.polimi.group06briscola.model;
  * The AI class holds the logic or strategy of the Robot, which means how robot select the card to be played in its turn.
  * @author Roza.
  */
-
 class AI {
 
     /**

@@ -1,6 +1,7 @@
 package it.polimi.group06briscola.model;
 
 /**
+ * This class holds the 4 suits Batons, Sowrds, Cups and Golds and is used in the Card class.
  * @author Timo Zandonella
  */
 public enum Suit {

@@ -5,16 +5,16 @@ import java.util.Collections;
 import java.util.Iterator;
 
 /**
+ * This Class holds the deck of cards with 40 or less cards in it. It also holds methods to shuffle a deck and return the current deck size.
  * @author Timo Zandonella
  */
 public class DeckOfCards {
 
     private ArrayList<Card> playingdeck;
 
-
     /**
-     * Constructor for a Deck of Cards;
-     * @param shuffled shuffled is true, when the deck should also be shuffled
+     * Constructor for a full deck of cards. It uses the card class to create object of cards.
+     * @param shuffled is true, when the deck should be shuffled
      */
     public DeckOfCards(boolean shuffled) {
 
@@ -33,21 +33,20 @@ public class DeckOfCards {
     }
 
     /**
-     * Constructor of Deck of Cards, returns an empty deck of Cards
+     * Constructor of an empty deck of cards
      */
     public DeckOfCards(){
         this.playingdeck = new ArrayList<Card>();
     }
 
     /**
-     * Shuffles the current deck of cards
+     * Shuffle the current deck of cards
      */
     public void shuffle(){
         Collections.shuffle(this.playingdeck);
     }
 
     /** Remaining cards in current deck
-     *
      * @return number of cards left in the deck
      */
     public int remaining(){
@@ -56,7 +55,6 @@ public class DeckOfCards {
 
     /**
      * A card gets drawn from the deck if there are still cards in the deck
-     *
      * @return Last card of the deck
      */
     public Card takeCard() {
