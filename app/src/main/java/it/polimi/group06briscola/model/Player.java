@@ -3,19 +3,19 @@ package it.polimi.group06briscola.model;
 import java.util.ArrayList;
 
 /**
- * This class defines and holds the basic information of a player in the game.
+ * This class defines and holds the basic information of a player such as id, username, score, hand and pile of the player in the game.
  * @author Roza.
  */
 
 abstract public class Player {
     /**
-     * Username of the player.
+     * Nickname of the player.
      */
     private String username;
 
 
     /**
-     * ID of the Player (from 0 to 1) representing his position on the table.
+     * Unique identifier of the Player ( starting from 0 ) representing his position on the table.
      */
     private int id;
 
@@ -27,9 +27,9 @@ abstract public class Player {
 
 
     /**
-     * Stores the three Cards the Player holds.
+     * Stores the Cards that the Player holds (up to 3 ).
      */
-    private ArrayList<Card> hand = new ArrayList<Card>();
+    private ArrayList<Card> hand = new ArrayList<>();
 
 
     /**
@@ -40,7 +40,9 @@ abstract public class Player {
 
 
     /**
-     *Constructor of the class to initialize the new objects of Player Types(Human, Robot) .
+     *Constructor of the class to initialize the new objects of Player Types(Human, Robot).
+     * @param id is the unique identifier of the player in the game.
+     * @param  username is the nickname of the player which may be shown in the game.
      */
     public Player( int id , String username ) {
 
@@ -53,7 +55,7 @@ abstract public class Player {
 
 
     /**
-     * Returns the ID (position) of the player
+     * @return the unique identifier which is also the position of the player
      */
     public int getId()
     {
@@ -61,7 +63,7 @@ abstract public class Player {
     }
 
     /**
-     * Returns the username of the player
+     * @return the username of the player
      */
     public String getUsername()
     {
@@ -69,7 +71,7 @@ abstract public class Player {
     }
 
     /**
-     * Returns the score of the player
+     * @return the score of the player
      */
     public int getPlayerPoints(){
         return score;
@@ -81,12 +83,12 @@ abstract public class Player {
     public void setPlayerPoints(int score) { this.score = score; }
 
     /**
-     * Returns the hand of the player
+     * @return the hand of the player
      */
     public ArrayList<Card> getHand() { return hand;}
 
     /**
-     * Returns the pile of the player
+     * @return the pile of the player
      */
     public ArrayList<Card> getPlayerPile() { return playerPile; }
 
@@ -100,8 +102,8 @@ abstract public class Player {
         return hand.remove(position);
     }
 
-    /** Adds a card to player's hand
-     * @param card card to be replaced.
+    /** Adds a card to player's hand, in the last position
+     * @param card the card to be added.
      */
     public void takeCardInHand(Card card) {
         if (this.hand.size()>3)
