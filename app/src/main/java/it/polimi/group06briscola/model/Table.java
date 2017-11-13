@@ -9,24 +9,29 @@ package it.polimi.group06briscola.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/** Table class storing domain objects used during the game
+/**
+ * Table class storing domain objects used during the game
  */
 public class Table {
 
-    /** Array of Card on the table that will hold the played cards of the players.
+    /**
+     * Array of Card on the table that will hold the played cards of the players.
      * The first Player to play will put the card in first position, then the second Player to playerPlaysCard and so on
      */
     private ArrayList<Card> playedCards;
 
-    /** The "Briscola" set at the beginning of the game is kept here
+    /**
+     * The "Briscola" set at the beginning of the game is kept here
      */
     private Card trump;
 
-    /** The deck shuffled at the beginning of the game is kept here
+    /**
+     * The deck shuffled at the beginning of the game is kept here
      */
     private DeckOfCards deck;
 
-    /** Constructor of the Table
+    /**
+     * Constructor of the Table
      * Initialize an empty array of played card
      * Set the trump and the deck initialized from the Game class
      */
@@ -48,7 +53,8 @@ public class Table {
     }
     public Card getTrump() { return this.trump; }
 
-    /** Takes the trump removing it from the table
+    /**
+     * Takes the trump removing it from the table
      * @return the trump on the table
      */
     public Card takeTrump() {

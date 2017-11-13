@@ -1,7 +1,7 @@
 package it.polimi.group06briscola.model;
 
 /**
- * This class holds all information about a card - suit, rank, point and value. For a comparison between the 3 variables value, rank and point, please see the src/main/explanation.png
+ * This class holds all information about a card - suit, rank, point and value. For a comparison between the 3 variables value, rank and point, please see the explanation/card.png
  * Value: The value of a card that is used for the configurations.
  * Suit: The suit of a card (can be Batons, Swords, Cups, Golds).
  * Rank: The Rank is the order of a card, meaning the card with rank 1 (Ace) is > rank 2 (Card 3) > rank 3 (King) and so on. Rank exists for comparing whose card has one a round.
@@ -37,7 +37,7 @@ public class Card {
 
     /**
      * This method converts the value of a card to a rank.
-     * See src/main/explanation.png for more information
+     * See explanation/card.png for more information
      * @param value
      * @return rank
      */
@@ -59,7 +59,7 @@ public class Card {
 
     /**
      * This method converts the value of a card to the corresponding points. Only the top 5 ranked cards, so cards with value 1,3,8,9 and 10 get points.
-     * See src/main/explanation.png for more information
+     * See explanation/card.png for more information
      * @param value
      * @return points
      */
