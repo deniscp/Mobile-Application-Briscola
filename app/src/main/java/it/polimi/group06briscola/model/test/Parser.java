@@ -141,7 +141,7 @@ public class Parser {
 
 
     private ArrayList<Card> parseCards(String cardString){
-        ArrayList<Card> cards = new ArrayList<Card>();
+        ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < cardString.length(); i += 2)
             cards.add(parseToCard(cardString.substring(i, i + 2)));
         return cards;

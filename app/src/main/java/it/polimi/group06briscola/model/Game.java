@@ -1,11 +1,10 @@
 package it.polimi.group06briscola.model;
 
-import java.util.Iterator;
-
 import it.polimi.group06briscola.model.test.Parser;
 
-/**
- * Created by denis on 29/10/17.
+/** @author denis on 29/10/17.
+ * Class containing all the element needed to play a briscola game,
+ * and wrapper methods abstracting the usage of the object it instantiates.
  */
 
 public class Game {
@@ -23,31 +22,31 @@ public class Game {
         this.players[1] = new  Robot(1,"Robot00");
         DeckOfCards deck = new DeckOfCards(false);
 
-        /** Distribute cards to players
+        /* Distribute cards to players
          */
         int i,j;
         for(i=0;i<3;i++)
             for(j=0;j<players.length;j++)
                 players[j].takeCardInHand(deck.takeCard());
 
-        /** Set a table with the 7th card as briscola and the remaining deck
+        /* Set a table with the 7th card as briscola and the remaining deck
          */
         this.table = new Table(deck.takeCard(), deck);
 
-        /**
+        /*
          * Set the briscola suit for easier further accesses
          */
         this.briscola = this.table.getTrump().getSuit();
 
-        /** first of 20 rounds in a 2-player briscola game
+        /* first of 20 rounds in a 2-player briscola game
          */
         this.round = 1;
 
-        /** Human player always starts first
+        /* Human player always starts first
          */
         this.startingPlayer = 0;
 
-        /** At the beginning of the game the current player is the starting player
+        /* At the beginning of the game the current player is the starting player
          */
         this.currentPlayer=this.startingPlayer;
 
@@ -62,8 +61,8 @@ public class Game {
 
         /* Creating the deck
          */
-        for (Iterator<Card> card = parser.deck().iterator(); card.hasNext(); )
-            deck.addCard(card.next());
+        for (Card card : parser.deck())
+            deck.addCard(card);
 
 
         /* Set hands of players
@@ -77,7 +76,7 @@ public class Game {
             players[i].getPlayerPile().addAll(parser.piles()[i]);
 
 
-        /** Set a table with the briscola and the deck
+        /* Set a table with the briscola and the deck
          */
         this.table = new Table(parser.briscola(), deck);
 
@@ -86,21 +85,21 @@ public class Game {
         this.table.getPlayedCards().addAll(parser.surface());
 
 
-        /**
+        /*
          * Set the briscola suit for easier further accesses
          */
         this.briscola = parser.trumpSuit();
 
 
-        /** 20 rounds in a 2-player briscola game
+        /* 20 rounds in a 2-player briscola game
          */
         this.round = parser.round();
 
-        /** The player who started the turn
+        /* The player who started the turn
          */
         this.startingPlayer = parser.startingPlayer();
 
-        /** At the beginning of the game the current player is the starting player
+        /* At the beginning of the game the current player is the starting player
          */
         this.currentPlayer=parser.currentPlayer();
     }
@@ -136,18 +135,18 @@ public class Game {
         conf.append(this.table);
 
         for(int i=0; i<2 ; i++) {
-            for (Iterator<Card> c = this.players[i].getHand().iterator(); c.hasNext(); )
-                conf.append(c.next().toString());
+            for (Card card : this.players[i].getHand())
+                conf.append(card.toString());
             conf.append(".");
         }
 
-        for(Iterator<Card> c = this.players[0].getPlayerPile().iterator(); c.hasNext();)
-            conf.append(c.next().toString());
+        for (Card card : this.players[0].getPlayerPile())
+            conf.append(card.toString());
 
         conf.append(".");
 
-        for(Iterator<Card> c = this.players[1].getPlayerPile().iterator(); c.hasNext();)
-            conf.append(c.next().toString());
+        for (Card card : this.players[1].getPlayerPile())
+            conf.append(card.toString());
 
         return conf.toString();
     }
@@ -165,7 +164,6 @@ public class Game {
     }
 
     /** Checks if there are not cards yet to be played in the current round
-     *
      *
      * @return True if all players have already played their card
      *          False otherwise
@@ -216,7 +214,7 @@ public class Game {
     public int returnWinner() {
 
         for (int i = 0; i < 2; i++)
-            getPlayers()[i].setPlayerPoints( Rules.computeScore(this.players[i].getPlayerPile() ) );
+            getPlayers()[i].setPlayerPoints( Rules.computePoints(this.players[i].getPlayerPile() ) );
 
         if (getPlayers()[0].getPlayerPoints() > getPlayers()[1].getPlayerPoints())
             return 0;

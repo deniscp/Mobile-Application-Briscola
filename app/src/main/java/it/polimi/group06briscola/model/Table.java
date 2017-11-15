@@ -1,32 +1,25 @@
 package it.polimi.group06briscola.model;
 
-
-/**
- * Created by denis on 28/10/17.
- */
-
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
-/**
- * Table class storing domain objects used during the game
+
+/** @author denis on 28/10/17
+ * Table class storing domain objects used during the game, deck, briscola card and played cards
  */
 public class Table {
 
-    /**
-     * Array of Card on the table that will hold the played cards of the players.
-     * The first Player to play will put the card in first position, then the second Player to playerPlaysCard and so on
+    /** ArrayList of Card representing the cards played by the players.
+     * Cards are stored in the order in which they are played,
+     * so the first element is the card played by the player who starts the round,
+     * the second element is the card played by the player who immediately follows the first one and so on
      */
     private ArrayList<Card> playedCards;
 
-    /**
-     * The "Briscola" set at the beginning of the game is kept here
+    /** The "Briscola" card set at the beginning of the game is kept here
      */
     private Card trump;
 
-    /**
-     * The deck shuffled at the beginning of the game is kept here
+    /** The deck initialized at the beginning of the game is kept here
      */
     private DeckOfCards deck;
 
@@ -35,48 +28,51 @@ public class Table {
      * Initialize an empty array of played card
      * Set the trump and the deck initialized from the Game class
      */
-    public Table(Card trump, DeckOfCards deck) {
-        this.playedCards = new ArrayList<Card>();
+    Table(Card trump, DeckOfCards deck) {
+        this.playedCards = new ArrayList<>();
         setTrump(trump);
         setDeck(deck);
     }
 
-    public ArrayList<Card> getPlayedCards() { return this.playedCards; }
+    /**
+     *  Retrieve played cards for visualizing, leaving them on the table
+     */
+    ArrayList<Card> getPlayedCards() { return this.playedCards; }
 
     /**
      *  Collects played cards and remove them from the table
      */
-    public ArrayList<Card> collectPlayedCard() {
+    ArrayList<Card> collectPlayedCard() {
         ArrayList<Card> temp = new ArrayList<>(this.getPlayedCards());
-        this.playedCards = new ArrayList<Card>();
+        this.playedCards = new ArrayList<>();
         return temp;
     }
-    public Card getTrump() { return this.trump; }
+    Card getTrump() { return this.trump; }
 
     /**
      * Takes the trump removing it from the table
      * @return the trump on the table
      */
-    public Card takeTrump() {
+    Card takeTrump() {
         Card temp = this.getTrump();
         this.setTrump(null);
         return temp;
     }
 
-    public DeckOfCards getDeck() { return this.deck; }
+    DeckOfCards getDeck() { return this.deck; }
 
     /**
      *  Place a card on the table
      */
-    public void placeCard(Card playingCard) {
+    void placeCard(Card playingCard) {
         if (this.playedCards.size()==2)
             throw new IllegalArgumentException("All the players have already played their card in this turn");
         this.playedCards.add(playingCard);
     }
 
-    public void setTrump(Card trump) { this.trump = trump;  }
+    private void setTrump(Card trump) { this.trump = trump;  }
 
-    public void setDeck(DeckOfCards deck) {
+    private void setDeck(DeckOfCards deck) {
         this.deck = deck;
     }
 
@@ -88,8 +84,8 @@ public class Table {
         if(this.getTrump() != null) {tableToString.append(this.getTrump().toString());}
         tableToString.append(".");
 
-        for (Iterator i = this.getPlayedCards().iterator(); i.hasNext();){
-            tableToString.append(i.next().toString());
+        for (Card card : this.getPlayedCards()) {
+            tableToString.append(card.toString());
         }
         tableToString.append(".");
         return tableToString.toString();

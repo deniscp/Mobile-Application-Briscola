@@ -1,20 +1,16 @@
 package it.polimi.group06briscola.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-/**
- * Created by denis on 28/10/17.
- */
 
-/**
+/** @author denis on 28/10/17
  *  Static methods implementing the rules of the game Briscola
  */
-public class Rules {
+class Rules {
 
     /**
      *  Returns the position (in case of just two players, 0 or 1) of the winner of the current round
-     * given the played cards at the end of a round, the current briscola and the starting player
+     * given the played cards at the end of a round, the current briscola and the position of the starting player
      */
     static int roundWinner(ArrayList<Card> playedCard, Suit trump, int starting){
 
@@ -39,21 +35,19 @@ public class Rules {
     }
 
     /**
-     *  Ordered Italian Deck of Cards to be used as a String
+     *  Ordered Italian Deck of Cards to be used with an appropriate m parser
      */
     static final String[] sortedDeck={"1B", "2B", "3B", "4B", "5B", "6B", "7B", "JB", "HB", "KB", "1S", "2S", "3S", "4S", "5S", "6S", "7S", "JS", "HS", "KS", "1C", "2C", "3C", "4C", "5C", "6C", "7C", "JC", "HC", "KC", "1G", "2G", "3G", "4G", "5G", "6G", "7G", "JG", "HG", "KG"};
 
 
     /**
-     *  Compute the score of a give pile or deck in the form of an ArrayList<Card>
+     *  Compute the total points of a given pile or deck in the type of an ArrayList<Card>
      */
-    static int computeScore(ArrayList<Card> playerPile) {
+    static int computePoints(ArrayList<Card> playerPile) {
         int score = 0;
 
-        Iterator<Card> pileIterator = playerPile.iterator();
-
-        while (pileIterator.hasNext())
-            score += pileIterator.next().getPoint();
+        for (Card card : playerPile)
+            score += card.getPoint();
 
         return score;
     }
