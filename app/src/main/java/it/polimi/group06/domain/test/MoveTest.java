@@ -1,6 +1,6 @@
 package it.polimi.group06.domain.test;
 
-import it.polimi.group06briscola.model.Game;
+import it.polimi.group06.domain.Game;
 
 /**
  * Created by denis on 02/11/17.
