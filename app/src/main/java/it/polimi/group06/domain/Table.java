@@ -34,10 +34,18 @@ public class Table {
         setDeck(deck);
     }
 
+
     /**
      *  Retrieve played cards for visualizing, leaving them on the table
      */
     ArrayList<Card> getPlayedCards() { return this.playedCards; }
+
+    /**
+     *  Replaces played cards with new ones
+     */
+    public void replacePlayedCards(ArrayList<Card> newPlayedCards) {
+        this.playedCards = newPlayedCards;
+    }
 
     /**
      *  Collects played cards and remove them from the table
@@ -59,10 +67,10 @@ public class Table {
         return temp;
     }
 
-    DeckOfCards getDeck() { return this.deck; }
+    public DeckOfCards getDeck() { return this.deck; }
 
     /**
-     *  Place a card on the table
+     *  Places a card on the table
      */
     void placeCard(Card playingCard) {
         if (this.playedCards.size()==2)
@@ -70,7 +78,7 @@ public class Table {
         this.playedCards.add(playingCard);
     }
 
-    private void setTrump(Card trump) { this.trump = trump;  }
+    public void setTrump(Card trump) { this.trump = trump;  }
 
     private void setDeck(DeckOfCards deck) {
         this.deck = deck;

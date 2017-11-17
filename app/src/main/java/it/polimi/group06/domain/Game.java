@@ -1,11 +1,5 @@
 package it.polimi.group06.domain;
 
-import java.util.Iterator;
-
-import it.polimi.group06.domain.mtest.Parser;
-
-import it.polimi.group06.domain.Card;
-
 /** @author denis on 29/10/17.
  * Class containing all the element needed to play a briscola game,
  * and wrapper methods abstracting the usage of the object it instantiates.
@@ -56,63 +50,6 @@ public class Game {
 
     }
 
-    public Game(String conf) {
-        this.players = new Player[2];
-        this.players[0] = new Human(0, "Group06");
-        this.players[1] = new Robot(1, "Robot00");
-        Parser parser = new Parser(conf);
-        DeckOfCards deck = new DeckOfCards();
-        Card newCard;
-
-        newCard= new Card(1,Suit.Batons);
-
-        newCard.toString();
-
-
-        /* Creating the deck
-         */
-        for (Card card : parser.deck())
-            deck.addCard(card);
-
-
-        /* Set hands of players
-         */
-        for (int i=0; i<2; i++)
-            players[i].getHand().addAll( parser.hands()[i]);
-
-        /* Set pile of players
-         */
-        for (int i=0; i<2; i++)
-            players[i].getPlayerPile().addAll(parser.piles()[i]);
-
-
-        /* Set a table with the briscola and the deck
-         */
-        this.table = new Table(parser.briscola(), deck);
-
-        /* Set the played card on surface
-         */
-        this.table.getPlayedCards().addAll(parser.surface());
-
-
-        /*
-         * Set the briscola suit for easier further accesses
-         */
-        this.briscola = parser.trumpSuit();
-
-
-        /* 20 rounds in a 2-player briscola game
-         */
-        this.round = parser.round();
-
-        /* The player who started the turn
-         */
-        this.startingPlayer = parser.startingPlayer();
-
-        /* At the beginning of the game the current player is the starting player
-         */
-        this.currentPlayer=parser.currentPlayer();
-    }
 
     public int getStartingPlayer() {
         return startingPlayer;
@@ -133,6 +70,14 @@ public class Game {
     public Player[] getPlayers() {
         return this.players;
     }
+
+    public void setBriscolaSuit(Suit briscola) { this.briscola = briscola;  }
+
+    public void setRound(int round) {  this.round = round; }
+
+    public void setStartingPlayer(int startingPlayer) {  this.startingPlayer = startingPlayer;  }
+
+    public void setCurrentPlayer(int currentPlayer) {  this.currentPlayer = currentPlayer;   }
 
     /**
      * Computes the String representing the actual configuration of the game
@@ -235,20 +180,20 @@ public class Game {
     }
 
     public static void main(String[] argv){
-        Game game = new Game();
-        System.out.println(game.toConfiguration());
-
-        Game game0 = new Game(new Game().toConfiguration());
-        System.out.println(game0.toConfiguration());
-
-        System.out.println();
-
-
-        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
-        System.out.println(game1.toConfiguration());
-
-        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
-        System.out.println(game2.toConfiguration());
+//        Game game = new Game();
+//        System.out.println(game.toConfiguration());
+//
+//        Game game0 = new Game(new Game().toConfiguration());
+//        System.out.println(game0.toConfiguration());
+//
+//        System.out.println();
+//
+//
+//        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
+//        System.out.println(game1.toConfiguration());
+//
+//        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
+//        System.out.println(game2.toConfiguration());
 
 
 //        game.players[0].takeCardInHand(game.table.getDeck().takeCard());
