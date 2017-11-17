@@ -3,6 +3,7 @@ package it.polimi.group06;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import it.polimi.group06.domain.Card;
@@ -10,6 +11,7 @@ import it.polimi.group06.domain.DeckOfCards;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Suit;
 import it.polimi.group06.domain.Rules;
+import it.polimi.group06.domain.Table;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -53,20 +55,20 @@ public class DomainTest {
         assertFalse(rules.computePoints(testdeck) == 14);
 
         //Computation of who won a round:
-        ArrayList<Card> rounddeck = new ArrayList<Card>();
-        rounddeck.add(0, new Card(1,Suit.Cups));
-        rounddeck.add(1, new Card(3, Suit.Cups));
-        assertEquals(rules.roundWinner(rounddeck, Suit.Batons, 0), 0);
+        ArrayList<Card> cardsontable = new ArrayList<Card>();
+        cardsontable.add(0, new Card(1,Suit.Cups));
+        cardsontable.add(1, new Card(3, Suit.Cups));
+        assertEquals(rules.roundWinner(cardsontable, Suit.Batons, 0), 0);
 
-        rounddeck.remove(0); rounddeck.remove(0);
-        rounddeck.add(0, new Card(6, Suit.Cups));
-        rounddeck.add(1, new Card(5,Suit.Batons));
-        assertEquals(rules.roundWinner(rounddeck, Suit.Batons, 0), 1);
+        cardsontable.remove(0); cardsontable.remove(0);
+        cardsontable.add(0, new Card(6, Suit.Cups));
+        cardsontable.add(1, new Card(5,Suit.Batons));
+        assertEquals(rules.roundWinner(cardsontable, Suit.Batons, 0), 1);
 
         //If there is only one card in the to be compared array list, than the class puts out an error:
-        rounddeck.remove(0);
+        cardsontable.remove(0);
         try {
-            rules.roundWinner(rounddeck, Suit.Batons, 1);
+            rules.roundWinner(cardsontable, Suit.Batons, 1);
             Assert.fail();
         }catch(Exception e){
             String expected = "Not all players have played their card yet";
@@ -78,7 +80,21 @@ public class DomainTest {
     @Test
     public void GameTest(){
         Game game = new Game();
+        game.getTable().setTrump(new Card(7,Suit.Batons));
+        //For later stages we set the deck to a sorted deck...
+        DeckOfCards deck = new DeckOfCards(false);
+        //... and remove the first 7 cards of it, because they have already been dealt in the Game constructor
+        for(int i=0;i<7;i++){
+            deck.takeCard();
+        }
+        game.getTable().setDeck(deck);
         game.setBriscolaSuit(Suit.Batons);
+        ArrayList<Card> player0 = new ArrayList<Card>();
+        ArrayList<Card> player1 = new ArrayList<Card>();
+        player0.add(new Card(1, Suit.Batons)); player0.add(new Card(3, Suit.Batons)); player0.add(new Card(5, Suit.Batons));
+        player1.add(new Card(2, Suit.Batons)); player1.add(new Card(4, Suit.Batons)); player1.add(new Card(6, Suit.Batons));
+        game.getPlayers()[0].replaceHand(player0);
+        game.getPlayers()[1].replaceHand(player1);
         game.playerPlaysCard(0,0);
         game.playerPlaysCard(1,0);
         //Game is not over, when players each only played one card
@@ -90,5 +106,11 @@ public class DomainTest {
         assertEquals(game.returnWinner(), 0);
         //The toConfiguration methods puts out the correct configuration
         assertEquals(game.toConfiguration(),"0BKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..3B5BJB.4B6BHB.1B2B.");
+    }
+
+    @Test
+    public void TableTest(){
+        Table table = new Table(new Card(3, Suit.Batons), new DeckOfCards(false));
+
     }
 }

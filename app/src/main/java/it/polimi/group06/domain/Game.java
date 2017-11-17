@@ -18,7 +18,7 @@ public class Game {
         this.players = new Player[2];
         this.players[0] = new Human(0,"Group06");
         this.players[1] = new  Robot(1,"Robot00");
-        DeckOfCards deck = new DeckOfCards(false);
+        DeckOfCards deck = new DeckOfCards(true);
 
         /* Distribute cards to players
          */

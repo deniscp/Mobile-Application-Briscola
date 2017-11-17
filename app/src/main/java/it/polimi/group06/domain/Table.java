@@ -28,7 +28,7 @@ public class Table {
      * Initialize an empty array of played card
      * Set the trump and the deck initialized from the Game class
      */
-    Table(Card trump, DeckOfCards deck) {
+    public Table(Card trump, DeckOfCards deck) {
         this.playedCards = new ArrayList<>();
         setTrump(trump);
         setDeck(deck);
@@ -55,7 +55,7 @@ public class Table {
         this.playedCards = new ArrayList<>();
         return temp;
     }
-    Card getTrump() { return this.trump; }
+    public Card getTrump() { return this.trump; }
 
     /**
      * Takes the trump removing it from the table
@@ -80,7 +80,7 @@ public class Table {
 
     public void setTrump(Card trump) { this.trump = trump;  }
 
-    private void setDeck(DeckOfCards deck) {
+    public void setDeck(DeckOfCards deck) {
         this.deck = deck;
     }
 
