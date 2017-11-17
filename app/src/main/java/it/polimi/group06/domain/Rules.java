@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /** @author denis on 28/10/17
  *  Static methods implementing the rules of the game Briscola
  */
-class Rules {
+public class Rules {
 
     /**
      *  Returns the position (in case of just two players, 0 or 1) of the winner of the current round
@@ -43,7 +43,7 @@ class Rules {
     /**
      *  Compute the total points of a given pile or deck in the type of an ArrayList<Card>
      */
-    static int computePoints(ArrayList<Card> playerPile) {
+    public static int computePoints(ArrayList<Card> playerPile) {
         int score = 0;
 
         for (Card card : playerPile)
