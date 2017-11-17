@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import it.polimi.group06.domain.Card;
 import it.polimi.group06.domain.DeckOfCards;
+import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Suit;
 import it.polimi.group06.domain.Rules;
 
@@ -62,6 +63,7 @@ public class DomainTest {
         rounddeck.add(1, new Card(5,Suit.Batons));
         assertEquals(rules.roundWinner(rounddeck, Suit.Batons, 0), 1);
 
+        //If there is only one card in the to be compared array list, than the class puts out an error:
         rounddeck.remove(0);
         try {
             rules.roundWinner(rounddeck, Suit.Batons, 1);
@@ -70,7 +72,23 @@ public class DomainTest {
             String expected = "Not all players have played their card yet";
             Assert.assertEquals(expected, e.getMessage());
         }
-
     }
 
+    //Test the Game class, to see if all the game functionality works correctly
+    @Test
+    public void GameTest(){
+        Game game = new Game();
+        game.setBriscolaSuit(Suit.Batons);
+        game.playerPlaysCard(0,0);
+        game.playerPlaysCard(1,0);
+        //Game is not over, when players each only played one card
+        assertEquals(game.gameIsOver(),false);
+        //Round is over, because both players each played one card
+        assertEquals(game.roundIsOver(), true);
+        game.newRound();
+        //Player 0 has one with the Ace of Batons
+        assertEquals(game.returnWinner(), 0);
+        //The toConfiguration methods puts out the correct configuration
+        assertEquals(game.toConfiguration(),"0BKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..3B5BJB.4B6BHB.1B2B.");
+    }
 }
