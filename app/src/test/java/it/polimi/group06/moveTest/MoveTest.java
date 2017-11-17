@@ -1,6 +1,5 @@
-package it.polimi.group06.mtest;
+package it.polimi.group06.moveTest;
 
-import it.polimi.group06.domain.DeckOfCards;
 import it.polimi.group06.domain.Game;
 
 /**
@@ -55,6 +54,7 @@ public class MoveTest {
      * and selectively replaces fields according to the passed string configuration
      * and parsed by Parser
      * @see Parser
+     * @param conf the passed configuration file
      * @return the game initialized according to String conf
      */
     static Game initializeFromConf(String conf) {

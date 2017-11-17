@@ -1,4 +1,4 @@
-package it.polimi.group06.mtest;
+package it.polimi.group06.moveTest;
 
 import java.util.ArrayList;
 

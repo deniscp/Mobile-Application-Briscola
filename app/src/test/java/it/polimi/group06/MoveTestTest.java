@@ -1,9 +1,9 @@
-package it.polimi.group06.model.test;
+package it.polimi.group06;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import it.polimi.group06.mtest.MoveTest;
+import it.polimi.group06.moveTest.MoveTest;
 
 
 public class MoveTestTest {

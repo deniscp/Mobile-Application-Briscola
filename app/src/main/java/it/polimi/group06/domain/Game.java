@@ -1,7 +1,5 @@
 package it.polimi.group06.domain;
 
-import it.polimi.group06.mtest.Parser;
-
 /** @author denis on 29/10/17.
  * Class containing all the element needed to play a briscola game,
  * and wrapper methods abstracting the usage of the object it instantiates.
@@ -182,20 +180,20 @@ public class Game {
     }
 
     public static void main(String[] argv){
-        Game game = new Game();
-        System.out.println(game.toConfiguration());
-
-        Game game0 = new Game(new Game().toConfiguration());
-        System.out.println(game0.toConfiguration());
-
-        System.out.println();
-
-
-        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
-        System.out.println(game1.toConfiguration());
-
-        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
-        System.out.println(game2.toConfiguration());
+//        Game game = new Game();
+//        System.out.println(game.toConfiguration());
+//
+//        Game game0 = new Game(new Game().toConfiguration());
+//        System.out.println(game0.toConfiguration());
+//
+//        System.out.println();
+//
+//
+//        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
+//        System.out.println(game1.toConfiguration());
+//
+//        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
+//        System.out.println(game2.toConfiguration());
 
 
 //        game.players[0].takeCardInHand(game.table.getDeck().takeCard());
