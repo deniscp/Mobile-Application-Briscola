@@ -1,5 +1,6 @@
 package it.polimi.group06;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -39,14 +40,37 @@ public class DomainTest {
     @Test
     public void RulesTest() throws Exception{
         Rules rules = new Rules();
+
+        //Computation of Points:
         ArrayList<Card> testdeck = new ArrayList<Card>();
-        testdeck.add(0, new Card(5,Suit.Cups));
-        testdeck.add(1, new Card(1, Suit.Batons));
-        testdeck.add(2, new Card(9, Suit.Golds));
+        testdeck.add(0, new Card(5,Suit.Cups)); // 5 -> 0
+        testdeck.add(1, new Card(1, Suit.Batons)); //Ace -> 11
+        testdeck.add(2, new Card(9, Suit.Golds)); // Horse -> 3
         assertEquals(rules.computePoints(testdeck), 14);
+        //Add a card, the pile isn't worth 14 points anymore:
         testdeck.add(3, new Card(9, Suit.Swords));
-        //Added a card, the pile isn't worth 14 points anymore
         assertFalse(rules.computePoints(testdeck) == 14);
+
+        //Computation of who won a round:
+        ArrayList<Card> rounddeck = new ArrayList<Card>();
+        rounddeck.add(0, new Card(1,Suit.Cups));
+        rounddeck.add(1, new Card(3, Suit.Cups));
+        assertEquals(rules.roundWinner(rounddeck, Suit.Batons, 0), 0);
+
+        rounddeck.remove(0); rounddeck.remove(0);
+        rounddeck.add(0, new Card(6, Suit.Cups));
+        rounddeck.add(1, new Card(5,Suit.Batons));
+        assertEquals(rules.roundWinner(rounddeck, Suit.Batons, 0), 1);
+
+        rounddeck.remove(0);
+        try {
+            rules.roundWinner(rounddeck, Suit.Batons, 1);
+            Assert.fail();
+        }catch(Exception e){
+            String expected = "Not all players have played their card yet";
+            Assert.assertEquals(expected, e.getMessage());
+        }
+
     }
 
 }

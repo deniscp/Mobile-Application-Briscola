@@ -12,9 +12,9 @@ public class Rules {
      *  Returns the position (in case of just two players, 0 or 1) of the winner of the current round
      * given the played cards at the end of a round, the current briscola and the position of the starting player
      */
-    static int roundWinner(ArrayList<Card> playedCard, Suit trump, int starting){
+    public static int roundWinner(ArrayList<Card> playedCard, Suit trump, int starting){
 
-        if(playedCard.get(0)==null || playedCard.get(1)==null)
+        if(playedCard.size()!=2 || playedCard.get(0)==null || playedCard.get(1)==null)
             throw new IllegalArgumentException("Not all players have played their card yet");
 
 
