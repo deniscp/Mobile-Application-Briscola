@@ -5,9 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import it.polimi.group06.mtest.MoveTest;
 
-/**
- * Created by denis on 15/11/17.
- */
+
 public class MoveTestTest {
     @Test
     public void moveTest() throws Exception {
@@ -15,6 +13,9 @@ public class MoveTestTest {
         String inputConf;
         String inputMoves;
         String outputConf;
+
+        /*complete test for one round game*/
+        /* @author Mahsa Shekari*/
 
         /* PLAYER 0 PLAYS THE CARD #1(JC)  JC SHOULD BE ELIMINATED FROM THE HAND OF PLAYER0 AND BE ADDED TO THE SURFACE AND THE ORDER OF THE HAND OF PLAYER 0 SHOULD BE ORGANISED */
         inputConf = "0S5C1CJB3G7G1B1S6B4S5BHGJG7C7B2C3C6S7S2B6GHBKB3BKCHC4B6CKS3S2SHS4C2GJS..KGJC5S.1G4G5G..";
@@ -466,6 +467,19 @@ public class MoveTestTest {
         inputMoves = "2221000";
         outputConf = "WINNER066";
         assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
+
+        //Timo:
+
+        inputConf = "1S3B5B6BJBHBKB1S2S3S4S6S7SJSHSKS4C5C6C7CHCKC1G2G3G4G5G7GJG..2B2C1C.3CHGKG.5S7BJC6G.1B4B";
+        inputMoves = "10";
+        outputConf = "1S6BJBHBKB1S2S3S4S6S7SJSHSKS4C5C6C7CHCKC1G2G3G4G5G7GJG..2C1C5B.3CKG3B.5S7BJC6G.1B4BHG2B";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+        inputConf = "1B1B3B4B6BJBHBKB1S3S4S5S6SJSHSKS1C3C4C5C6C7CJCHCKC1G2G3G7G4G5G6GJGHGKG.5B.7B7S.2S2B2C..";
+        inputMoves = "1";
+        outputConf= "0B4B6BJBHBKB1S3S4S5S6SJSHSKS1C3C4C5C6C7CJCHCKC1G2G3G7G4G5G6GJGHGKG..7B7S1B.2S2C3B.5B2B.";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
     }
 
 }
