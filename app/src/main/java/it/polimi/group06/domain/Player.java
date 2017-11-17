@@ -88,9 +88,23 @@ abstract public class Player {
     public ArrayList<Card> getHand() { return hand;}
 
     /**
+     * Replaces the hand of the player with a new one
+     */
+    public void replaceHand(ArrayList<Card> newHand) {
+        this.hand = newHand;
+    }
+
+    /**
      * @return the pile of the player
      */
     public ArrayList<Card> getPlayerPile() { return playerPile; }
+
+    /**
+     * Replaces the pile of the player with a new one
+     */
+    public void replacePlayerPile(ArrayList<Card> newPlayerPile) {
+        this.playerPile = newPlayerPile;
+    }
 
     /** Plays a player's card, removing it from his hand
      * @param position the position of the card that has been selected by a player to be played.

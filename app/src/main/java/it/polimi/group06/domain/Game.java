@@ -1,10 +1,6 @@
 package it.polimi.group06.domain;
 
-import java.util.Iterator;
-
-import it.polimi.group06.domain.mtest.Parser;
-
-import it.polimi.group06.domain.Card;
+import it.polimi.group06.mtest.Parser;
 
 /** @author denis on 29/10/17.
  * Class containing all the element needed to play a briscola game,
@@ -56,63 +52,6 @@ public class Game {
 
     }
 
-    public Game(String conf) {
-        this.players = new Player[2];
-        this.players[0] = new Human(0, "Group06");
-        this.players[1] = new Robot(1, "Robot00");
-        Parser parser = new Parser(conf);
-        DeckOfCards deck = new DeckOfCards();
-        Card newCard;
-
-        newCard= new Card(1,Suit.Batons);
-
-        newCard.toString();
-
-
-        /* Creating the deck
-         */
-        for (Card card : parser.deck())
-            deck.addCard(card);
-
-
-        /* Set hands of players
-         */
-        for (int i=0; i<2; i++)
-            players[i].getHand().addAll( parser.hands()[i]);
-
-        /* Set pile of players
-         */
-        for (int i=0; i<2; i++)
-            players[i].getPlayerPile().addAll(parser.piles()[i]);
-
-
-        /* Set a table with the briscola and the deck
-         */
-        this.table = new Table(parser.briscola(), deck);
-
-        /* Set the played card on surface
-         */
-        this.table.getPlayedCards().addAll(parser.surface());
-
-
-        /*
-         * Set the briscola suit for easier further accesses
-         */
-        this.briscola = parser.trumpSuit();
-
-
-        /* 20 rounds in a 2-player briscola game
-         */
-        this.round = parser.round();
-
-        /* The player who started the turn
-         */
-        this.startingPlayer = parser.startingPlayer();
-
-        /* At the beginning of the game the current player is the starting player
-         */
-        this.currentPlayer=parser.currentPlayer();
-    }
 
     public int getStartingPlayer() {
         return startingPlayer;
@@ -133,6 +72,14 @@ public class Game {
     public Player[] getPlayers() {
         return this.players;
     }
+
+    public void setBriscolaSuit(Suit briscola) { this.briscola = briscola;  }
+
+    public void setRound(int round) {  this.round = round; }
+
+    public void setStartingPlayer(int startingPlayer) {  this.startingPlayer = startingPlayer;  }
+
+    public void setCurrentPlayer(int currentPlayer) {  this.currentPlayer = currentPlayer;   }
 
     /**
      * Computes the String representing the actual configuration of the game

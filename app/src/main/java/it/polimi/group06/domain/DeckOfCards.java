@@ -40,6 +40,13 @@ public class DeckOfCards {
     }
 
     /**
+     *  Replaces deck with new one
+     */
+    public void replaceDeck(ArrayList<Card> newDeck){
+        this.playingdeck = newDeck;
+    }
+
+    /**
      * Shuffle the current deck of cards
      */
     public void shuffle(){

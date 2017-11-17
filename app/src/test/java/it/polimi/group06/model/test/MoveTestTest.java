@@ -3,7 +3,7 @@ package it.polimi.group06.model.test;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import it.polimi.group06.domain.mtest.MoveTest;
+import it.polimi.group06.mtest.MoveTest;
 
 /**
  * Created by denis on 15/11/17.
