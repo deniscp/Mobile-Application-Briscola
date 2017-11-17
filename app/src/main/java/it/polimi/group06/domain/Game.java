@@ -1,9 +1,10 @@
 package it.polimi.group06.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Iterator;
 
-import it.polimi.group06.domain.test.Parser;
+import it.polimi.group06.domain.mtest.Parser;
+
+import it.polimi.group06.domain.Card;
 
 /** @author denis on 29/10/17.
  * Class containing all the element needed to play a briscola game,
@@ -62,6 +63,10 @@ public class Game {
         Parser parser = new Parser(conf);
         DeckOfCards deck = new DeckOfCards();
         Card newCard;
+
+        newCard= new Card(1,Suit.Batons);
+
+        newCard.toString();
 
 
         /* Creating the deck

@@ -1,9 +1,9 @@
-package it.polimi.group06.domain.test;
+package it.polimi.group06.domain.mtest;
 
 import java.util.ArrayList;
 
-import it.polimi.group06briscola.model.Card;
-import it.polimi.group06briscola.model.Suit;
+import it.polimi.group06.domain.Card;
+import it.polimi.group06.domain.Suit;
 
 /**
  * Created by denis on 31/10/17.

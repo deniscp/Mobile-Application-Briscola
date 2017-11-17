@@ -1,4 +1,4 @@
-package it.polimi.group06.domain.test;
+package it.polimi.group06.domain.mtest;
 
 import it.polimi.group06.domain.Game;
 
