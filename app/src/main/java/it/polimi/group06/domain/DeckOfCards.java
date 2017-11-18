@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class DeckOfCards {
 
-    private ArrayList<Card> playingdeck;
+    public static ArrayList<Card> playingdeck;
 
     /**
      * Constructor for a full deck of cards. It uses the card class to create object of cards.
@@ -62,7 +62,7 @@ public class DeckOfCards {
 
     /**
      * A card gets drawn from the deck if there are still cards in the deck
-     * @return Last card of the deck
+     * @return the card from the top of the deck
      */
     public Card takeCard() {
         if (playingdeck.size() == 0)

@@ -16,6 +16,67 @@ public class MoveTestTest {
         String inputMoves;
         String outputConf;
 
+
+        /* Some tests for the moveTest method to test the domain as a whole
+         * @author Roza
+         */
+
+        /* PLAYER0 PLAYS THE CARD #0(HC)*/
+            inputConf = "0C5GKB7B6C..HCHB1B.HG7C6B.JS6G7G4C3C7SJBHS2S3S4S1GKC5C.4B1S2G3BJG5BJCKG2B1CKS3G5S4G6S2C";
+            inputMoves = "0";
+            outputConf = "1C5GKB7B6C.HC.HB1B.HG7C6B.JS6G7G4C3C7SJBHS2S3S4S1GKC5C.4B1S2G3BJG5BJCKG2B1CKS3G5S4G6S2C";
+            assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
+
+        /* PLAYER1 PLAYS THE CARD #1(7C)*/
+            inputConf = "1C5GKB7B6C.HC.HB1B.HG7C6B.JS6G7G4C3C7SJBHS2S3S4S1GKC5C.4B1S2G3BJG5BJCKG2B1CKS3G5S4G6S2C";
+            inputMoves = "1";
+            outputConf = "0C7B6C..HB1B5G.HG6BKB.JS6G7G4C3C7SJBHS2S3S4S1GKC5CHC7C.4B1S2G3BJG5BJCKG2B1CKS3G5S4G6S2C";
+            assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
+
+        /* COMBINATION OF THE LAST 10 MOVEMENTS
+        PLAYER0 PLAYS THE CARD #0 (HC)
+        PLAYER1 PLAYS THE CARD #1(7C)*
+        WINNER? PLAYER0 (TRUMP,VS TRUMP Then THE HIGHER VALUE WINS)
+        PLAYER 0 TAKES (5G) FROM THE DECK
+        PLAYER 1 TAKES (KB) FROM THE DECK
+        Player 0 PLAYS CARD #0 (HB)
+        Player 1 PLAYS CARD #1 (6B)
+        WINNER? PLAYER0 (SAME SUITS THEN HIGHER VALUE WILL WIN)
+        HERE IS THE LAST CARD WHICH IS THE TRUMP AND GOES TO THE SECOND PLAYER
+        PLAYER 0 TAKES (7B) FROM THE DECK
+        PLAYER 1 TAKES (6C) FROM THE DECK
+        PLAYER0 PLAYS THE CARD #1 (5G)
+        PLAYER1 PLAYS THE CARD #0 (HG)
+        WINNER? PLAYER1 (SAME SUITS THEN HIGHER VALUE WILL WIN)
+        PLAYER1 PLAYS THE CARD #0 (KB)
+        PLAYER0 PLAYS THE CARD #1 (7B)
+        WINNER? PLAYER1 (SAME SUITS THEN HIGHER VALUE WILL WIN)
+        PLAYER1 PLAYS THE CARD #0 (6C)
+        PLAYER0 PLAYS THE CARD #0 (1B)
+        WINNER? PLAYER1 (TRUMP,VS ANOTHER SUIT THEN TRUMP WINS)		HERE THE FINAL WINNER ALSO SHOULD BE UPDATED
+        PLAYER1 WON THE GAME WITH THE OVERALL SCORE 72*/
+            inputConf = "0C5GKB7B6C..HCHB1B.HG7C6B.JS6G7G4C3C7SJBHS2S3S4S1GKC5C.4B1S2G3BJG5BJCKG2B1CKS3G5S4G6S2C";
+            inputMoves = "0101100100";
+            outputConf = "WINNER172";
+            assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
+
+
+        /* COMBINATION OF THE LAST 4 MOVEMENTS
+        PLAYER1 PLAYS THE CARD #1 (JC)
+        PLAYER0 PLAYS THE CARD #1 (3G)
+        WINNER? PLAYER0 (TRUMP,VS ANOTHER SUIT THEN TRUMP WINS)
+        Player 0 PLAYS CARD #0 (6C)
+        Player 0 PLAYS CARD #0 (1B)
+        WINNER? PLAYER0( NO TRUMP, DIFFERENT SUITS THEN FIRST PLAYER WILL WIN)
+		WINNER? PLAYER1 HERE THE FINAL WINNER ALSO SHOULD BE UPDATED
+        PLAYER0 WON THE GAME WITH THE OVERALL SCORE 71*/
+            inputConf = "1G..6C3G.1BJC.JS6G7G4C3C7SJBHS2S3S4S1GKC5CHC7CHB6B.4B1S2G3BJG5BKG2B1CKS5S4G6S2C5GHGKB7B";
+            inputMoves = "1100";
+            outputConf = "WINNER071";
+            assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
+
+
+
         /* Some tests for the moveTest method
          * @author denis
          */
@@ -68,8 +129,8 @@ public class MoveTestTest {
         assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
 
 
-        /*complete test for one entire game
-         * @author Mahsa Shekari*/
+        /*complete test for one entire game*/
+        /* @author Mahsa Shekari*/
 
         /* PLAYER 0 PLAYS THE CARD #1(JC)  JC SHOULD BE ELIMINATED FROM THE HAND OF PLAYER0 AND BE ADDED TO THE SURFACE AND THE ORDER OF THE HAND OF PLAYER 0 SHOULD BE ORGANISED */
         inputConf = "0S5C1CJB3G7G1B1S6B4S5BHGJG7C7B2C3C6S7S2B6GHBKB3BKCHC4B6CKS3S2SHS4C2GJS..KGJC5S.1G4G5G..";
@@ -522,7 +583,10 @@ public class MoveTestTest {
         outputConf = "WINNER066";
         assertEquals(outputConf,MoveTest.moveTest(inputConf,inputMoves));
 
-        //Timo:
+
+        /**
+         * @author Timo
+         */
 
         inputConf = "1S3B5B6BJBHBKB1S2S3S4S6S7SJSHSKS4C5C6C7CHCKC1G2G3G4G5G7GJG..2B2C1C.3CHGKG.5S7BJC6G.1B4B";
         inputMoves = "10";
