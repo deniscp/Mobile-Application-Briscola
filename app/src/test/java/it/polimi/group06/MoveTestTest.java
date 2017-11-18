@@ -3,19 +3,73 @@ package it.polimi.group06;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+import it.polimi.group06.domain.Game;
 import it.polimi.group06.moveTest.MoveTest;
 
 
 public class MoveTestTest {
+
     @Test
     public void moveTest() throws Exception {
-
         String inputConf;
         String inputMoves;
         String outputConf;
 
-        /*complete test for one round game*/
-        /* @author Mahsa Shekari*/
+        /* Some tests for the moveTest method
+         * @author denis
+         */
+
+        inputConf = "0SHC4B6CKS3S2SHS4C2GJS..1SKB3B.6S2BKC.JC4GKG5G1G5SJB3G4S6BHG5B7C7BHB7S.5C1C2C3C7G1BJG6G";
+        inputMoves = "0000000000000000000000000000000000";
+        outputConf = "ERROR: <attempt to make a move while game is over>";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        inputConf = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..1B3B5B.2B4B6B..";   //New game with ordered deck
+        inputMoves = "0000000000000000000000000000000000000000";
+        outputConf = "WINNER061";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+        inputConf = new Game().toConfiguration();                                                //New game with ordered deck
+        inputMoves = "0000000000000000000000000000000000000000";
+        outputConf = "WINNER061";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+
+        inputConf = "0B..2B3B5B.1B4B6B..JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B";
+        inputMoves = "00";
+        outputConf = "1B..3B5B.4B6B..JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B2B1B";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        inputConf  = "0B....JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7G.JGHGKG1S2S3S4S5S6S7SJSHSKS7B1B3B5B2B4B6B";       // Game over DRAW
+        inputMoves = "0";
+        outputConf = "DRAW";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        inputConf  = "0B....JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B1B3B5B2B4B6B.";       // Game over p0-120
+        inputMoves = "0";
+        outputConf = "WINNER0120";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        inputConf  = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B..JCKG2B.1CKS3G..";
+        inputMoves = "0011000000000000000000000000000000000000";
+        outputConf = "WINNER183";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        inputConf  = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B..JCKG2B.1CKS3G..";
+        inputMoves = "00110";
+        outputConf = "1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C";
+        assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
+
+
+        /*complete test for one entire game
+         * @author Mahsa Shekari*/
 
         /* PLAYER 0 PLAYS THE CARD #1(JC)  JC SHOULD BE ELIMINATED FROM THE HAND OF PLAYER0 AND BE ADDED TO THE SURFACE AND THE ORDER OF THE HAND OF PLAYER 0 SHOULD BE ORGANISED */
         inputConf = "0S5C1CJB3G7G1B1S6B4S5BHGJG7C7B2C3C6S7S2B6GHBKB3BKCHC4B6CKS3S2SHS4C2GJS..KGJC5S.1G4G5G..";
@@ -479,7 +533,6 @@ public class MoveTestTest {
         inputMoves = "1";
         outputConf= "0B4B6BJBHBKB1S3S4S5S6SJSHSKS1C3C4C5C6C7CJCHCKC1G2G3G7G4G5G6GJGHGKG..7B7S1B.2S2C3B.5B2B.";
         assertEquals(outputConf,MoveTest.moveTest(inputConf, inputMoves));
-
     }
 
 }

@@ -9,9 +9,9 @@ import it.polimi.group06.domain.Suit;
  * Created by denis on 31/10/17.
  */
 
-class Parser {
+public class Parser {
 
-    static void main(String[] argv){
+    public static void main(String[] argv){
 
         String test0 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..1B3B5B.2B4B6B..";
         String test1 = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..";
