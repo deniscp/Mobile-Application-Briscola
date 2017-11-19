@@ -10,6 +10,9 @@ import java.util.Iterator;
  */
 public class Deck {
 
+    /**
+     * This is the deck that cards are added and drawn from that is held by the table.
+     */
     public static ArrayList<Card> playingdeck;
 
     /**
@@ -30,7 +33,7 @@ public class Deck {
     }
 
     /**
-     * Replaces deck with new one
+     * Replaces deck with a (maybe custom) new one
      */
     public void replaceDeck(ArrayList<Card> newDeck){ this.playingdeck = newDeck; }
 

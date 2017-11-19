@@ -1,5 +1,7 @@
 package it.polimi.group06.domain;
 
+import android.support.annotation.NonNull;
+
 /**
  * This class holds the 4 suits Batons, Swords, Cups and Golds and is used in the Card class.
  * @author Timo Zandonella

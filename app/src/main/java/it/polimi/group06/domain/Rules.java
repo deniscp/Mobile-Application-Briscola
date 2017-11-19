@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * @author Denis
- *  Static methods implementing the rules of the game Briscola
+ * Static methods implementing the rules of the game Briscola
  */
 public class Rules {
 
