@@ -35,6 +35,11 @@ public class DomainTest {
         assertEquals(0,player.getId());
     }
 
+
+    /**
+     * Replaces the cards of a standard deck with 1B, 2B, 3B and then tests their order
+     * @throws Exception
+     */
     @Test
     public void customDeckTest() throws Exception{
         Deck deck = new Deck(false);
@@ -60,16 +65,20 @@ public class DomainTest {
     }
 
 
+    /**
+     * Tests if in a standard deck you can draw up to 40 cards
+     *  @throws Exception
+     */
     @Test
-    public void deckLength(){
+    public void deckLength()throws Exception{
         Deck deck = new Deck(true);
-        int i=0;
+        int numOfCardsDrawn=0;
 
         while (deck.remaining()>0){
             deck.drawCard();
-            i++;
+            numOfCardsDrawn++;
         }
-        assertEquals(40,i);
+        assertEquals(40,numOfCardsDrawn);
     }
 
     /**
@@ -77,7 +86,7 @@ public class DomainTest {
      @throws Exception
      */
     @Test
-    public void DeckOfCardsTest() throws Exception{
+    public void deckOfCardsTest() throws Exception{
         String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
         assertEquals(sorteddeck, new Deck(false).toString());
     }
@@ -87,7 +96,7 @@ public class DomainTest {
      * @throws Exception
      */
     @Test
-    public void CardTest() throws Exception{
+    public void cardTest() throws Exception{
         Card threeofbatons = new Card(3, Suit.Batons);
         String threeofbatonsString = "3B";
         //Test of the custom toString() method
@@ -110,7 +119,7 @@ public class DomainTest {
      * @throws Exception
      */
     @Test
-    public void RulesTest() throws Exception{
+    public void rulesTest() throws Exception{
         Rules rules = new Rules();
 
         //1. Test of the computation of points of the testpile
@@ -157,7 +166,7 @@ public class DomainTest {
      * @throws Exception
      */
     @Test
-    public void GameTest() throws Exception{
+    public void gameTest() throws Exception{
         Game game = new Game();
         //0. Because the in the Game class the deck is shuffled automatically in the constructor, we have to do some preparation for testing:
         //a) Set the Trump to the trump of every sorted deck

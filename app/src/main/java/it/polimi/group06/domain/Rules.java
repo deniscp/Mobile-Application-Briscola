@@ -2,6 +2,8 @@ package it.polimi.group06.domain;
 
 import java.util.ArrayList;
 
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
+
 
 /** @author denis on 28/10/17
  *  Static methods implementing the rules of the game Briscola
@@ -12,7 +14,7 @@ public class Rules {
      *  Returns the position (in case of just two players, 0 or 1) of the winner of the current round
      * given the played cards at the end of a round, the current briscola and the position of the starting player
      */
-    public static int roundWinner(ArrayList<Card> playedCard, Suit trump, int starting){
+    public static int roundWinner(ArrayList<Card> playedCard, Suit trump, int startingPlayer){
 
         if(playedCard.size()!=2 || playedCard.get(0)==null || playedCard.get(1)==null)
             throw new IllegalArgumentException("Not all players have played their card yet");
@@ -20,18 +22,18 @@ public class Rules {
 
         if(playedCard.get(0).getSuit() == playedCard.get(1).getSuit())
             if( playedCard.get(0).getRank() < playedCard.get(1).getRank() )
-                return (0 + starting) % 2;
+                return (0 + startingPlayer) % NUMBEROFPLAYERS;
             else
-                return (1 + starting) % 2;
+                return (1 + startingPlayer) % NUMBEROFPLAYERS;
 
         else
             if(playedCard.get(0).getSuit().equals(trump))
-                return (0 + starting) % 2;
+                return (0 + startingPlayer) % NUMBEROFPLAYERS;
         else
             if(playedCard.get(1).getSuit().equals(trump))
-                return (1 + starting) % 2;
+                return (1 + startingPlayer) % NUMBEROFPLAYERS;
         else
-            return (0 + starting) % 2;
+            return (0 + startingPlayer) % NUMBEROFPLAYERS;
     }
 
     /**

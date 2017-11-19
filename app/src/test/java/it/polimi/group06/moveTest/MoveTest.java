@@ -2,6 +2,9 @@ package it.polimi.group06.moveTest;
 
 import it.polimi.group06.domain.Game;
 
+import static it.polimi.group06.domain.Constants.DRAW;
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
+
 /**
  * Created by denis on 02/11/17.
  */
@@ -26,7 +29,7 @@ public class MoveTest {
             if (briscola.gameIsOver()) {
             /*Compute the winner and print the score*/
                 int winner = briscola.returnWinner();
-                if (winner == -1)
+                if (winner == DRAW)
                     nextConfiguration = "DRAW";
                 else
                     nextConfiguration = "WINNER" + winner + briscola.getPlayers()[winner].getPlayerPoints();
@@ -64,12 +67,12 @@ public class MoveTest {
 
         /* Replace hands of players
          */
-        for (int i=0; i<2; i++)
+        for (int i=0; i<NUMBEROFPLAYERS; i++)
             gameFromConf.getPlayers()[i].replaceHand(parser.hands()[i]);
 
         /* Replace pile of players
          */
-        for (int i=0; i<2; i++)
+        for (int i=0; i<NUMBEROFPLAYERS; i++)
             gameFromConf.getPlayers()[i].replacePlayerPile(parser.piles()[i]);
 
 

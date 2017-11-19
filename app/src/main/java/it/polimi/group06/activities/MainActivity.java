@@ -1,7 +1,9 @@
-package it.polimi.group06;
+package it.polimi.group06.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import it.polimi.group06.R;
 
 public class MainActivity extends AppCompatActivity {
 

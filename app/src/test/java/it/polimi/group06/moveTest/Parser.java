@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import it.polimi.group06.domain.Card;
 import it.polimi.group06.domain.Suit;
 
+import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
+import static it.polimi.group06.domain.Constants.SECONDPLAYER;
+
 /**
  * Created by denis on 31/10/17.
  */
@@ -76,7 +80,7 @@ public class Parser {
 
     public int startingPlayer(){
         if(cardOnSurface.length() /2 == 1) //if one card is already on the table
-            return (currentPlayer() + 1) %2 ;
+            return (currentPlayer() + 1) % NUMBEROFPLAYERS ;
         else
             return currentPlayer();
     }
@@ -121,22 +125,22 @@ public class Parser {
     }
 
     public ArrayList<Card>[] hands(){
-        ArrayList<Card>[] hand = new ArrayList[2];
-        hand[0] = parseCards(cardInHandP0);
-        hand[1] = parseCards(cardInHandP1);
+        ArrayList<Card>[] hand = new ArrayList[NUMBEROFPLAYERS];
+        hand[FIRSTPLAYER] = parseCards(cardInHandP0);
+        hand[SECONDPLAYER] = parseCards(cardInHandP1);
         return hand;
     }
 
 
     public ArrayList<Card>[] piles(){
-        ArrayList<Card>[] pile = new ArrayList[2];
-        pile[0] = parseCards(pileP0);
-        pile[1] = parseCards(pileP1);
+        ArrayList<Card>[] pile = new ArrayList[NUMBEROFPLAYERS];
+        pile[FIRSTPLAYER] = parseCards(pileP0);
+        pile[SECONDPLAYER] = parseCards(pileP1);
         return pile;
     }
 
     public int round(){
-        return (this.pileP0.length()/2 + this.pileP1.length()/2)/2 +1;
+        return ( this.pileP0.length()/2 + this.pileP1.length()/2 )  /2  +1;
     }
 
 
@@ -223,10 +227,10 @@ public class Parser {
         stringBuilder.append("\nDeck : " + this.deck());
         stringBuilder.append("\nBriscola : " + this.briscola());
         stringBuilder.append("\nCards on surface : " + this.surface());
-        stringBuilder.append("\nCards in hand of player0 : " + this.hands()[0]);
-        stringBuilder.append("\nCards in hand of player1 : " + this.hands()[1]);
-        stringBuilder.append("\nPile of player0 : " + this.piles()[0] + " (" + this.piles()[0].size() + " cards)");
-        stringBuilder.append("\nPile of player1 : " + this.piles()[1] + " (" + this.piles()[1].size() + " cards)");
+        stringBuilder.append("\nCards in hand of player0 : " + this.hands()[FIRSTPLAYER]);
+        stringBuilder.append("\nCards in hand of player1 : " + this.hands()[SECONDPLAYER]);
+        stringBuilder.append("\nPile of player0 : " + this.piles()[FIRSTPLAYER] + " (" + this.piles()[FIRSTPLAYER].size() + " cards)");
+        stringBuilder.append("\nPile of player1 : " + this.piles()[SECONDPLAYER] + " (" + this.piles()[SECONDPLAYER].size() + " cards)");
         return stringBuilder.toString();
     }
 }

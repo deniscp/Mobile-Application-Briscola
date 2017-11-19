@@ -1,5 +1,10 @@
 package it.polimi.group06.domain;
 
+import static it.polimi.group06.domain.Constants.DRAW;
+import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
+import static it.polimi.group06.domain.Constants.SECONDPLAYER;
+
 /** @author denis on 29/10/17.
  * Class containing all the element needed to play a briscola game,
  * and wrapper methods abstracting the usage of the object it instantiates.
@@ -15,13 +20,12 @@ public class Game {
 
     public Game(){
 
-        this.players = new Player[2];
-        this.players[0] = new Human(0,"Group06");
-        this.players[1] = new  Robot(1,"Robot00");
+        this.players = new Player[NUMBEROFPLAYERS];
+        this.players[FIRSTPLAYER] = new Human(FIRSTPLAYER,"Group06");
+        this.players[SECONDPLAYER] = new  Robot(SECONDPLAYER,"Robot00");
         Deck deck = new Deck(false);
 
-        /* Distribute cards to players
-         */
+        // Distribute cards to players
         int i,j;
         for(i=0;i<3;i++)
             for(j=0;j<players.length;j++)
@@ -42,7 +46,7 @@ public class Game {
 
         /* Human player always starts first
          */
-        this.startingPlayer = 0;
+        this.startingPlayer = FIRSTPLAYER;
 
         /* At the beginning of the game the current player is the starting player
          */
@@ -89,18 +93,18 @@ public class Game {
         conf.append(currentPlayer).append(this.briscola);
         conf.append(this.table);
 
-        for(int i=0; i<2 ; i++) {
+        for(int i=0; i<NUMBEROFPLAYERS ; i++) {
             for (Card card : this.players[i].getHand())
                 conf.append(card.toString());
             conf.append(".");
         }
 
-        for (Card card : this.players[0].getPlayerPile())
+        for (Card card : this.players[FIRSTPLAYER].getPlayerPile())
             conf.append(card.toString());
 
         conf.append(".");
 
-        for (Card card : this.players[1].getPlayerPile())
+        for (Card card : this.players[SECONDPLAYER].getPlayerPile())
             conf.append(card.toString());
 
         return conf.toString();
@@ -124,7 +128,7 @@ public class Game {
      *          False otherwise
      */
     public boolean roundIsOver(){
-        if (this.table.getPlayedCards().size() == 2 )
+        if (this.table.getPlayedCards().size() == NUMBEROFPLAYERS )
             return true;
         else
             return false;
@@ -137,7 +141,7 @@ public class Game {
 
     public void playerPlaysCard(int playerNum, int cardPos){
         this.table.placeCard( this.players[playerNum].throwCard(cardPos) );
-        this.currentPlayer = ( this.getCurrentPlayer() +1 ) %2;
+        this.currentPlayer = ( this.getCurrentPlayer() +1 ) %NUMBEROFPLAYERS;
     }
 
     /** Initializes a new round by defining the current round winner,
@@ -157,9 +161,9 @@ public class Game {
             players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());
 
             if (round == 17)
-                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.takeTrump());
+                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.takeTrump());
             else
-                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.getDeck().drawCard());
+                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.getDeck().drawCard());
         }
 
         this.round++;
@@ -168,15 +172,15 @@ public class Game {
 
     public int returnWinner() {
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < NUMBEROFPLAYERS; i++)
             getPlayers()[i].setPlayerPoints( Rules.computePoints(this.players[i].getPlayerPile() ) );
 
-        if (getPlayers()[0].getPlayerPoints() > getPlayers()[1].getPlayerPoints())
-            return 0;
-        else if (getPlayers()[1].getPlayerPoints() > getPlayers()[0].getPlayerPoints())
-            return 1;
+        if (getPlayers()[FIRSTPLAYER].getPlayerPoints() > getPlayers()[SECONDPLAYER].getPlayerPoints())
+            return FIRSTPLAYER;
+        else if (getPlayers()[SECONDPLAYER].getPlayerPoints() > getPlayers()[FIRSTPLAYER].getPlayerPoints())
+            return SECONDPLAYER;
         else
-            return -1;
+            return DRAW;
     }
 
     public static void main(String[] argv){
