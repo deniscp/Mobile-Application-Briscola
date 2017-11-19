@@ -8,7 +8,7 @@ import java.util.Iterator;
  * This Class holds the deck of cards with 40 or less cards in it. It also holds methods to shuffle a deck and return the current deck size.
  * @author Timo Zandonella
  */
-public class DeckOfCards {
+public class Deck {
 
     public static ArrayList<Card> playingdeck;
 
@@ -16,7 +16,7 @@ public class DeckOfCards {
      * Constructor for a full deck of cards. It uses the card class to create object of cards.
      * @param shuffled is true, when the deck should be shuffled
      */
-    public DeckOfCards(boolean shuffled) {
+    public Deck(boolean shuffled) {
 
         this.playingdeck = new ArrayList<Card>();
 
@@ -30,13 +30,6 @@ public class DeckOfCards {
 
         if (shuffled)
             shuffle();
-    }
-
-    /**
-     * Constructor of an empty deck of cards
-     */
-    public DeckOfCards(){
-        this.playingdeck = new ArrayList<Card>();
     }
 
     /**
@@ -64,7 +57,7 @@ public class DeckOfCards {
      * A card gets drawn from the deck if there are still cards in the deck
      * @return the card from the top of the deck
      */
-    public Card takeCard() {
+    public Card drawCard() {
         if (playingdeck.size() == 0)
             throw new IllegalArgumentException("Impossible to take a card: deck is empty");
 
@@ -101,27 +94,4 @@ public class DeckOfCards {
         return deckToString.toString();
     }
 
-    public static void main(String[] argv){
-
-        DeckOfCards deck = new DeckOfCards(false);
-        DeckOfCards sdeck = new DeckOfCards(true);
-
-        System.out.println(deck.playingdeck.toString());
-
-        System.out.println(deck);
-
-        System.out.println(sdeck);
-
-        while (sdeck.remaining()>0){
-            System.out.println("Prendo la carta: " + sdeck.takeCard());
-            System.out.println(sdeck.playingdeck.toString());
-        }
-
-        DeckOfCards deck2 = new DeckOfCards();
-        System.out.println(deck2);
-        deck2.addCard(new Card(3,Suit.Batons));
-        deck2.addCard(new Card(10,Suit.Batons));
-        deck2.addCard(new Card(5,Suit.Cups));
-        System.out.println(deck2);
-    }
 }

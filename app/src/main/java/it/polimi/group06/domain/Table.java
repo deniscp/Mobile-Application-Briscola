@@ -21,14 +21,14 @@ public class Table {
 
     /** The deck initialized at the beginning of the game is kept here
      */
-    private DeckOfCards deck;
+    private Deck deck;
 
     /**
      * Constructor of the Table
      * Initialize an empty array of played card
      * Set the trump and the deck initialized from the Game class
      */
-    public Table(Card trump, DeckOfCards deck) {
+    public Table(Card trump, Deck deck) {
         this.playedCards = new ArrayList<>();
         setTrump(trump);
         setDeck(deck);
@@ -67,7 +67,7 @@ public class Table {
         return temp;
     }
 
-    public DeckOfCards getDeck() { return this.deck; }
+    public Deck getDeck() { return this.deck; }
 
     /**
      *  Places a card on the table
@@ -80,7 +80,7 @@ public class Table {
 
     public void setTrump(Card trump) { this.trump = trump;  }
 
-    public void setDeck(DeckOfCards deck) {
+    public void setDeck(Deck deck) {
         this.deck = deck;
     }
 

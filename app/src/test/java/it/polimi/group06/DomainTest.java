@@ -3,12 +3,13 @@ package it.polimi.group06;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import it.polimi.group06.domain.Card;
-import it.polimi.group06.domain.DeckOfCards;
+import it.polimi.group06.domain.Deck;
 import it.polimi.group06.domain.Game;
+import it.polimi.group06.domain.Human;
+import it.polimi.group06.domain.Player;
 import it.polimi.group06.domain.Suit;
 import it.polimi.group06.domain.Rules;
 import it.polimi.group06.domain.Table;
@@ -22,11 +23,59 @@ import static org.junit.Assert.assertFalse;
 
 public class DomainTest {
 
+
+    /**
+     * Test of the player constructor in Player class
+     */
+    @Test
+    public void playerTest() throws Exception{
+        Player player = new Human(0 ,"Group06");
+        assertEquals("Group06",player.getUsername());
+        assertEquals(0,player.getId());
+    }
+
+    @Test
+    public void customDeckTest() throws Exception{
+        Deck deck = new Deck(false);
+        String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
+        assertEquals(sorteddeck, deck.toString());
+
+        deck.replaceDeck(new ArrayList<Card>());
+        assertEquals("", deck.toString());
+        assertEquals(0,deck.remaining());
+
+        deck.addCard(new Card(2,Suit.Batons)); //only card in the deck
+        deck.pushCard(new Card(1,Suit.Batons));//added on top of the pile
+        deck.addCard(new Card(3,Suit.Batons)); //added on the bottom of the pile
+
+        assertEquals("1B2B3B", deck.toString()); //the expected order in which the cards are placed
+
+        assertEquals(new Card(1,Suit.Batons), deck.drawCard()); //first card drawn from the top
+        assertEquals(new Card(2,Suit.Batons), deck.drawCard()); //second card drawn from the top
+        assertEquals(new Card(3,Suit.Batons), deck.drawCard()); //third card drawn from the top
+
+        assertEquals("", deck.toString()); //Empty deck again
+        assertEquals(0,deck.remaining()); //Empty deck again
+    }
+
+
+    @Test
+    public void deckLength(){
+        Deck deck = new Deck(true);
+        int i=0;
+
+        while (deck.remaining()>0){
+            deck.drawCard();
+            i++;
+        }
+        assertEquals(40,i);
+    }
+
     //Test the creation of an unsorted deck of cards and the toString() method
     @Test
     public void deckOfCardsTest() throws Exception{
         String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
-        assertEquals(sorteddeck, new DeckOfCards(false).toString());
+        assertEquals(sorteddeck, new Deck(false).toString());
     }
 
     //Test the creation of a card, the point and rank methods
@@ -86,10 +135,10 @@ public class DomainTest {
         Game game = new Game();
         game.getTable().setTrump(new Card(7,Suit.Batons));
         //For later stages we set the deck to a sorted deck...
-        DeckOfCards deck = new DeckOfCards(false);
+        Deck deck = new Deck(false);
         //... and remove the first 7 cards of it, because they have already been dealt in the Game constructor
         for(int i=0;i<7;i++){
-            deck.takeCard();
+            deck.drawCard();
         }
         game.getTable().setDeck(deck);
         game.setBriscolaSuit(Suit.Batons);
@@ -114,7 +163,7 @@ public class DomainTest {
 
     @Test
     public void tableTest(){
-        Table table = new Table(new Card(3, Suit.Batons), new DeckOfCards(false));
+        Table table = new Table(new Card(3, Suit.Batons), new Deck(false));
 
     }
 }

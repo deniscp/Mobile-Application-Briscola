@@ -18,18 +18,18 @@ public class Game {
         this.players = new Player[2];
         this.players[0] = new Human(0,"Group06");
         this.players[1] = new  Robot(1,"Robot00");
-        DeckOfCards deck = new DeckOfCards(false);
+        Deck deck = new Deck(false);
 
         /* Distribute cards to players
          */
         int i,j;
         for(i=0;i<3;i++)
             for(j=0;j<players.length;j++)
-                players[j].takeCardInHand(deck.takeCard());
+                players[j].takeCardInHand(deck.drawCard());
 
         /* Set a table with the 7th card as briscola and the remaining deck
          */
-        this.table = new Table(deck.takeCard(), deck);
+        this.table = new Table(deck.drawCard(), deck);
 
         /*
          * Set the briscola suit for easier further accesses
@@ -154,12 +154,12 @@ public class Game {
         this.players[winningPlayer].getPlayerPile().addAll(this.table.collectPlayedCard());
 
         if(round <= 17) {
-            players[winningPlayer].takeCardInHand(this.table.getDeck().takeCard());
+            players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());
 
             if (round == 17)
                 players[(winningPlayer + 1) % 2].takeCardInHand(this.table.takeTrump());
             else
-                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.getDeck().takeCard());
+                players[(winningPlayer + 1) % 2].takeCardInHand(this.table.getDeck().drawCard());
         }
 
         this.round++;
@@ -196,7 +196,7 @@ public class Game {
 //        System.out.println(game2.toConfiguration());
 
 
-//        game.players[0].takeCardInHand(game.table.getDeck().takeCard());
+//        game.players[0].takeCardInHand(game.table.getDeck().drawCard());
 //        System.out.println(game.toConfiguration());
 //        game.table.placeCard(game.players[0].throwCard(1));
 //        System.out.println(game.toConfiguration());

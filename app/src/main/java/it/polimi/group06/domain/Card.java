@@ -96,4 +96,17 @@ public class Card {
             default: throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (otherObject == null) return false;
+        if (otherObject == this) return true;
+        if (!(otherObject instanceof Card))return false;
+        Card otherCard = (Card) otherObject;
+
+        if (this.value == otherCard.value && this.suit == otherCard.suit)
+            return true;
+        else
+            return false;
+    }
 }
