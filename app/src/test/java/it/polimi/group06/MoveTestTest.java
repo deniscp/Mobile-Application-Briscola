@@ -7,7 +7,10 @@ import static org.junit.Assert.*;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.moveTest.MoveTest;
 
-
+/**
+ * Class that tests the moveTest method with various configurations.
+ * See comments below for more details about each configuration.
+ */
 public class MoveTestTest {
 
     @Test
