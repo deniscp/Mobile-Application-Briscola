@@ -6,38 +6,32 @@ import java.util.ArrayList;
  * This class defines and holds the basic information of a player such as id, username, score, hand and pile of the player in the game.
  * @author Roza.
  */
-
 abstract public class Player {
+
     /**
      * Nickname of the player.
      */
     private String username;
-
 
     /**
      * Unique identifier of the Player ( starting from 0 ) representing his position on the table.
      */
     private int id;
 
-
     /**
      * Total points of the player at the end of each game.
      */
     private int score=0;
-
 
     /**
      * Stores the Cards that the Player holds (up to 3 ).
      */
     private ArrayList<Card> hand = new ArrayList<>();
 
-
     /**
      * List of cards collected by the player during previous rounds
      */
     private ArrayList<Card> playerPile;
-
-
 
     /**
      *Constructor of the class to initialize the new objects of Player Types(Human, Robot).
@@ -45,14 +39,12 @@ abstract public class Player {
      * @param  username is the nickname of the player which may be shown in the game.
      */
     public Player( int id , String username ) {
-
         this.id=id;
         this.username=username;
         this.score=0;
         this.playerPile = new ArrayList<Card>();
         this.hand = new ArrayList<Card>();
     }
-
 
     /**
      * @return the unique identifier which is also the position of the player

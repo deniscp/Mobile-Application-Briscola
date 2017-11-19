@@ -5,11 +5,11 @@ import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
-/** @author denis on 29/10/17.
+/**
+ * @author Denis on 29/10/17
  * Class containing all the element needed to play a briscola game,
  * and wrapper methods abstracting the usage of the object it instantiates.
  */
-
 public class Game {
     private Player[] players;
     private int round;
@@ -53,7 +53,6 @@ public class Game {
         this.currentPlayer=this.startingPlayer;
 
     }
-
 
     public int getStartingPlayer() {
         return startingPlayer;
@@ -110,8 +109,8 @@ public class Game {
         return conf.toString();
     }
 
-    /** Checks if there are still rounds to play
-     *
+    /**
+     * Checks if there are still rounds to play
      * @return True if there is no round left to be played
      *          False if the game is not over
      */
@@ -122,8 +121,8 @@ public class Game {
             return false;
     }
 
-    /** Checks if there are not cards yet to be played in the current round
-     *
+    /**
+     * Checks if there are not cards yet to be played in the current round
      * @return True if all players have already played their card
      *          False otherwise
      */
@@ -134,21 +133,22 @@ public class Game {
             return false;
     }
 
-    /** Plays a card of a player
+    /**
+     * Plays a card of a player
      * @param playerNum the id of player that plays the card
      * @param cardPos the position of the card in the hand of the player
      */
-
     public void playerPlaysCard(int playerNum, int cardPos){
         this.table.placeCard( this.players[playerNum].throwCard(cardPos) );
         this.currentPlayer = ( this.getCurrentPlayer() +1 ) %NUMBEROFPLAYERS;
     }
 
-    /** Initializes a new round by defining the current round winner,
-     *  assigning the played cards to the winning player,
-     *  distributing new cards if still any,
-     *  advancing the round number,
-     *  and updating the starting and the current player
+    /**
+     * Initializes a new round by defining the current round winner,
+     * assigning the played cards to the winning player,
+     * distributing new cards if still any,
+     * advancing the round number,
+     * and updating the starting and the current player
      */
     public void newRound(){
         int winningPlayer;  //the winner of the current round

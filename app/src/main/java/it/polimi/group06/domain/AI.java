@@ -1,6 +1,5 @@
 package it.polimi.group06.domain;
 
-
 /**
  * The AI class holds the logic or strategy of the Robot, which means how robot select the card to be played in its turn.
  * @author Roza.

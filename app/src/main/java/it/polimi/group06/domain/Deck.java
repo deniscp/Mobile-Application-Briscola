@@ -19,15 +19,12 @@ public class Deck {
     public Deck(boolean shuffled) {
 
         this.playingdeck = new ArrayList<Card>();
-
         int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Suit[] suit = new Suit[]{Suit.Batons, Suit.Cups, Suit.Golds, Suit.Swords};
-
         int i, j;
         for (i = 0; i < suit.length; i++)
             for (j = 0; j < values.length; j++)
                 playingdeck.add(new Card(values[j], suit[i]));
-
         if (shuffled)
             shuffle();
     }
@@ -46,7 +43,8 @@ public class Deck {
         Collections.shuffle(this.playingdeck);
     }
 
-    /** Remaining cards in current deck
+    /**
+     * Remaining cards in current deck
      * @return number of cards left in the deck
      */
     public int remaining(){
@@ -60,7 +58,6 @@ public class Deck {
     public Card drawCard() {
         if (playingdeck.size() == 0)
             throw new IllegalArgumentException("Impossible to take a card: deck is empty");
-
         return playingdeck.remove(0);
     }
 
@@ -93,5 +90,4 @@ public class Deck {
         }
         return deckToString.toString();
     }
-
 }

@@ -13,7 +13,6 @@ public class Robot extends Player{
      */
     AI strategy;
 
-
     /**
      * Constructor of Robot Player which calls the superclass constructor (Player) in order to initialize its objects,
      * and sets the appropriate strategy of the AI class method
