@@ -10,13 +10,17 @@ package it.polimi.group06.domain;
 public class Robot extends Player {
 
     /**
-     * This is a method for robot to play the card in turn based on the logic which has been defined in AI Class.
+     * This is the AI belonging to the robot that decides which card to play.
+     *
+     * @see AI
      */
     AI strategy;
 
     /**
      * Constructor of Robot Player which calls the superclass constructor (Player) in order to initialize its objects,
      * and sets the appropriate strategy of the AI class method
+     *
+     * @see Player
      */
     public Robot(int id, String username) {
         super(id, username);

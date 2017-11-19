@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class Deck {
 
-    public static ArrayList<Card> playingdeck;
+    private ArrayList<Card> playingdeck;
 
     /**
      * Constructor for a full deck of cards. It uses the card class to create object of cards.

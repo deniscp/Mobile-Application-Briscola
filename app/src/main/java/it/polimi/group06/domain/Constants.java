@@ -1,7 +1,9 @@
 package it.polimi.group06.domain;
 
 /**
- * Created by denis on 19/11/17.
+ * Class containing Domain class constants
+ *
+ * @author Denis
  */
 
 public class Constants {

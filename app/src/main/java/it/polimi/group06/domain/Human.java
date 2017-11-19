@@ -13,6 +13,7 @@ public class Human extends Player {
      *
      * @param id       is the unique identifier of the player in the game.
      * @param username is the nickname of the player which may be shown in the game.
+     * @see Player
      */
     public Human(int id, String username) {
         super(id, username);

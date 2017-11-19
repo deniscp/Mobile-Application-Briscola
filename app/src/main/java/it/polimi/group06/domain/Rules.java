@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 
 /**
- * @author Denis on 28/10/17
- *         Static methods implementing the rules of the game Briscola
+ * Static methods implementing the rules of the game Briscola
+ *
+ * @author Denis
  */
 public class Rules {
 

@@ -6,7 +6,9 @@ import static it.polimi.group06.domain.Constants.DRAW;
 import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 
 /**
- * Created by denis on 02/11/17.
+ * Class containing only two static methods: moveTest and initializeFromConf
+ *
+ * @author denis
  */
 
 public class MoveTest {
@@ -45,20 +47,23 @@ public class MoveTest {
             if (nextConfiguration.startsWith("WINNER") || nextConfiguration.startsWith("DRAW"))
                 nextConfiguration = "ERROR: <attempt to make a move while game is over>";
             else if (!nextConfiguration.startsWith("ERROR")) {
-                if (stat == true) System.err.println(briscola.getRound() + " - " + nextConfiguration);
+                if (stat == true)
+                    System.err.println(briscola.getRound() + " - " + nextConfiguration);
                 nextConfiguration = moveTest(nextConfiguration, moveSequence.substring(1));
             }
         }
-        if (stat == true && moveSequence.length()<2) System.err.println(briscola.getRound() + " - " + nextConfiguration);
+        if (stat == true && moveSequence.length() < 2)
+            System.err.println(briscola.getRound() + " - " + nextConfiguration);
         return nextConfiguration;
     }
 
-    /** Static method that creates a Game object using the standard constructor of Game class
-     * and selectively replacing fields according to the passed string configuration
-     * and parsed by Parser
-     * @see Parser
+    /**
+     * Static method that creates a Game object using the standard constructor of Game class
+     * and selectively replacing fields according to the passed string configuration as parsed by Parser
+     *
      * @param conf the passed configuration file
      * @return the Game initialized according to String conf parameter
+     * @see Parser
      */
     static Game initializeFromConf(String conf) {
         Game gameFromConf = new Game();
@@ -67,18 +72,18 @@ public class MoveTest {
 
         /* Replace hands of players
          */
-        for (int i=0; i<NUMBEROFPLAYERS; i++)
+        for (int i = 0; i < NUMBEROFPLAYERS; i++)
             gameFromConf.getPlayers()[i].replaceHand(parser.hands()[i]);
 
         /* Replace pile of players
          */
-        for (int i=0; i<NUMBEROFPLAYERS; i++)
+        for (int i = 0; i < NUMBEROFPLAYERS; i++)
             gameFromConf.getPlayers()[i].replacePlayerPile(parser.piles()[i]);
 
 
         /* Set the table replacing the briscola and the deck
          */
-        gameFromConf.getTable().setTrump(parser.briscola());
+        gameFromConf.getTable().setBriscola(parser.briscola());
         gameFromConf.getTable().getDeck().replaceDeck(parser.deck());
 
         /* Set the played card on surface
@@ -89,7 +94,7 @@ public class MoveTest {
         /*
          * Set the briscola suit for easier future accesses
          */
-        gameFromConf.setBriscolaSuit(parser.trumpSuit());
+        gameFromConf.setBriscolaSuit(parser.briscolaSuit());
 
 
         /* 20 rounds in a 2-player briscola game

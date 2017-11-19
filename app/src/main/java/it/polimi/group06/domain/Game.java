@@ -6,9 +6,10 @@ import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
- * @author Denis on 29/10/17
- *         Class containing all the element needed to play a briscola game,
- *         and wrapper methods abstracting the usage of the object it instantiates.
+ * Class containing all the element needed to play a briscola game,
+ * and wrapper methods abstracting the usage of the object it instantiates.
+ *
+ * @author Denis
  */
 public class Game {
     private Player[] players;
@@ -18,14 +19,19 @@ public class Game {
     private Table table;
     private Suit briscola;
 
+    /**
+     * Creates a new game with two players.
+     * The first player is a human, the second a robot, the human player starts the first round.
+     * The deck is not shuffled.
+     */
     public Game() {
-
         this.players = new Player[NUMBEROFPLAYERS];
         this.players[FIRSTPLAYER] = new Human(FIRSTPLAYER, "Group06");
         this.players[SECONDPLAYER] = new Robot(SECONDPLAYER, "Robot00");
         Deck deck = new Deck(false);
 
-        // Distribute cards to players
+        /* Distribute cards to players
+         */
         int i, j;
         for (i = 0; i < 3; i++)
             for (j = 0; j < players.length; j++)
@@ -38,7 +44,7 @@ public class Game {
         /*
          * Set the briscola suit for easier further accesses
          */
-        this.briscola = this.table.getTrump().getSuit();
+        this.briscola = this.table.getBriscola().getSuit();
 
         /* first of 20 rounds in a 2-player briscola game
          */
@@ -51,7 +57,6 @@ public class Game {
         /* At the beginning of the game the current player is the starting player
          */
         this.currentPlayer = this.startingPlayer;
-
     }
 
     public int getStartingPlayer() {
@@ -119,10 +124,10 @@ public class Game {
     }
 
     /**
-     * Checks if there are still rounds to play
+     * Checks if there are still rounds to play, i.e. the game is not finished
      *
-     * @return True if there is no round left to be played
-     * False if the game is not over
+     * @return True if there is no round left to be played,
+     *         False if the game is not over
      */
     public boolean gameIsOver() {
         if (this.round == 21)
@@ -134,8 +139,8 @@ public class Game {
     /**
      * Checks if there are not cards yet to be played in the current round
      *
-     * @return True if all players have already played their card
-     * False otherwise
+     * @return True if all players have already played their card,
+     *         False otherwise
      */
     public boolean roundIsOver() {
         if (this.table.getPlayedCards().size() == NUMBEROFPLAYERS)
@@ -173,7 +178,7 @@ public class Game {
             players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());
 
             if (round == 17)
-                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.takeTrump());
+                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.takeBriscola());
             else
                 players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.getDeck().drawCard());
         }
@@ -182,40 +187,24 @@ public class Game {
         this.startingPlayer = this.currentPlayer = winningPlayer;
     }
 
+    /**
+     * Returns the winner at the end of a game, it should be called when the game is over.
+     * @return The id of the winning player.
+     */
     public int returnWinner() {
 
+        /* Set the point of each player
+         */
         for (int i = 0; i < NUMBEROFPLAYERS; i++)
             getPlayers()[i].setPlayerPoints(Rules.computePoints(this.players[i].getPlayerPile()));
 
+        /* Check which player scored more points and return it.
+         */
         if (getPlayers()[FIRSTPLAYER].getPlayerPoints() > getPlayers()[SECONDPLAYER].getPlayerPoints())
             return FIRSTPLAYER;
         else if (getPlayers()[SECONDPLAYER].getPlayerPoints() > getPlayers()[FIRSTPLAYER].getPlayerPoints())
             return SECONDPLAYER;
         else
             return DRAW;
-    }
-
-    public static void main(String[] argv) {
-//        Game game = new Game();
-//        System.out.println(game.toConfiguration());
-//
-//        Game game0 = new Game(new Game().toConfiguration());
-//        System.out.println(game0.toConfiguration());
-//
-//        System.out.println();
-//
-//
-//        Game game1 = new Game("0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..");
-//        System.out.println(game1.toConfiguration());
-//
-//        Game game2 = new Game("1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C");
-//        System.out.println(game2.toConfiguration());
-
-
-//        game.players[0].takeCardInHand(game.table.getDeck().drawCard());
-//        System.out.println(game.toConfiguration());
-//        game.table.placeCard(game.players[0].throwCard(1));
-//        System.out.println(game.toConfiguration());
-
     }
 }

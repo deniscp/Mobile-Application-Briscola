@@ -10,34 +10,16 @@ import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
- * Created by denis on 31/10/17.
+ * Class used to parse a configuration from a String, it need to be instantiated to be used.
+ *
+ * @author denis
  */
 
 public class Parser {
 
-    public static void main(String[] argv){
-
-        String test0 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..1B3B5B.2B4B6B..";
-        String test1 = "0B5S4G6S2C5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KS.JCKG2B.1C3G..";
-        String test2 = "1B5GKB7B6CHCHB1GKC5C4B1BHG7C6BJS6G7G4C3C7SJBHS2S3S4S1S2G3BJG5B.KG.4G6S.KS5S2C.3G2B.JC1C";
-        String test3 = "0B..1B3B5B.2B4B6B..JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B";
-        String test4 = "0B.....JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B1B3B5B2B4B6B";
-        String test5 = "1B.5B..6B.4B3B.JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B7BKS2B1B"; // 42 cards!
-        String test6 = "0BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKSKS7B..1B3B5B.2B4B6B..";   // 41 cards!
-
-//        Parser parser = new Parser(test0);
-        Parser parser = new Parser(test6);
-
-        System.out.println(parser.toString());
-
-//        Parser parser1= new Parser(test1);
-//        System.out.println("Print: " + parser1.parseToCard("7G").toString());
-    }
-
     private String currentPlayer;
-    private String trumpS;
+    private String briscolaSuit;
     private String deckString;
-    private String trumpCard;
     private String cardOnSurface;
     private String cardInHandP0;
     private String cardInHandP1;
@@ -47,7 +29,7 @@ public class Parser {
     public Parser(String configuration) {
         int i,j;
         this.currentPlayer = configuration.substring(0, 1);
-        this.trumpS = configuration.substring(1, 2);
+        this.briscolaSuit = configuration.substring(1, 2);
 
         for (i = 2; configuration.charAt(i) != '.'; i++) ;
         this.deckString = configuration.substring(2,i);
@@ -65,17 +47,7 @@ public class Parser {
         this.pileP0 = configuration.substring(j,i);
 
         j=++i;
-        this.pileP1 = configuration.substring(j,configuration.length());
-
-
-//        System.out.println("Current player: "+this.currentPlayer);
-//        System.out.println("Trump suit: "+this.trumpS);
-//        System.out.println("Deck: '"+this.deckString +"'");
-//        System.out.println("Card on surface: '"+this.cardOnSurface+"'");
-//        System.out.println("Card in hand of Player0: '"+this.cardInHandP0+"'");
-//        System.out.println("Card in hand of Player1: '"+this.cardInHandP1+"'");
-//        System.out.println("Pile of Player0: '"+this.pileP0+"'");
-//        System.out.println("Pile of Player1: '"+this.pileP1+"'");
+        this.pileP1 = configuration.substring(j, configuration.length());
     }
 
     public int startingPlayer(){
@@ -89,8 +61,8 @@ public class Parser {
         return Integer.parseInt(this.currentPlayer);
     }
 
-    public Suit trumpSuit(){
-        switch (trumpS){
+    public Suit briscolaSuit(){
+        switch (briscolaSuit){
             case "B":
                 return Suit.Batons;
             case "C":
@@ -223,7 +195,7 @@ public class Parser {
 
         stringBuilder.append("Round : " + this.round());
         stringBuilder.append("\nStarting player : " + this.startingPlayer());
-        stringBuilder.append("\nTrump suit : " + this.trumpSuit());
+        stringBuilder.append("\nBriscola suit : " + this.briscolaSuit());
         stringBuilder.append("\nDeck : " + this.deck());
         stringBuilder.append("\nBriscola : " + this.briscola());
         stringBuilder.append("\nCards on surface : " + this.surface());

@@ -91,7 +91,7 @@ public class DomainTest {
      * @throws Exception
      */
     @Test
-    public void deckOfCardsTest() throws Exception {
+    public void deckTest() throws Exception {
         String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
         assertEquals(sorteddeck, new Deck(false).toString());
     }
@@ -178,7 +178,7 @@ public class DomainTest {
         Game game = new Game();
         //0. Because the in the Game class the deck is shuffled automatically in the constructor, we have to do some preparation for testing:
         //a) Set the Trump to the trump of every sorted deck
-        game.getTable().setTrump(new Card(7, Suit.Batons));
+        game.getTable().setBriscola(new Card(7, Suit.Batons));
         //b) We create a sorted deck...
         Deck deck = new Deck(false);
         //... and than remove the first 7 cards of it, because the first 6 cards have already been dealt to the two players in the Game constructor. Then ...

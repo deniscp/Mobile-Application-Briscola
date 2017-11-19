@@ -1,7 +1,7 @@
 package it.polimi.group06.domain;
 
 /**
- * This class holds the 4 suits Batons, Swords, Cups and Golds and is used in the Card class.
+ * This enumeration holds the 4 suits Batons, Swords, Cups and Golds.
  *
  * @author Timo Zandonella
  */
