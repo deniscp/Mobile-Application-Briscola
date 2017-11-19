@@ -19,39 +19,31 @@ public class Deck {
     public Deck(boolean shuffled) {
 
         this.playingdeck = new ArrayList<Card>();
-
         int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Suit[] suit = new Suit[]{Suit.Batons, Suit.Cups, Suit.Golds, Suit.Swords};
-
         int i, j;
         for (i = 0; i < suit.length; i++)
             for (j = 0; j < values.length; j++)
                 playingdeck.add(new Card(values[j], suit[i]));
-
         if (shuffled)
             shuffle();
     }
 
     /**
-     *  Replaces deck with new one
+     * Replaces deck with new one
      */
-    public void replaceDeck(ArrayList<Card> newDeck){
-        this.playingdeck = newDeck;
-    }
+    public void replaceDeck(ArrayList<Card> newDeck){ this.playingdeck = newDeck; }
 
     /**
      * Shuffle the current deck of cards
      */
-    public void shuffle(){
-        Collections.shuffle(this.playingdeck);
-    }
+    public void shuffle(){ Collections.shuffle(this.playingdeck); }
 
-    /** Remaining cards in current deck
+    /**
+     * Remaining cards in current deck
      * @return number of cards left in the deck
      */
-    public int remaining(){
-        return this.playingdeck.size();
-    }
+    public int remaining(){ return this.playingdeck.size(); }
 
     /**
      * A card gets drawn from the deck if there are still cards in the deck
@@ -68,20 +60,14 @@ public class Deck {
      * Add a new card on bottom of the deck
      * @param card to be added in the deck
      */
-    public void addCard(Card card)
-    {
-        this.playingdeck.add(card);
-    }
+    public void addCard(Card card) { this.playingdeck.add(card); }
 
     /**
      * Push a card on top of the deck
      * Useful for later implementation of the "Game undo" operation
      * @param card to be pushed in the deck
      */
-    public void pushCard(Card card)
-    {
-        this.playingdeck.add(0,card);
-    }
+    public void pushCard(Card card) { this.playingdeck.add(0,card); }
 
     @Override
     public String toString(){
