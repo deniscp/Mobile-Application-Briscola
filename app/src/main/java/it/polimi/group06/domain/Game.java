@@ -7,8 +7,8 @@ import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
  * @author Denis on 29/10/17
- * Class containing all the element needed to play a briscola game,
- * and wrapper methods abstracting the usage of the object it instantiates.
+ *         Class containing all the element needed to play a briscola game,
+ *         and wrapper methods abstracting the usage of the object it instantiates.
  */
 public class Game {
     private Player[] players;
@@ -18,17 +18,17 @@ public class Game {
     private Table table;
     private Suit briscola;
 
-    public Game(){
+    public Game() {
 
         this.players = new Player[NUMBEROFPLAYERS];
-        this.players[FIRSTPLAYER] = new Human(FIRSTPLAYER,"Group06");
-        this.players[SECONDPLAYER] = new  Robot(SECONDPLAYER,"Robot00");
+        this.players[FIRSTPLAYER] = new Human(FIRSTPLAYER, "Group06");
+        this.players[SECONDPLAYER] = new Robot(SECONDPLAYER, "Robot00");
         Deck deck = new Deck(false);
 
         // Distribute cards to players
-        int i,j;
-        for(i=0;i<3;i++)
-            for(j=0;j<players.length;j++)
+        int i, j;
+        for (i = 0; i < 3; i++)
+            for (j = 0; j < players.length; j++)
                 players[j].takeCardInHand(deck.drawCard());
 
         /* Set a table with the 7th card as briscola and the remaining deck
@@ -50,7 +50,7 @@ public class Game {
 
         /* At the beginning of the game the current player is the starting player
          */
-        this.currentPlayer=this.startingPlayer;
+        this.currentPlayer = this.startingPlayer;
 
     }
 
@@ -74,25 +74,34 @@ public class Game {
         return this.players;
     }
 
-    public void setBriscolaSuit(Suit briscola) { this.briscola = briscola;  }
+    public void setBriscolaSuit(Suit briscola) {
+        this.briscola = briscola;
+    }
 
-    public void setRound(int round) {  this.round = round; }
+    public void setRound(int round) {
+        this.round = round;
+    }
 
-    public void setStartingPlayer(int startingPlayer) {  this.startingPlayer = startingPlayer;  }
+    public void setStartingPlayer(int startingPlayer) {
+        this.startingPlayer = startingPlayer;
+    }
 
-    public void setCurrentPlayer(int currentPlayer) {  this.currentPlayer = currentPlayer;   }
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 
     /**
      * Computes the String representing the actual configuration of the game
+     *
      * @return String for the game configuration
      */
-    public String toConfiguration(){
+    public String toConfiguration() {
         StringBuilder conf = new StringBuilder();
 
         conf.append(currentPlayer).append(this.briscola);
         conf.append(this.table);
 
-        for(int i=0; i<NUMBEROFPLAYERS ; i++) {
+        for (int i = 0; i < NUMBEROFPLAYERS; i++) {
             for (Card card : this.players[i].getHand())
                 conf.append(card.toString());
             conf.append(".");
@@ -111,11 +120,12 @@ public class Game {
 
     /**
      * Checks if there are still rounds to play
+     *
      * @return True if there is no round left to be played
-     *          False if the game is not over
+     * False if the game is not over
      */
-    public boolean gameIsOver(){
-        if (this.round == 21 )
+    public boolean gameIsOver() {
+        if (this.round == 21)
             return true;
         else
             return false;
@@ -123,11 +133,12 @@ public class Game {
 
     /**
      * Checks if there are not cards yet to be played in the current round
+     *
      * @return True if all players have already played their card
-     *          False otherwise
+     * False otherwise
      */
-    public boolean roundIsOver(){
-        if (this.table.getPlayedCards().size() == NUMBEROFPLAYERS )
+    public boolean roundIsOver() {
+        if (this.table.getPlayedCards().size() == NUMBEROFPLAYERS)
             return true;
         else
             return false;
@@ -135,12 +146,13 @@ public class Game {
 
     /**
      * Plays a card of a player
+     *
      * @param playerNum the id of player that plays the card
-     * @param cardPos the position of the card in the hand of the player
+     * @param cardPos   the position of the card in the hand of the player
      */
-    public void playerPlaysCard(int playerNum, int cardPos){
-        this.table.placeCard( this.players[playerNum].throwCard(cardPos) );
-        this.currentPlayer = ( this.getCurrentPlayer() +1 ) %NUMBEROFPLAYERS;
+    public void playerPlaysCard(int playerNum, int cardPos) {
+        this.table.placeCard(this.players[playerNum].throwCard(cardPos));
+        this.currentPlayer = (this.getCurrentPlayer() + 1) % NUMBEROFPLAYERS;
     }
 
     /**
@@ -150,14 +162,14 @@ public class Game {
      * advancing the round number,
      * and updating the starting and the current player
      */
-    public void newRound(){
+    public void newRound() {
         int winningPlayer;  //the winner of the current round
 
-        winningPlayer=Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
+        winningPlayer = Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
 
         this.players[winningPlayer].getPlayerPile().addAll(this.table.collectPlayedCard());
 
-        if(round <= 17) {
+        if (round <= 17) {
             players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());
 
             if (round == 17)
@@ -173,7 +185,7 @@ public class Game {
     public int returnWinner() {
 
         for (int i = 0; i < NUMBEROFPLAYERS; i++)
-            getPlayers()[i].setPlayerPoints( Rules.computePoints(this.players[i].getPlayerPile() ) );
+            getPlayers()[i].setPlayerPoints(Rules.computePoints(this.players[i].getPlayerPile()));
 
         if (getPlayers()[FIRSTPLAYER].getPlayerPoints() > getPlayers()[SECONDPLAYER].getPlayerPoints())
             return FIRSTPLAYER;
@@ -183,7 +195,7 @@ public class Game {
             return DRAW;
     }
 
-    public static void main(String[] argv){
+    public static void main(String[] argv) {
 //        Game game = new Game();
 //        System.out.println(game.toConfiguration());
 //

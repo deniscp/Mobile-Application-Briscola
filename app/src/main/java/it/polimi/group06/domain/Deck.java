@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 /**
  * This Class holds the deck of cards with 40 or less cards in it. It also holds methods to shuffle a deck and return the current deck size.
+ *
  * @author Timo Zandonella
  */
 public class Deck {
@@ -14,6 +15,7 @@ public class Deck {
 
     /**
      * Constructor for a full deck of cards. It uses the card class to create object of cards.
+     *
      * @param shuffled is true, when the deck should be shuffled
      */
     public Deck(boolean shuffled) {
@@ -30,29 +32,31 @@ public class Deck {
     }
 
     /**
-     *  Replaces deck with new one
+     * Replaces deck with new one
      */
-    public void replaceDeck(ArrayList<Card> newDeck){
+    public void replaceDeck(ArrayList<Card> newDeck) {
         this.playingdeck = newDeck;
     }
 
     /**
      * Shuffle the current deck of cards
      */
-    public void shuffle(){
+    public void shuffle() {
         Collections.shuffle(this.playingdeck);
     }
 
     /**
      * Remaining cards in current deck
+     *
      * @return number of cards left in the deck
      */
-    public int remaining(){
+    public int remaining() {
         return this.playingdeck.size();
     }
 
     /**
      * A card gets drawn from the deck if there are still cards in the deck
+     *
      * @return the card from the top of the deck
      */
     public Card drawCard() {
@@ -63,29 +67,29 @@ public class Deck {
 
     /**
      * Add a new card on bottom of the deck
+     *
      * @param card to be added in the deck
      */
-    public void addCard(Card card)
-    {
+    public void addCard(Card card) {
         this.playingdeck.add(card);
     }
 
     /**
      * Push a card on top of the deck
      * Useful for later implementation of the "Game undo" operation
+     *
      * @param card to be pushed in the deck
      */
-    public void pushCard(Card card)
-    {
-        this.playingdeck.add(0,card);
+    public void pushCard(Card card) {
+        this.playingdeck.add(0, card);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         Iterator<Card> deckIterator = this.playingdeck.iterator();
         StringBuilder deckToString = new StringBuilder();
 
-        while (deckIterator.hasNext()){
+        while (deckIterator.hasNext()) {
             deckToString.append(deckIterator.next().toString());
         }
         return deckToString.toString();

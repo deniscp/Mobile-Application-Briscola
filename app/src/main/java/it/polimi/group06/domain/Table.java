@@ -5,11 +5,12 @@ import java.util.ArrayList;
 
 /**
  * @author Denis on 28/10/17
- * Table class storing domain objects used during the game, deck, briscola card and played cards
+ *         Table class storing domain objects used during the game, deck, briscola card and played cards
  */
 public class Table {
 
-    /** ArrayList of Card representing the cards played by the players.
+    /**
+     * ArrayList of Card representing the cards played by the players.
      * Cards are stored in the order in which they are played,
      * so the first element is the card played by the player who starts the round,
      * the second element is the card played by the player who immediately follows the first one and so on
@@ -37,28 +38,38 @@ public class Table {
         setDeck(deck);
     }
 
-    public void setTrump(Card trump) { this.trump = trump;  }
+    public void setTrump(Card trump) {
+        this.trump = trump;
+    }
 
-    public void setDeck(Deck deck) { this.deck = deck; }
+    public void setDeck(Deck deck) {
+        this.deck = deck;
+    }
 
-    public Card getTrump() { return this.trump; }
+    public Card getTrump() {
+        return this.trump;
+    }
 
-    public Deck getDeck() { return this.deck; }
+    public Deck getDeck() {
+        return this.deck;
+    }
 
     /**
-     *  Retrieve played cards for visualizing, leaving them on the table
+     * Retrieve played cards for visualizing, leaving them on the table
      */
-    ArrayList<Card> getPlayedCards() { return this.playedCards; }
+    ArrayList<Card> getPlayedCards() {
+        return this.playedCards;
+    }
 
     /**
-     *  Replaces played cards with new ones
+     * Replaces played cards with new ones
      */
     public void replacePlayedCards(ArrayList<Card> newPlayedCards) {
         this.playedCards = newPlayedCards;
     }
 
     /**
-     *  Collects played cards and remove them from the table
+     * Collects played cards and remove them from the table
      */
     ArrayList<Card> collectPlayedCard() {
         ArrayList<Card> temp = new ArrayList<>(this.getPlayedCards());
@@ -68,6 +79,7 @@ public class Table {
 
     /**
      * Takes the trump removing it from the table
+     *
      * @return the trump on the table
      */
     Card takeTrump() {
@@ -77,10 +89,10 @@ public class Table {
     }
 
     /**
-     *  Places a card on the table
+     * Places a card on the table
      */
     void placeCard(Card playingCard) {
-        if (this.playedCards.size()==2)
+        if (this.playedCards.size() == 2)
             throw new IllegalArgumentException("All the players have already played their card in this turn");
         this.playedCards.add(playingCard);
     }
@@ -90,7 +102,9 @@ public class Table {
         StringBuilder tableToString = new StringBuilder();
 
         tableToString.append(this.getDeck().toString());
-        if(this.getTrump() != null) {tableToString.append(this.getTrump().toString());}
+        if (this.getTrump() != null) {
+            tableToString.append(this.getTrump().toString());
+        }
         tableToString.append(".");
 
         for (Card card : this.getPlayedCards()) {
