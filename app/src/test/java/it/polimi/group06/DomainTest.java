@@ -49,11 +49,11 @@ public class DomainTest {
         String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
         assertEquals(sorteddeck, deck.toString());
 
-        deck.replaceDeck(new ArrayList<Card>());
-        assertEquals("", deck.toString());
-        assertEquals(0, deck.remaining());
+        deck.replaceDeck(new ArrayList<Card>());   //replace the content of the deck with no cards, i.e. make it empty
+        assertEquals("", deck.toString()); //it is expected to not contain any card...
+        assertEquals(0, deck.remaining()); //...or that zero are left
 
-        deck.addCard(new Card(2, Suit.Batons)); //only card in the deck
+        deck.addCard(new Card(2, Suit.Batons)); //the only card in the deck
         deck.pushCard(new Card(1, Suit.Batons));//added on top of the pile
         deck.addCard(new Card(3, Suit.Batons)); //added on the bottom of the pile
 
@@ -69,7 +69,7 @@ public class DomainTest {
 
 
     /**
-     * Tests if in a standard deck you can draw up to 40 cards
+     * Tests if in a standardly constructed deck you can draw up to 40 cards
      *
      * @throws Exception
      */
@@ -86,7 +86,7 @@ public class DomainTest {
     }
 
     /**
-     * Test of the custom toString() method in the DeckOfCards class
+     * Test of the custom toString() method in the Deck class
      *
      * @throws Exception
      */

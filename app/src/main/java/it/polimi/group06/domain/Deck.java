@@ -86,11 +86,10 @@ public class Deck {
 
     @Override
     public String toString() {
-        Iterator<Card> deckIterator = this.playingdeck.iterator();
         StringBuilder deckToString = new StringBuilder();
 
-        while (deckIterator.hasNext()) {
-            deckToString.append(deckIterator.next().toString());
+        for (Card card : this.playingdeck) {
+            deckToString.append(card.toString());
         }
         return deckToString.toString();
     }
