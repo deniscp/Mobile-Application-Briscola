@@ -67,6 +67,17 @@ public class Game {
         return currentPlayer;
     }
 
+    /**
+     * Returns how many cards can still be picked by players.
+     * @return The number of cards left in the deck plus the briscola if it is still on the table
+     */
+    public int remainingCards(){
+        int briscola = 0;
+        if(this.getTable().getBriscola()!= null)
+            briscola = 1;
+        return this.getTable().getDeck().remaining() + briscola;
+    }
+
     public Table getTable() {
         return table;
     }
