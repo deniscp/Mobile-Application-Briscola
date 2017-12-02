@@ -6,4 +6,5 @@
     <color name="black_overlay">#66000000</color>
     <color name="black">#fc000000</color>
     <color name="blue">#660d28bd</color>
+    <color name="splash_screen_color">#CD853F</color>
 </resources>
