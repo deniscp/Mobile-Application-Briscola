@@ -17,8 +17,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activities.SplashScreen"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.StatisticsActivity"></activity>
     </application>
 
 </manifest>

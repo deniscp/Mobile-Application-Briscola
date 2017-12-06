@@ -26,17 +26,25 @@ public class MainActivity extends AppCompatActivity {
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, GameActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                MainActivity.this.startActivity(gameIntent);
             }
         });
 
-
-        final Button btnSetting = findViewById(R.id.settings_button);
-        btnSetting.setOnClickListener(new View.OnClickListener() {
+        final Button statistics_button = findViewById(R.id.statistics_button);
+        statistics_button.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                Intent statisticsIntent = new Intent(MainActivity.this, StatisticsActivity.class);
+                MainActivity.this.startActivity(statisticsIntent);
+            }
+        });
+
+        final Button settings_button = findViewById(R.id.settings_button);
+        settings_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                MainActivity.this.startActivity(settingsIntent);
             }
         });
 
