@@ -1,6 +1,10 @@
 package it.polimi.group06.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -173,11 +177,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < humanhand.length - 1; i++) {
                 cardtwo_button.setEnabled(false);
                 humanhand[i].setText(human.getHand().get(i).toString());
-                humanhand[2].setText("");
+                humanhand[2].setText("-");
             }
         } else if (human.getHand().size() == 1) {
             cardone_button.setEnabled(false);
-            humanhand[1].setText("");
+            humanhand[1].setText("-");
             humanhand[0].setText(human.getHand().get(0).toString());
         } else {
             cardzero_button.setEnabled(false);
@@ -205,16 +209,38 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setText();
         j++;
         if (j == 20) {
-            cardzero_button.setText("");
-            if (game.returnWinner() == FIRSTPLAYER) {
-                winner.setText("Player wins with " + String.valueOf(human.getPlayerPoints()));
-            } else if (game.returnWinner() == FIRSTPLAYER) {
-                winner.setText("Robot wins with " + String.valueOf(robot.getPlayerPoints()));
-            } else {
-                winner.setText("Draw");
-            }
-            Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
+            endofgame();
         }
+    }
+
+    public void endofgame() {
+        String text;
+        cardzero_button.setText("-");
+        if (game.returnWinner() == FIRSTPLAYER) {
+            text = "Player wins with " + String.valueOf(human.getPlayerPoints());
+        } else if (game.returnWinner() == FIRSTPLAYER) {
+            text = "Robot wins with " + String.valueOf(robot.getPlayerPoints());
+        } else {
+            text = "Draw";
+        }
+        Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
+
+        new AlertDialog.Builder(GameActivity.this)
+                .setTitle("End of Game")
+                .setMessage(text+"\nDo you want to start a new game?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        finish();
+                    }
+                })
+        .show();
     }
 
 
