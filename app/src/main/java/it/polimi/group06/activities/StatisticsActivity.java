@@ -82,7 +82,9 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         String str = fileContent.toString();
-        statList = Arrays.asList(str.split(","));
+        if(!str.equals("")){
+            statList = Arrays.asList(str.split(","));
+        }
     }
 
     void setcontentofviews(){
@@ -92,9 +94,12 @@ public class StatisticsActivity extends AppCompatActivity {
 
         TextView seconds = findViewById(R.id.timeplayed);
 
-        zero.setText(statList.get(0));
-        one.setText(statList.get(1));
-        two.setText(statList.get(2));
-        seconds.setText(statList.get(3));
+        if(statList!=null){
+            zero.setText(statList.get(0));
+            one.setText(statList.get(1));
+            two.setText(statList.get(2));
+            seconds.setText(statList.get(3));
+        }
+
     }
 }

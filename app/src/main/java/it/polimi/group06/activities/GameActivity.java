@@ -143,7 +143,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
-        elapsedSeconds = tDelta / 1000.0;
+        elapsedSeconds += tDelta / 1000.0;
+        elapsedSeconds = (double)Math.round(elapsedSeconds * 100d) / 100d;
 
         updateStatisticsFile();
 
@@ -185,11 +186,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         String stats = fileContent.toString();
-        List<String> statList = Arrays.asList(stats.split(","));
-        for (int i = 0; i < 3; i++) {
-            amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
+        if(!stats.equals("")) {
+            List<String> statList = Arrays.asList(stats.split(","));
+            for (int i = 0; i < 3; i++) {
+                amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
+            }
+            elapsedSeconds = Double.parseDouble(statList.get(3));
+        }else{
+            for (int i = 0; i < 3; i++) {
+                amountpositionwasplayed[i] = 0;
+            }
+            elapsedSeconds = 0;
         }
-        elapsedSeconds = Double.parseDouble(statList.get(3));
     }
 
     void updateStatisticsFile() {
@@ -227,8 +235,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         String str = fileContent.toString();
         System.out.println("YYYY" + str);
-        color = Integer.parseInt(str);
         if (!str.equals("")) {
+            color = Integer.parseInt(str);
             switch (color) {
                 case (0):
                     remaining.setBackgroundResource(R.drawable.deck);
