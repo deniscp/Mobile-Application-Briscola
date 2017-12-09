@@ -1,6 +1,7 @@
 package it.polimi.group06.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import it.polimi.group06.R;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Player;
@@ -21,23 +29,17 @@ import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button cardzero_button;
-    Button cardone_button;
-    Button cardtwo_button;
-    TextView humancard;
-    TextView robotcard;
-    TextView remaining;
-    TextView winner;
+    Button cardzero_button, cardone_button, cardtwo_button;
+    TextView humancard, robotcard, remaining, winner;
 
-    int i;
-    int j;
+    int i, j, color;
 
     long tStart;
     double elapsedSeconds;
+    int[] amountpositionwasplayed = {0, 0, 0};
 
     Game game;
-    Player human;
-    Player robot;
+    Player human, robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robot = game.getPlayers()[1];
 
         setText();
+        getStatisticsFile();
+        setSettings();
 
         cardzero_button.setClickable(true);
         cardone_button.setClickable(true);
@@ -102,12 +106,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.zero) {
+            amountpositionwasplayed[0] += 1;
             i = 0;
         }
         if (v.getId() == R.id.one) {
+            amountpositionwasplayed[1] += 1;
             i = 1;
         }
         if (v.getId() == R.id.two) {
+            amountpositionwasplayed[2] += 1;
             i = 2;
         }
         humancard.setText(human.getHand().get(i).toString());
@@ -134,9 +141,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
 
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        elapsedSeconds = tDelta / 1000.0;
+
+        updateStatisticsFile();
+
         new AlertDialog.Builder(GameActivity.this)
                 .setTitle("End of Game")
-                .setMessage(text+"\nDo you want to start a new game?")
+                .setMessage(text + "\nDo you want to start a new game?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent intent = getIntent();
@@ -149,11 +162,90 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                     }
                 })
-        .show();
+                .show();
 
-        long tEnd = System.currentTimeMillis();
-        long tDelta = tEnd - tStart;
-        elapsedSeconds = tDelta / 1000.0;
     }
 
+    void getStatisticsFile() {
+        FileInputStream fis;
+        int n;
+        StringBuffer fileContent = new StringBuffer("");
+        try {
+            fis = openFileInput("statistics");
+
+            byte[] buffer = new byte[1024];
+
+            while ((n = fis.read(buffer)) != -1) {
+                fileContent.append(new String(buffer, 0, n));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            System.out.println("Problem");
+        }
+
+        String stats = fileContent.toString();
+        List<String> statList = Arrays.asList(stats.split(","));
+        for (int i = 0; i < 3; i++) {
+            amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
+        }
+        elapsedSeconds = Double.parseDouble(statList.get(3));
+    }
+
+    void updateStatisticsFile() {
+        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
+                + "," + String.valueOf(elapsedSeconds);
+
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput("statistics", Context.MODE_PRIVATE);
+            outputStream.write(towrite.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void setSettings() {
+        FileInputStream fis;
+        int n;
+        StringBuffer fileContent = new StringBuffer("");
+        try {
+            fis = openFileInput("settings");
+
+            byte[] buffer = new byte[1024];
+
+            while ((n = fis.read(buffer)) != -1) {
+                fileContent.append(new String(buffer, 0, n));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            System.out.println("Problem");
+        }
+
+        String str = fileContent.toString();
+        System.out.println("YYYY" + str);
+        color = Integer.parseInt(str);
+        if (!str.equals("")) {
+            switch (color) {
+                case (0):
+                    remaining.setBackgroundResource(R.drawable.deck);
+                    break;
+                case (1):
+                    remaining.setBackgroundResource(R.drawable.deck_orange);
+                    break;
+                case (2):
+                    remaining.setBackgroundResource(R.drawable.deck_green);
+                    break;
+                case (3):
+                    remaining.setBackgroundResource(R.drawable.deck_blue);
+                    break;
+                default:
+                    System.out.println("This color doesn't exist");
+            }
+            System.out.println("XXXX" + color);
+        }
+    }
 }
