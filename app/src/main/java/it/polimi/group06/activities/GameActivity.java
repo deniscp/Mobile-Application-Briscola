@@ -1,7 +1,6 @@
 package it.polimi.group06.activities;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,26 +12,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import it.polimi.group06.InputHandler;
+import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.domain.Constants.DRAW;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
-
+import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button cardzero_button, cardone_button, cardtwo_button;
+    Button cardzero_button, cardone_button, cardtwo_button, saveandquit;
     TextView humancard, robotcard, remaining, winner;
 
-    int i, j, color;
+    int i, j, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -52,6 +50,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game);
 
+        Bundle extras = getIntent().getExtras();
+        String msg = extras.getString("keyMessage");
+
         cardzero_button = findViewById(R.id.zero);
         cardone_button = findViewById(R.id.one);
         cardtwo_button = findViewById(R.id.two);
@@ -59,14 +60,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard = findViewById(R.id.robotcard);
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
-
-        game = new Game();
+        saveandquit = findViewById(R.id.savequit_button);
+        if (msg == "fromsaved") {
+            createGamefromConfig();
+        } else {
+            game = new Game();
+        }
         human = game.getPlayers()[0];
         robot = game.getPlayers()[1];
 
         setText();
         getStatisticsFile();
-        setSettings();
+        setSettingsfromFile();
 
         cardzero_button.setClickable(true);
         cardone_button.setClickable(true);
@@ -75,8 +80,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardzero_button.setOnClickListener(this);
         cardone_button.setOnClickListener(this);
         cardtwo_button.setOnClickListener(this);
+        saveandquit.setOnClickListener(this);
 
         tStart = System.currentTimeMillis();
+    }
+
+    void createGamefromConfig() {
+        String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
     }
 
     void setText() {
@@ -100,33 +110,60 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             cardzero_button.setEnabled(false);
         }
 
-        remaining.setText(String.valueOf(game.getTable().getDeck().remaining()));
+        remaining.setText(String.valueOf(game.remainingCards()));
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.zero) {
-            amountpositionwasplayed[0] += 1;
-            i = 0;
+        boolean cardplayed = false;
+        switch (v.getId()) {
+            case (R.id.savequit_button):
+                saveGame();
+                System.out.println("xxxxxxx");
+                cardplayed=false;
+                finish();
+                break;
+            case (R.id.zero):
+                amountpositionwasplayed[0] += 1;
+                i = 0;
+                cardplayed=true;
+                break;
+            case (R.id.one):
+                amountpositionwasplayed[1] += 1;
+                i = 1;
+                cardplayed=true;
+                break;
+            case (R.id.two):
+                amountpositionwasplayed[2] += 1;
+                i = 2;
+                cardplayed=true;
+                break;
         }
-        if (v.getId() == R.id.one) {
-            amountpositionwasplayed[1] += 1;
-            i = 1;
+        if(cardplayed) {
+            humancard.setText(human.getHand().get(i).toString());
+            game.playerPlaysCard(0, i);
+            robotcard.setText(robot.getHand().get(0).toString());
+            game.playerPlaysCard(1, 0);
+            game.newRound();
+            setText();
+            j++;
+            if (j == 20) {
+                endofgame();
+            }
         }
-        if (v.getId() == R.id.two) {
-            amountpositionwasplayed[2] += 1;
-            i = 2;
-        }
-        humancard.setText(human.getHand().get(i).toString());
-        game.playerPlaysCard(0, i);
-        robotcard.setText(robot.getHand().get(0).toString());
-        game.playerPlaysCard(1, 0);
-        game.newRound();
-        setText();
-        j++;
-        if (j == 20) {
-            endofgame();
-        }
+    }
+
+    void saveGame() {
+        String towrite = game.toConfiguration();
+        OutputHandler.writefile(towrite, "savedgame", getApplicationContext());
+    }
+
+    void updateStatisticsFile() {
+        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
+                + "," + String.valueOf(elapsedSeconds) + "," + String.valueOf(numberoftimesplayerwon) + "," + String.valueOf(numberoftimesrobotwon) +","+
+                String.valueOf(numberofdraws);
+
+        OutputHandler.writefile(towrite, "statistics", getApplicationContext());
     }
 
     public void endofgame() {
@@ -134,17 +171,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardzero_button.setText("-");
         if (game.returnWinner() == FIRSTPLAYER) {
             text = "Player wins with " + String.valueOf(human.getPlayerPoints());
+            numberoftimesplayerwon +=1;
         } else if (game.returnWinner() == FIRSTPLAYER) {
             text = "Robot wins with " + String.valueOf(robot.getPlayerPoints());
+            numberoftimesrobotwon +=1;
         } else {
             text = "Draw";
+            numberofdraws +=1;
         }
         Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
 
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         elapsedSeconds += tDelta / 1000.0;
-        elapsedSeconds = (double)Math.round(elapsedSeconds * 100d) / 100d;
+        elapsedSeconds = (double) Math.round(elapsedSeconds * 100d) / 100d;
 
         updateStatisticsFile();
 
@@ -168,72 +208,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void getStatisticsFile() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("statistics");
+        String stats = InputHandler.getStringfromFile("statistics", getApplicationContext());
 
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        } catch (IOException e) {
-            System.out.println("Problem");
-        }
-
-        String stats = fileContent.toString();
-        if(!stats.equals("")) {
+        if (!stats.equals("")) {
             List<String> statList = Arrays.asList(stats.split(","));
+            System.out.println(stats + "yyyyyy" + statList + "xxxxxxxxxx");
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
             }
             elapsedSeconds = Double.parseDouble(statList.get(3));
-        }else{
+            numberoftimesplayerwon = Integer.parseInt(statList.get(4));
+            numberoftimesrobotwon = Integer.parseInt(statList.get(5));
+            numberofdraws = Integer.parseInt(statList.get(6));
+        } else {
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = 0;
             }
             elapsedSeconds = 0;
+            numberoftimesplayerwon = 0;
+            numberoftimesrobotwon = 0;
+            numberofdraws = 0;
         }
     }
 
-    void updateStatisticsFile() {
-        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
-                + "," + String.valueOf(elapsedSeconds);
+    void setSettingsfromFile() {
+        String str = InputHandler.getStringfromFile("settings", getApplicationContext());
 
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput("statistics", Context.MODE_PRIVATE);
-            outputStream.write(towrite.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    void setSettings() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("settings");
-
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        } catch (IOException e) {
-            System.out.println("Problem");
-        }
-
-        String str = fileContent.toString();
         System.out.println("YYYY" + str);
         if (!str.equals("")) {
             color = Integer.parseInt(str);

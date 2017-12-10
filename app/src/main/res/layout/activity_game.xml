@@ -111,5 +111,15 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/savequit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="142dp"
+        android:layout_marginTop="45dp"
+        android:text="Save and Quit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
