@@ -10,11 +10,8 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import it.polimi.group06.InputHandler;
+import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -83,14 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String towrite = String.valueOf(i);
-                FileOutputStream outputStream;
-                try {
-                    outputStream = openFileOutput("settings", Context.MODE_PRIVATE);
-                    outputStream.write(towrite.getBytes());
-                    outputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                OutputHandler.writefile(towrite, "settings", getApplicationContext());
                 System.out.println("saveSettings" + i);
                 finish();
             }
@@ -98,27 +88,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     void getSettings() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("settings");
-
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-            String str = fileContent.toString();
+        String str = InputHandler.getStringfromFile("settings", getApplicationContext());
+        if(str.equals("")){
+            i = 0;
+        }else{
             i = Integer.parseInt(str);
-            System.out.println("GetSettings" + i);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-            i=0;
-        } catch (IOException e) {
-            System.out.println("Problem");
         }
-
+        System.out.println("GetSettings" + i);
     }
 
 }

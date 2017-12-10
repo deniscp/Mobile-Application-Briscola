@@ -1,7 +1,6 @@
 package it.polimi.group06.activities;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,19 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import it.polimi.group06.InputHandler;
+import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Player;
 
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
-
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -73,7 +69,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setText();
         getStatisticsFile();
-        setSettings();
+        setSettingsfromFile();
 
         cardzero_button.setClickable(true);
         cardone_button.setClickable(true);
@@ -88,24 +84,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void createGamefromConfig() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("savedgame");
-
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        } catch (IOException e) {
-            System.out.println("Problem");
-        }
-
-        String config = fileContent.toString();
+        String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
     }
 
     void setText() {
@@ -129,7 +108,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             cardzero_button.setEnabled(false);
         }
 
-        remaining.setText(String.valueOf(game.getTable().getDeck().remaining()));
+        remaining.setText(String.valueOf(game.remainingCards()));
     }
 
     @Override
@@ -158,24 +137,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 cardplayed=true;
                 break;
         }
-        /*
-        if (v.getId() == R.id.savequit_button){
-            saveGame();
-            System.out.println("xxxxxxx");
-            finish();
-        }
-        if (v.getId() == R.id.zero) {
-            amountpositionwasplayed[0] += 1;
-            i = 0;
-        }
-        if (v.getId() == R.id.one) {
-            amountpositionwasplayed[1] += 1;
-            i = 1;
-        }
-        if (v.getId() == R.id.two) {
-            amountpositionwasplayed[2] += 1;
-            i = 2;
-        }*/
         if(cardplayed) {
             humancard.setText(human.getHand().get(i).toString());
             game.playerPlaysCard(0, i);
@@ -192,14 +153,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     void saveGame() {
         String towrite = game.toConfiguration();
-        FileOutputStream outputStream;
-        try {
-            outputStream = openFileOutput("savedgame", Context.MODE_PRIVATE);
-            outputStream.write(towrite.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        OutputHandler.writefile(towrite, "savedgame", getApplicationContext());
+    }
+
+    void updateStatisticsFile() {
+        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
+                + "," + String.valueOf(elapsedSeconds);
+
+        OutputHandler.writefile(towrite, "statistics", getApplicationContext());
     }
 
     public void endofgame() {
@@ -241,26 +202,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void getStatisticsFile() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("statistics");
+        String stats = InputHandler.getStringfromFile("statistics", getApplicationContext());
 
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        } catch (IOException e) {
-            System.out.println("Problem");
-        }
-
-        String stats = fileContent.toString();
         if (!stats.equals("")) {
             List<String> statList = Arrays.asList(stats.split(","));
+            System.out.println(stats + "yyyyyy" + statList + "xxxxxxxxxx");
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
             }
@@ -273,40 +219,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void updateStatisticsFile() {
-        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
-                + "," + String.valueOf(elapsedSeconds);
+    void setSettingsfromFile() {
+        String str = InputHandler.getStringfromFile("settings", getApplicationContext());
 
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput("statistics", Context.MODE_PRIVATE);
-            outputStream.write(towrite.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    void setSettings() {
-        FileInputStream fis;
-        int n;
-        StringBuffer fileContent = new StringBuffer("");
-        try {
-            fis = openFileInput("settings");
-
-            byte[] buffer = new byte[1024];
-
-            while ((n = fis.read(buffer)) != -1) {
-                fileContent.append(new String(buffer, 0, n));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        } catch (IOException e) {
-            System.out.println("Problem");
-        }
-
-        String str = fileContent.toString();
         System.out.println("YYYY" + str);
         if (!str.equals("")) {
             color = Integer.parseInt(str);
