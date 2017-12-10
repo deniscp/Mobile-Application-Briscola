@@ -175,10 +175,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String text;
         cardzero_button.setText("-");
         if (game.returnWinner() == FIRSTPLAYER) {
-            text = "Player wins with " + String.valueOf(human.getPlayerPoints());
+            text = "Player wins with " + String.valueOf(human.getPlayerPoints()) + " Points";
             numberoftimesplayerwon +=1;
-        } else if (game.returnWinner() == FIRSTPLAYER) {
-            text = "Robot wins with " + String.valueOf(robot.getPlayerPoints());
+        } else if (game.returnWinner() == SECONDPLAYER) {
+            text = "Robot wins with " + String.valueOf(robot.getPlayerPoints()) + " Points";
             numberoftimesrobotwon +=1;
         } else {
             text = "Draw";
