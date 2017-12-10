@@ -50,7 +50,7 @@ public class Deck {
      *
      * @return number of cards left in the deck
      */
-    int remaining() {
+    public int remaining() {
         return this.playingdeck.size();
     }
 

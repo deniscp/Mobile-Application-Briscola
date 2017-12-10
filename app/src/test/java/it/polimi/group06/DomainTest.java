@@ -13,6 +13,8 @@ import it.polimi.group06.domain.Player;
 import it.polimi.group06.domain.Suit;
 import it.polimi.group06.domain.Rules;
 
+import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -39,6 +41,35 @@ public class DomainTest {
 
 
     /**
+     * Test of the remaining method of Game class
+     *
+     * @throws Exception
+     */
+    @Test
+    public void remainingCardsInGame() throws Exception {
+
+        Game game = new Game();
+
+        assertEquals(34,game.remainingCards());
+
+        game.playerPlaysCard(FIRSTPLAYER,0);
+        assertEquals(34,game.remainingCards());
+        game.playerPlaysCard(SECONDPLAYER,0);
+        assertEquals(34,game.remainingCards());
+
+        if(game.roundIsOver())
+            game.newRound();
+
+        assertEquals(32,game.remainingCards());
+
+        if(game.roundIsOver())
+            game.newRound();
+
+        assertEquals(32,game.remainingCards());
+
+    }
+
+    /**
      * Replaces the cards of a standard deck with 1B, 2B, 3B and then tests their order
      *
      * @throws Exception
@@ -46,7 +77,7 @@ public class DomainTest {
     @Test
     public void customDeckTest() throws Exception {
         Deck deck = new Deck(false);
-        String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
+        final String sorteddeck = "1B2B3B4B5B6B7BJBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS";
         assertEquals(sorteddeck, deck.toString());
 
         deck.replaceDeck(new ArrayList<Card>());   //replace the content of the deck with no cards, i.e. make it empty

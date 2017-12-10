@@ -1,9 +1,6 @@
-package it.polimi.group06.moveTest;
+package it.polimi.group06.domain;
 
 import java.util.ArrayList;
-
-import it.polimi.group06.domain.Card;
-import it.polimi.group06.domain.Suit;
 
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;

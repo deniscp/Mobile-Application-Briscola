@@ -1,6 +1,7 @@
 package it.polimi.group06.moveTest;
 
 import it.polimi.group06.domain.Game;
+import it.polimi.group06.domain.Parser;
 
 import static it.polimi.group06.domain.Constants.DRAW;
 import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
@@ -17,7 +18,7 @@ public class MoveTest {
 
         /* Initialize a new game passing the input configuration to the special constructor
          */
-        Game briscola = initializeFromConf(configuration); //Initial configuration must always be a valid one
+        Game briscola = Game.initializeFromConf(configuration); //Initial configuration must always be a valid one
         String nextConfiguration;               //next visible configuration
         boolean stat = true;                    //print the computed configurations
 
@@ -55,61 +56,5 @@ public class MoveTest {
         if (stat == true && moveSequence.length() < 2)
             System.err.println(briscola.getRound() + " - " + nextConfiguration);
         return nextConfiguration;
-    }
-
-    /**
-     * Static method that creates a Game object using the standard constructor of Game class
-     * and selectively replacing fields according to the passed string configuration as parsed by Parser
-     *
-     * @param conf the passed configuration file
-     * @return the Game initialized according to String conf parameter
-     * @see Parser
-     */
-    static Game initializeFromConf(String conf) {
-        Game gameFromConf = new Game();
-        Parser parser = new Parser(conf);
-
-
-        /* Replace hands of players
-         */
-        for (int i = 0; i < NUMBEROFPLAYERS; i++)
-            gameFromConf.getPlayers()[i].replaceHand(parser.hands()[i]);
-
-        /* Replace pile of players
-         */
-        for (int i = 0; i < NUMBEROFPLAYERS; i++)
-            gameFromConf.getPlayers()[i].replacePlayerPile(parser.piles()[i]);
-
-
-        /* Set the table replacing the briscola and the deck
-         */
-        gameFromConf.getTable().setBriscola(parser.briscola());
-        gameFromConf.getTable().getDeck().replaceDeck(parser.deck());
-
-        /* Set the played card on surface
-         */
-        gameFromConf.getTable().replacePlayedCards(parser.surface());
-
-
-        /*
-         * Set the briscola suit for easier future accesses
-         */
-        gameFromConf.setBriscolaSuit(parser.briscolaSuit());
-
-
-        /* 20 rounds in a 2-player briscola game
-         */
-        gameFromConf.setRound(parser.round());
-
-        /* The player who started the turn
-         */
-        gameFromConf.setStartingPlayer(parser.startingPlayer());
-
-        /* At the beginning of the game the current player is the starting player
-         */
-        gameFromConf.setCurrentPlayer(parser.currentPlayer());
-
-
-        return gameFromConf;
     }
 }
