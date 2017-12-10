@@ -21,14 +21,16 @@ import it.polimi.group06.R;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.domain.Constants.DRAW;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button cardzero_button, cardone_button, cardtwo_button, saveandquit;
     TextView humancard, robotcard, remaining, winner;
 
-    int i, j, color;
+    int i, j, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -158,7 +160,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     void updateStatisticsFile() {
         String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
-                + "," + String.valueOf(elapsedSeconds);
+                + "," + String.valueOf(elapsedSeconds) + "," + String.valueOf(numberoftimesplayerwon) + "," + String.valueOf(numberoftimesrobotwon) +","+
+                String.valueOf(numberofdraws);
 
         OutputHandler.writefile(towrite, "statistics", getApplicationContext());
     }
@@ -168,10 +171,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardzero_button.setText("-");
         if (game.returnWinner() == FIRSTPLAYER) {
             text = "Player wins with " + String.valueOf(human.getPlayerPoints());
+            numberoftimesplayerwon +=1;
         } else if (game.returnWinner() == FIRSTPLAYER) {
             text = "Robot wins with " + String.valueOf(robot.getPlayerPoints());
+            numberoftimesrobotwon +=1;
         } else {
             text = "Draw";
+            numberofdraws +=1;
         }
         Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
 
@@ -211,11 +217,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
             }
             elapsedSeconds = Double.parseDouble(statList.get(3));
+            numberoftimesplayerwon = Integer.parseInt(statList.get(4));
+            numberoftimesrobotwon = Integer.parseInt(statList.get(5));
+            numberofdraws = Integer.parseInt(statList.get(6));
         } else {
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = 0;
             }
             elapsedSeconds = 0;
+            numberoftimesplayerwon = 0;
+            numberoftimesrobotwon = 0;
+            numberofdraws = 0;
         }
     }
 

@@ -44,7 +44,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     void deleteStatistics(){
-        String towrite = 0 + "," + 0 + "," + 0 +","+0;
+        String towrite = 0 + "," + 0 + "," + 0 +","+ 0+","+ 0+","+ 0+","+ 0;
         OutputHandler.writefile(towrite, "statistics", getApplicationContext());
     }
 
@@ -60,14 +60,19 @@ public class StatisticsActivity extends AppCompatActivity {
         TextView zero = findViewById(R.id.zero);
         TextView one = findViewById(R.id.one);
         TextView two = findViewById(R.id.two);
-
         TextView seconds = findViewById(R.id.timeplayed);
+        TextView numberplayer = findViewById(R.id.playerwins_text);
+        TextView numberrobot = findViewById(R.id.robotwins_text);
+        TextView draws = findViewById(R.id.draws_text);
 
         if(statList!=null){
             zero.setText(statList.get(0));
             one.setText(statList.get(1));
             two.setText(statList.get(2));
             seconds.setText(statList.get(3));
+            numberplayer.setText(statList.get(4));
+            numberrobot.setText(statList.get(5));
+            draws.setText(statList.get(6));
         }
 
     }
