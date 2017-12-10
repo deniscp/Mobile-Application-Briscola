@@ -11,6 +11,7 @@ public class InputHandler {
     public static String getStringfromFile(String kind, Context ctx){
         FileInputStream fis;
         int n;
+        String returnString;
         StringBuffer fileContent = new StringBuffer("");
         try {
             fis = ctx.openFileInput(kind);
@@ -22,9 +23,13 @@ public class InputHandler {
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
+            returnString="filenotfound";
         } catch (IOException e) {
             System.out.println("Problem");
+            returnString="problem";
         }
-        return fileContent.toString();
+        returnString = fileContent.toString();
+        System.out.println("xxxxyyyy" + returnString);
+        return returnString;
     }
 }

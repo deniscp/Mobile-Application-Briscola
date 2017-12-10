@@ -14,7 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
+import it.polimi.group06.domain.Game;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,10 +43,24 @@ public class MainActivity extends AppCompatActivity {
         final Button load_button = findViewById(R.id.load_button);
         load_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String msg = "fromsaved";
-                Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                gameIntent.putExtra("keyMessage", msg);
-                MainActivity.this.startActivity(gameIntent);
+                String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
+                if (config.equals("filenotfound") || config.equals("problem") || config.equals("")) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("No Saved Game")
+                            .setMessage("There is no saved game yet!")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    System.out.println("aisjidj");
+                                }
+                            }).show();
+                } else {
+                    String msg = "fromsaved";
+                    Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                    gameIntent.putExtra("keyMessage", msg);
+                    MainActivity.this.startActivity(gameIntent);
+                }
+
             }
         });
 

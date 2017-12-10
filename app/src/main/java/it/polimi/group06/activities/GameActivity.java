@@ -28,9 +28,9 @@ import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button cardzero_button, cardone_button, cardtwo_button, saveandquit;
-    TextView humancard, robotcard, remaining, winner;
+    TextView humancard, robotcard, remaining, winner, briscola;
 
-    int i, j, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+    int i, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -50,22 +50,27 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game);
 
-        Bundle extras = getIntent().getExtras();
-        String msg = extras.getString("keyMessage");
-
         cardzero_button = findViewById(R.id.zero);
         cardone_button = findViewById(R.id.one);
         cardtwo_button = findViewById(R.id.two);
         humancard = findViewById(R.id.humancard);
         robotcard = findViewById(R.id.robotcard);
         remaining = findViewById(R.id.remaining);
+        briscola = findViewById(R.id.briscola);
         winner = findViewById(R.id.winner);
         saveandquit = findViewById(R.id.savequit_button);
-        if (msg == "fromsaved") {
-            createGamefromConfig();
-        } else {
+
+        Bundle extras = getIntent().getExtras();
+        String msg = extras.getString("keyMessage");
+
+        if (msg.equals("fromsaved")) {
+            String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
+            game = Game.initializeFromConf(config);
+        }
+        if (msg.equals("newgame")){
             game = new Game();
         }
+
         human = game.getPlayers()[0];
         robot = game.getPlayers()[1];
 
@@ -83,10 +88,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         saveandquit.setOnClickListener(this);
 
         tStart = System.currentTimeMillis();
-    }
-
-    void createGamefromConfig() {
-        String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
     }
 
     void setText() {
@@ -109,8 +110,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             cardzero_button.setEnabled(false);
         }
-
         remaining.setText(String.valueOf(game.remainingCards()));
+        briscola.setText(String.valueOf(game.getTable().getBriscola()));
     }
 
     @Override
@@ -146,8 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             game.playerPlaysCard(1, 0);
             game.newRound();
             setText();
-            j++;
-            if (j == 20) {
+            if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
                 endofgame();
             }
         }
@@ -194,6 +194,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Intent intent = getIntent();
+                        String msg = intent.getExtras().getString("keyMessage");
+                        if(msg.equals("fromsaved")){
+                            msg="newgame";
+                            intent.putExtra("keyMessage", msg);
+                        }
                         finish();
                         startActivity(intent);
                     }
