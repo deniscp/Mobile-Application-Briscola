@@ -104,11 +104,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanhand[2].setText("-");
             }
         } else if (human.getHand().size() == 1) {
-            cardone_button.setEnabled(false);
+            humanhand[1].setEnabled(false);
+            humanhand[2].setEnabled(false);
             humanhand[1].setText("-");
+            humanhand[2].setText("-");
             humanhand[0].setText(human.getHand().get(0).toString());
         } else {
-            cardzero_button.setEnabled(false);
+            for(int i=0;i<3;i++){
+                humanhand[i].setEnabled(false);
+                humanhand[i].setText("-");
+            }
         }
         remaining.setText(String.valueOf(game.remainingCards()));
         briscola.setText(String.valueOf(game.getTable().getBriscola()));
