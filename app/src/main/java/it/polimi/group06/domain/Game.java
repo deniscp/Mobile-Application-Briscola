@@ -69,7 +69,7 @@ public class Game {
 
     /**
      * Returns how many cards can still be picked by players.
-     * @return The number of cards left in the deck plus the briscola if it is still on the table
+     * @return The number of cards left in the deck plus one if the briscola is still on the table
      */
     public int remainingCards(){
         int briscola = 0;
