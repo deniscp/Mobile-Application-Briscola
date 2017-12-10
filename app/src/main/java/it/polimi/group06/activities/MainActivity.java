@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import it.polimi.group06.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +31,19 @@ public class MainActivity extends AppCompatActivity {
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String msg = "newgame";
                 Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                gameIntent.putExtra("keyMessage", msg);
+                MainActivity.this.startActivity(gameIntent);
+            }
+        });
+
+        final Button load_button = findViewById(R.id.load_button);
+        load_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String msg = "fromsaved";
+                Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+                gameIntent.putExtra("keyMessage", msg);
                 MainActivity.this.startActivity(gameIntent);
             }
         });

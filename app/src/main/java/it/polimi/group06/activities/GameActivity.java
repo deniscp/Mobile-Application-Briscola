@@ -29,7 +29,7 @@ import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button cardzero_button, cardone_button, cardtwo_button;
+    Button cardzero_button, cardone_button, cardtwo_button, saveandquit;
     TextView humancard, robotcard, remaining, winner;
 
     int i, j, color;
@@ -52,6 +52,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game);
 
+        Bundle extras = getIntent().getExtras();
+        String msg = extras.getString("keyMessage");
+
         cardzero_button = findViewById(R.id.zero);
         cardone_button = findViewById(R.id.one);
         cardtwo_button = findViewById(R.id.two);
@@ -59,8 +62,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard = findViewById(R.id.robotcard);
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
-
-        game = new Game();
+        saveandquit = findViewById(R.id.savequit_button);
+        if (msg == "fromsaved") {
+            createGamefromConfig();
+        } else {
+            game = new Game();
+        }
         human = game.getPlayers()[0];
         robot = game.getPlayers()[1];
 
@@ -75,8 +82,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardzero_button.setOnClickListener(this);
         cardone_button.setOnClickListener(this);
         cardtwo_button.setOnClickListener(this);
+        saveandquit.setOnClickListener(this);
 
         tStart = System.currentTimeMillis();
+    }
+
+    void createGamefromConfig() {
+        FileInputStream fis;
+        int n;
+        StringBuffer fileContent = new StringBuffer("");
+        try {
+            fis = openFileInput("savedgame");
+
+            byte[] buffer = new byte[1024];
+
+            while ((n = fis.read(buffer)) != -1) {
+                fileContent.append(new String(buffer, 0, n));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch (IOException e) {
+            System.out.println("Problem");
+        }
+
+        String config = fileContent.toString();
     }
 
     void setText() {
@@ -105,6 +134,36 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        boolean cardplayed = false;
+        switch (v.getId()) {
+            case (R.id.savequit_button):
+                saveGame();
+                System.out.println("xxxxxxx");
+                cardplayed=false;
+                finish();
+                break;
+            case (R.id.zero):
+                amountpositionwasplayed[0] += 1;
+                i = 0;
+                cardplayed=true;
+                break;
+            case (R.id.one):
+                amountpositionwasplayed[1] += 1;
+                i = 1;
+                cardplayed=true;
+                break;
+            case (R.id.two):
+                amountpositionwasplayed[2] += 1;
+                i = 2;
+                cardplayed=true;
+                break;
+        }
+        /*
+        if (v.getId() == R.id.savequit_button){
+            saveGame();
+            System.out.println("xxxxxxx");
+            finish();
+        }
         if (v.getId() == R.id.zero) {
             amountpositionwasplayed[0] += 1;
             i = 0;
@@ -116,16 +175,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.two) {
             amountpositionwasplayed[2] += 1;
             i = 2;
+        }*/
+        if(cardplayed) {
+            humancard.setText(human.getHand().get(i).toString());
+            game.playerPlaysCard(0, i);
+            robotcard.setText(robot.getHand().get(0).toString());
+            game.playerPlaysCard(1, 0);
+            game.newRound();
+            setText();
+            j++;
+            if (j == 20) {
+                endofgame();
+            }
         }
-        humancard.setText(human.getHand().get(i).toString());
-        game.playerPlaysCard(0, i);
-        robotcard.setText(robot.getHand().get(0).toString());
-        game.playerPlaysCard(1, 0);
-        game.newRound();
-        setText();
-        j++;
-        if (j == 20) {
-            endofgame();
+    }
+
+    void saveGame() {
+        String towrite = game.toConfiguration();
+        FileOutputStream outputStream;
+        try {
+            outputStream = openFileOutput("savedgame", Context.MODE_PRIVATE);
+            outputStream.write(towrite.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -144,7 +217,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         elapsedSeconds += tDelta / 1000.0;
-        elapsedSeconds = (double)Math.round(elapsedSeconds * 100d) / 100d;
+        elapsedSeconds = (double) Math.round(elapsedSeconds * 100d) / 100d;
 
         updateStatisticsFile();
 
@@ -186,13 +259,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         String stats = fileContent.toString();
-        if(!stats.equals("")) {
+        if (!stats.equals("")) {
             List<String> statList = Arrays.asList(stats.split(","));
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
             }
             elapsedSeconds = Double.parseDouble(statList.get(3));
-        }else{
+        } else {
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = 0;
             }
