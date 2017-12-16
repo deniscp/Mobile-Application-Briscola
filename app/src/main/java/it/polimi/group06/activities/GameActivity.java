@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +31,8 @@ import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button saveandquit;
-    TextView humancard, robotcard, remaining, winner;
-    ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image;
+    TextView remaining, winner;
+    ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
 
     int i, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
@@ -53,8 +54,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game);
 
-        humancard = findViewById(R.id.humancard);
-        robotcard = findViewById(R.id.robotcard);
+        humancard = findViewById(R.id.humanplayed);
+        robotcard = findViewById(R.id.robotplayed);
 
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
@@ -92,6 +93,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         briscola_image.setImageDrawable(getCardDrawable(game.getTable().getBriscola()));
 
         setHandCardImages();
+
+        humancard.setImageDrawable(null);
+        robotcard.setImageDrawable(null);
 
         tStart = System.currentTimeMillis();
     }
@@ -244,15 +248,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         if (cardplayed) {
-            humancard.setText(human.getHand().get(i).toString());
+            //set card to played card by human
+            humancard.setImageDrawable(getCardDrawable(human.getHand().get(i)));
+            //actually play card
             game.playerPlaysCard(0, i);
-            robotcard.setText(robot.getHand().get(0).toString());
+            //set card to played card by robot
+            robotcard.setImageDrawable(getCardDrawable(robot.getHand().get(i)));
+            //actually play card
             game.playerPlaysCard(1, 0);
             game.newRound();
             setHandCardImages();
             if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
                 endofgame();
             }
+
+            //humancard.setImageDrawable(null);
+            //robotcard.setImageDrawable(null);
         }
     }
 
