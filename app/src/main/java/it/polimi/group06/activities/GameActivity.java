@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     TextView remaining, winner;
     ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
 
-    int i, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+    int cardatpositionplayed, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -100,6 +99,70 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         tStart = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        updateStatisticsFile();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        updateStatisticsFile();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        updateStatisticsFile();
+    }
+
+    @Override
+    public void onClick(View v) {
+        boolean cardplayed = false;
+        switch (v.getId()) {
+            case (R.id.savequit_button):
+                saveGame();
+                cardplayed = false;
+                finish();
+                break;
+            case (R.id.cardzeroimage):
+                amountpositionwasplayed[0] += 1;
+                cardatpositionplayed = 0;
+                cardplayed = true;
+                break;
+            case (R.id.cardoneimage):
+                amountpositionwasplayed[1] += 1;
+                cardatpositionplayed = 1;
+                cardplayed = true;
+                break;
+            case (R.id.cardtwoimage):
+                amountpositionwasplayed[2] += 1;
+                cardatpositionplayed = 2;
+                cardplayed = true;
+                break;
+        }
+        if (cardplayed) {
+            //set card to played card by human
+            humancard.setImageDrawable(getCardDrawable(human.getHand().get(cardatpositionplayed)));
+            //actually play card
+            game.playerPlaysCard(0, cardatpositionplayed);
+            //set card to played card by robot
+            robotcard.setImageDrawable(getCardDrawable(robot.getHand().get(cardatpositionplayed)));
+            //actually play card
+            game.playerPlaysCard(1, 0);
+            game.newRound();
+            setHandCardImages();
+            if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
+                endofgame();
+            }
+            //humancard.setImageDrawable(null);
+            //robotcard.setImageDrawable(null);
+        }
+    }
 
     void setHandCardImages() {
         ImageView[] humanhand = {cardzero_image, cardone_image, cardtwo_image};
@@ -222,66 +285,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return null;
     }
 
-    @Override
-    public void onClick(View v) {
-        boolean cardplayed = false;
-        switch (v.getId()) {
-            case (R.id.savequit_button):
-                saveGame();
-                cardplayed = false;
-                finish();
-                break;
-            case (R.id.cardzeroimage):
-                amountpositionwasplayed[0] += 1;
-                i = 0;
-                cardplayed = true;
-                break;
-            case (R.id.cardoneimage):
-                amountpositionwasplayed[1] += 1;
-                i = 1;
-                cardplayed = true;
-                break;
-            case (R.id.cardtwoimage):
-                amountpositionwasplayed[2] += 1;
-                i = 2;
-                cardplayed = true;
-                break;
-        }
-        if (cardplayed) {
-            //set card to played card by human
-            humancard.setImageDrawable(getCardDrawable(human.getHand().get(i)));
-            //actually play card
-            game.playerPlaysCard(0, i);
-            //set card to played card by robot
-            robotcard.setImageDrawable(getCardDrawable(robot.getHand().get(i)));
-            //actually play card
-            game.playerPlaysCard(1, 0);
-            game.newRound();
-            setHandCardImages();
-            if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
-                endofgame();
-            }
-
-            //humancard.setImageDrawable(null);
-            //robotcard.setImageDrawable(null);
-        }
-    }
-
-    void saveGame() {
-        String towrite = game.toConfiguration();
-        OutputHandler.writefile(towrite, "savedgame", getApplicationContext());
-    }
-
-    void updateStatisticsFile() {
-        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
-                + "," + String.valueOf(elapsedSeconds) + "," + String.valueOf(numberoftimesplayerwon) + "," + String.valueOf(numberoftimesrobotwon) + "," +
-                String.valueOf(numberofdraws);
-
-        OutputHandler.writefile(towrite, "statistics", getApplicationContext());
-    }
-
     public void endofgame() {
         String text;
+
+        saveandquit.setEnabled(false);
+
         if (game.returnWinner() == FIRSTPLAYER) {
             text = "Player wins with " + String.valueOf(human.getPlayerPoints()) + " Points";
             numberoftimesplayerwon += 1;
@@ -323,6 +331,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .show();
 
+    }
+
+    void saveGame() {
+        String towrite = game.toConfiguration();
+        OutputHandler.writefile(towrite, "savedgame", getApplicationContext());
+    }
+
+    void updateStatisticsFile() {
+        String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
+                + "," + String.valueOf(elapsedSeconds) + "," + String.valueOf(numberoftimesplayerwon) + "," + String.valueOf(numberoftimesrobotwon) + "," +
+                String.valueOf(numberofdraws);
+
+        OutputHandler.writefile(towrite, "statistics", getApplicationContext());
     }
 
     void getStatisticsFile() {
