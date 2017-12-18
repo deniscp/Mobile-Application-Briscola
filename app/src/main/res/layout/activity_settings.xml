@@ -9,39 +9,42 @@
 
     <RadioGroup
         android:id="@+id/colorpicker_group"
-        android:layout_width="115dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="151dp"
+        android:layout_height="530dp"
+        android:layout_margin="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:orientation='vertical'
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/red"
+            android:id="@+id/classic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Red"
+            android:layout_height="134dp"
+            android:drawableTop="@drawable/deck90"
+            android:gravity="center"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/orange"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Orange"
+            android:layout_height="128dp"
+            android:drawableTop="@drawable/deck_orange90"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/green"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Green"
+            android:layout_height="128dp"
+            android:drawableTop="@drawable/deck_green90"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/blue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Blue"
+            android:layout_height="128dp"
+            android:drawableTop="@drawable/deck_blue90"
             android:textSize="18sp" />
 
     </RadioGroup>
@@ -50,8 +53,8 @@
         android:id="@+id/cardpicker_group"
         android:layout_width="129dp"
         android:layout_height="111dp"
-        android:layout_marginBottom="308dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginBottom="272dp"
+        android:layout_marginStart="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -84,10 +87,22 @@
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        android:layout_marginStart="141dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="140dp"
         android:text="Save Settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="252dp"
+        android:text="Cardback:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

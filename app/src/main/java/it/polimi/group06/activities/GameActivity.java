@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +38,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     List<String> settingsList;
     String cardbackstring;
 
+    Animation robottomiddle;
+
     int cardatpositionplayed, color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
@@ -53,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_game_actvity);
 
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
@@ -79,11 +84,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             game = new Game();
         }
 
+        robottomiddle = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.robotcard);
+
         human = game.getPlayers()[0];
         robot = game.getPlayers()[1];
 
         getStatisticsFile();
-        setSettingsfromFile();
+        getSettingsFile();
         System.out.println("adssdaioadsjioafirst" + cardbackstring);
         saveandquit.setOnClickListener(this);
 
@@ -92,7 +100,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardtwo_image.setOnClickListener(this);
 
         briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
-        System.out.println("zzzzzfirst"+ getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
+        System.out.println("zzzzzfirst" + getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
 
         setHandCardImages();
 
@@ -106,21 +114,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         super.onPause();
 
-        updateStatisticsFile();
+        setStatisticsFile();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        updateStatisticsFile();
+        setStatisticsFile();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        updateStatisticsFile();
+        setStatisticsFile();
     }
 
     @Override
@@ -153,15 +161,36 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         humancard.setImageResource(getCardDrawable(human.getHand().get(cardatpositionplayed), cardcontext));
         //actually play card
         game.playerPlaysCard(0, cardatpositionplayed);
+
+        cardzero_image.setEnabled(false);
+        cardone_image.setEnabled(false);
+        cardtwo_image.setEnabled(false);
+
         //set card to played card by robot
         robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+        robotcard.startAnimation(robottomiddle);
         //actually play card
         game.playerPlaysCard(1, 0);
-        game.newRound();
-        setHandCardImages();
-        if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
-            endofgame();
-        }
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                humancard.setImageDrawable(null);
+                robotcard.setImageDrawable(null);
+
+                game.newRound();
+                setHandCardImages();
+                if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
+                    endofgame();
+                }
+
+                cardzero_image.setEnabled(true);
+                cardone_image.setEnabled(true);
+                cardtwo_image.setEnabled(true);
+            }
+        }, 1000);
+
     }
 
     void setHandCardImages() {
@@ -309,7 +338,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         elapsedSeconds += tDelta / 1000.0;
         elapsedSeconds = (double) Math.round(elapsedSeconds * 100d) / 100d;
 
-        updateStatisticsFile();
+        setStatisticsFile();
 
         new AlertDialog.Builder(GameActivity.this)
                 .setTitle("End of Game")
@@ -340,7 +369,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         OutputHandler.writefile(towrite, "savedgame", getApplicationContext());
     }
 
-    void updateStatisticsFile() {
+    void setStatisticsFile() {
         String towrite = String.valueOf(amountpositionwasplayed[0]) + "," + String.valueOf(amountpositionwasplayed[1]) + "," + String.valueOf(amountpositionwasplayed[2])
                 + "," + String.valueOf(elapsedSeconds) + "," + String.valueOf(numberoftimesplayerwon) + "," + String.valueOf(numberoftimesrobotwon) + "," +
                 String.valueOf(numberofdraws);
@@ -372,7 +401,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void setSettingsfromFile() {
+    void getSettingsFile() {
         String str = InputHandler.getStringfromFile("settings", getApplicationContext());
         settingsList = Arrays.asList(str.split(","));
         System.out.println("YYYY" + settingsList);
@@ -415,3 +444,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+

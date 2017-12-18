@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
         colorpicker = findViewById(R.id.colorpicker_group);
         cardpicker = findViewById(R.id.cardpicker_group);
 
-        red = findViewById(R.id.red);
+        red = findViewById(R.id.classic);
         orange = findViewById(R.id.orange);
         green = findViewById(R.id.green);
         blue = findViewById(R.id.blue);
@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.red) {
+                if (checkedId == R.id.classic) {
                     whichcolor = 0;
                 } else if (checkedId == R.id.orange) {
                     whichcolor = 1;

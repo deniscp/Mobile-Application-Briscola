@@ -1,25 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_game"
+    android:background="@drawable/background_settings"
     tools:context="it.polimi.group06.activities.GameActivity">
-
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text=""
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/winner"
@@ -30,15 +16,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-
     <TextView
         android:id="@+id/remaining"
-        android:layout_width="128dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="155dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="204dp"
         android:background="@drawable/deck"
         android:gravity="center_vertical|center_horizontal"
         android:text="remaining"
@@ -48,24 +31,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/fullscreen_content_controls"
-        style="?metaButtonBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/black_overlay"
-        android:orientation="horizontal"
-        tools:ignore="UselessParent">
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/savequit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="45dp"
-        android:text="Save and Quit"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:background="@null"
+        android:drawableRight="@drawable/ic_arrowback"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,8 +52,8 @@
 
     <ImageView
         android:id="@+id/cardzeroimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,8 +62,8 @@
 
     <ImageView
         android:id="@+id/cardoneimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,8 +72,8 @@
 
     <ImageView
         android:id="@+id/cardtwoimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -111,9 +82,9 @@
 
     <ImageView
         android:id="@+id/briscolaimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="216dp"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
+        android:layout_marginBottom="252dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,23 +92,21 @@
 
     <ImageView
         android:id="@+id/humanplayed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="220dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bastoni1n" />
 
     <ImageView
         android:id="@+id/robotplayed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="160dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bastoni1n" />
-
 
 </android.support.constraint.ConstraintLayout>

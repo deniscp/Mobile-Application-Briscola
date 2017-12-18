@@ -10,13 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
-import it.polimi.group06.domain.Game;
 
 public class MainActivity extends AppCompatActivity {
 
