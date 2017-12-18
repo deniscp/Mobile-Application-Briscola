@@ -1,9 +1,9 @@
 package it.polimi.group06.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +32,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button saveandquit;
     TextView remaining, winner;
     ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
+    List<String> settingsList;
+    String cardbackstring;
 
-    int cardatpositionplayed, color, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+    int cardatpositionplayed, color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -82,14 +84,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         getStatisticsFile();
         setSettingsfromFile();
-
+        System.out.println("adssdaioadsjioafirst" + cardbackstring);
         saveandquit.setOnClickListener(this);
 
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
 
-        briscola_image.setImageDrawable(getCardDrawable(game.getTable().getBriscola()));
+        briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
+        System.out.println("zzzzzfirst"+ getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
 
         setHandCardImages();
 
@@ -100,21 +103,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
         updateStatisticsFile();
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
 
         updateStatisticsFile();
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
 
         updateStatisticsFile();
@@ -122,45 +125,42 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        boolean cardplayed = false;
         switch (v.getId()) {
             case (R.id.savequit_button):
                 saveGame();
-                cardplayed = false;
                 finish();
                 break;
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[0] += 1;
                 cardatpositionplayed = 0;
-                cardplayed = true;
+                playCard(0, cardzero_image.getContext());
                 break;
             case (R.id.cardoneimage):
                 amountpositionwasplayed[1] += 1;
                 cardatpositionplayed = 1;
-                cardplayed = true;
+                playCard(1, cardone_image.getContext());
                 break;
             case (R.id.cardtwoimage):
                 amountpositionwasplayed[2] += 1;
                 cardatpositionplayed = 2;
-                cardplayed = true;
+                playCard(2, cardtwo_image.getContext());
                 break;
         }
-        if (cardplayed) {
-            //set card to played card by human
-            humancard.setImageDrawable(getCardDrawable(human.getHand().get(cardatpositionplayed)));
-            //actually play card
-            game.playerPlaysCard(0, cardatpositionplayed);
-            //set card to played card by robot
-            robotcard.setImageDrawable(getCardDrawable(robot.getHand().get(cardatpositionplayed)));
-            //actually play card
-            game.playerPlaysCard(1, 0);
-            game.newRound();
-            setHandCardImages();
-            if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
-                endofgame();
-            }
-            //humancard.setImageDrawable(null);
-            //robotcard.setImageDrawable(null);
+    }
+
+    void playCard(int positionofcard, Context cardcontext) {
+        //set card to played card by human
+        humancard.setImageResource(getCardDrawable(human.getHand().get(cardatpositionplayed), cardcontext));
+        //actually play card
+        game.playerPlaysCard(0, cardatpositionplayed);
+        //set card to played card by robot
+        robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+        //actually play card
+        game.playerPlaysCard(1, 0);
+        game.newRound();
+        setHandCardImages();
+        if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
+            endofgame();
         }
     }
 
@@ -174,20 +174,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (handsize == 3) {
             for (int i = 0; i < 3; i++) {
                 Card humancard = human.getHand().get(i);
-                humanhand[i].setImageDrawable(getCardDrawable(humancard));
+                humanhand[i].setImageResource(getCardDrawable(humancard, cardzero_image.getContext()));
             }
         } else if (handsize == 2) {
             humanhand[2].setImageDrawable(null);
             for (int i = 0; i < 2; i++) {
                 Card humancard = human.getHand().get(i);
-                humanhand[i].setImageDrawable(getCardDrawable(humancard));
+                humanhand[i].setImageResource(getCardDrawable(humancard, cardone_image.getContext()));
             }
         } else if (handsize == 1) {
             Card humancard = human.getHand().get(0);
             for (int i = 0; i < 2; i++) {
                 humanhand[i].setImageDrawable(null);
             }
-            humanhand[0].setImageDrawable(getCardDrawable(humancard));
+            humanhand[0].setImageResource(getCardDrawable(humancard, cardtwo_image.getContext()));
         } else {
             for (int i = 0; i < 3; i++) {
                 humanhand[i].setImageDrawable(null);
@@ -196,93 +196,95 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         remaining.setText(String.valueOf(game.remainingCards()));
     }
 
-    Drawable getCardDrawable(Card cardatposition) {
+    int getCardDrawable(Card cardatposition, Context whichcard) {
+        System.out.println("zzzz" + cardatposition.toString() + " zzzzz " + whichcard.toString() + "zzzzz");
         switch (cardatposition.toString()) {
             case ("1B"):
-                return getResources().getDrawable(R.drawable.bastoni1);
+                return whichcard.getResources().getIdentifier("bastoni1" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("2B"):
-                return getResources().getDrawable(R.drawable.bastoni2);
+                return whichcard.getResources().getIdentifier("bastoni2" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("3B"):
-                return getResources().getDrawable(R.drawable.bastoni3);
+                return whichcard.getResources().getIdentifier("bastoni3" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("4B"):
-                return getResources().getDrawable(R.drawable.bastoni4);
+                return whichcard.getResources().getIdentifier("bastoni4" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("5B"):
-                return getResources().getDrawable(R.drawable.bastoni5);
+                return whichcard.getResources().getIdentifier("bastoni5" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("6B"):
-                return getResources().getDrawable(R.drawable.bastoni6);
+                return whichcard.getResources().getIdentifier("bastoni6" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("7B"):
-                return getResources().getDrawable(R.drawable.bastoni7);
+                return whichcard.getResources().getIdentifier("bastoni7" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("JB"):
-                return getResources().getDrawable(R.drawable.bastoni8);
+                return whichcard.getResources().getIdentifier("bastoni8" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("HB"):
-                return getResources().getDrawable(R.drawable.bastoni9);
+                return whichcard.getResources().getIdentifier("bastoni9" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("KB"):
-                return getResources().getDrawable(R.drawable.bastoni10);
+                return whichcard.getResources().getIdentifier("bastoni10" + cardbackstring, "drawable", whichcard.getPackageName());
 
             case ("1S"):
-                return getResources().getDrawable(R.drawable.spade1);
+                return whichcard.getResources().getIdentifier("spade1" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("2S"):
-                return getResources().getDrawable(R.drawable.spade2);
+                return whichcard.getResources().getIdentifier("spade2" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("3S"):
-                return getResources().getDrawable(R.drawable.spade3);
+                return whichcard.getResources().getIdentifier("spade3" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("4S"):
-                return getResources().getDrawable(R.drawable.spade4);
+                return whichcard.getResources().getIdentifier("spade4" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("5S"):
-                return getResources().getDrawable(R.drawable.spade5);
+                return whichcard.getResources().getIdentifier("spade5" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("6S"):
-                return getResources().getDrawable(R.drawable.spade6);
+                return whichcard.getResources().getIdentifier("spade6" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("7S"):
-                return getResources().getDrawable(R.drawable.spade7);
+                return whichcard.getResources().getIdentifier("spade7" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("JS"):
-                return getResources().getDrawable(R.drawable.spade8);
+                return whichcard.getResources().getIdentifier("spade8" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("HS"):
-                return getResources().getDrawable(R.drawable.spade9);
+                return whichcard.getResources().getIdentifier("spade9" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("KS"):
-                return getResources().getDrawable(R.drawable.spade10);
+                return whichcard.getResources().getIdentifier("spade10" + cardbackstring, "drawable", whichcard.getPackageName());
 
             case ("1C"):
-                return getResources().getDrawable(R.drawable.coppe1);
+                return whichcard.getResources().getIdentifier("coppe1" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("2C"):
-                return getResources().getDrawable(R.drawable.coppe2);
+                return whichcard.getResources().getIdentifier("coppe2" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("3C"):
-                return getResources().getDrawable(R.drawable.coppe3);
+                return whichcard.getResources().getIdentifier("coppe3" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("4C"):
-                return getResources().getDrawable(R.drawable.coppe4);
+                return whichcard.getResources().getIdentifier("coppe4" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("5C"):
-                return getResources().getDrawable(R.drawable.coppe5);
+                return whichcard.getResources().getIdentifier("coppe5" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("6C"):
-                return getResources().getDrawable(R.drawable.coppe6);
+                return whichcard.getResources().getIdentifier("coppe6" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("7C"):
-                return getResources().getDrawable(R.drawable.coppe7);
+                return whichcard.getResources().getIdentifier("coppe7" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("JC"):
-                return getResources().getDrawable(R.drawable.coppe8);
+                return whichcard.getResources().getIdentifier("coppe8" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("HC"):
-                return getResources().getDrawable(R.drawable.coppe9);
+                return whichcard.getResources().getIdentifier("coppe9" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("KC"):
-                return getResources().getDrawable(R.drawable.coppe10);
+                return whichcard.getResources().getIdentifier("coppe10" + cardbackstring, "drawable", whichcard.getPackageName());
 
             case ("1G"):
-                return getResources().getDrawable(R.drawable.denari1);
+                return whichcard.getResources().getIdentifier("denari1" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("2G"):
-                return getResources().getDrawable(R.drawable.denari2);
+                return whichcard.getResources().getIdentifier("denari2" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("3G"):
-                return getResources().getDrawable(R.drawable.denari3);
+                return whichcard.getResources().getIdentifier("denari3" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("4G"):
-                return getResources().getDrawable(R.drawable.denari4);
+                return whichcard.getResources().getIdentifier("denari4" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("5G"):
-                return getResources().getDrawable(R.drawable.denari5);
+                return whichcard.getResources().getIdentifier("denari5" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("6G"):
-                return getResources().getDrawable(R.drawable.denari6);
+                return whichcard.getResources().getIdentifier("denari6" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("7G"):
-                return getResources().getDrawable(R.drawable.denari7);
+                return whichcard.getResources().getIdentifier("denari7" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("JG"):
-                return getResources().getDrawable(R.drawable.denari8);
+                return whichcard.getResources().getIdentifier("denari8" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("HG"):
-                return getResources().getDrawable(R.drawable.denari9);
+                return whichcard.getResources().getIdentifier("denari9" + cardbackstring, "drawable", whichcard.getPackageName());
             case ("KG"):
-                return getResources().getDrawable(R.drawable.denari10);
+                return whichcard.getResources().getIdentifier("denari10" + cardbackstring, "drawable", whichcard.getPackageName());
         }
-        return null;
+        System.out.println("not in switch");
+        return 0;
     }
 
     public void endofgame() {
@@ -372,10 +374,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     void setSettingsfromFile() {
         String str = InputHandler.getStringfromFile("settings", getApplicationContext());
-
-        System.out.println("YYYY" + str);
+        settingsList = Arrays.asList(str.split(","));
+        System.out.println("YYYY" + settingsList);
         if (!str.equals("")) {
-            color = Integer.parseInt(str);
+            color = Integer.parseInt(settingsList.get(0));
+            cardback = Integer.parseInt(settingsList.get(1));
+
             switch (color) {
                 case (0):
                     remaining.setBackgroundResource(R.drawable.deck);
@@ -392,7 +396,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 default:
                     System.out.println("This color doesn't exist");
             }
-            System.out.println("XXXX" + color);
+
+            switch (cardback) {
+                case (0):
+                    cardbackstring = "n";
+                    break;
+                case (1):
+                    cardbackstring = "g";
+                    break;
+                case (2):
+                    cardbackstring = "s";
+                    break;
+                default:
+                    cardbackstring = "n";
+            }
+
+            System.out.println("XXXX" + color + cardback);
         }
     }
 }

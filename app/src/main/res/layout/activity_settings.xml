@@ -43,6 +43,41 @@
             android:layout_height="wrap_content"
             android:text="Blue"
             android:textSize="18sp" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/cardpicker_group"
+        android:layout_width="129dp"
+        android:layout_height="111dp"
+        android:layout_marginBottom="308dp"
+        android:layout_marginStart="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/naples"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Naples"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/german"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="German"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/sicily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sicily"
+            android:textSize="18sp" />
     </RadioGroup>
 
     <Button
@@ -54,4 +89,5 @@
         android:text="Save Settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -87,7 +87,7 @@
         android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/bastoni1" />
+        app:srcCompat="@drawable/bastoni1n" />
 
     <ImageView
         android:id="@+id/cardoneimage"
@@ -97,7 +97,7 @@
         android:layout_marginEnd="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/bastoni2" />
+        app:srcCompat="@drawable/bastoni2n" />
 
     <ImageView
         android:id="@+id/cardtwoimage"
@@ -107,7 +107,7 @@
         android:layout_marginEnd="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/bastoni3" />
+        app:srcCompat="@drawable/bastoni3n" />
 
     <ImageView
         android:id="@+id/briscolaimage"
@@ -117,7 +117,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/bastoni1" />
+        app:srcCompat="@drawable/bastoni1n" />
 
     <ImageView
         android:id="@+id/humanplayed"
@@ -127,7 +127,7 @@
         android:layout_marginTop="208dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bastoni1" />
+        app:srcCompat="@drawable/bastoni1n" />
 
     <ImageView
         android:id="@+id/robotplayed"
@@ -137,7 +137,7 @@
         android:layout_marginTop="208dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bastoni1" />
+        app:srcCompat="@drawable/bastoni1n" />
 
 
 </android.support.constraint.ConstraintLayout>
