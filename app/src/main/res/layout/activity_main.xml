@@ -20,8 +20,8 @@
             android:layout_width="181dp"
             android:layout_height="60dp"
             android:layout_marginBottom="24dp"
-            android:layout_marginEnd="56dp"
-            android:layout_marginStart="55dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginLeft="55dp"
             android:soundEffectsEnabled="false"
             android:text="@string/start"
             android:textColor="@color/black"
@@ -36,9 +36,14 @@
             android:layout_width="181dp"
             android:layout_height="60dp"
             android:layout_marginBottom="24dp"
+<<<<<<< HEAD
             android:layout_marginEnd="56dp"
             android:layout_marginStart="55dp"
             android:drawableLeft="@drawable/ic_file_upload_black_24dp"
+=======
+            android:layout_marginRight="56dp"
+            android:layout_marginLeft="55dp"
+>>>>>>> 00bd30eba80ce48b881a3b61a770dec75abbaa7d
             android:soundEffectsEnabled="false"
             android:text="Load"
             android:textColor="@color/black"
@@ -52,9 +57,14 @@
             android:layout_width="181dp"
             android:layout_height="63dp"
             android:layout_marginBottom="24dp"
+<<<<<<< HEAD
             android:layout_marginEnd="115dp"
             android:layout_marginStart="115dp"
             android:drawableLeft="@drawable/ic_chart_black_24dp"
+=======
+            android:layout_marginRight="56dp"
+            android:layout_marginLeft="55dp"
+>>>>>>> 00bd30eba80ce48b881a3b61a770dec75abbaa7d
             android:text="@string/statistics"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -67,9 +77,14 @@
             android:layout_width="181dp"
             android:layout_height="60dp"
             android:layout_marginBottom="24dp"
+<<<<<<< HEAD
             android:layout_marginEnd="115dp"
             android:layout_marginStart="115dp"
             android:drawableLeft="@drawable/ic_settings_black_24dp"
+=======
+            android:layout_marginRight="56dp"
+            android:layout_marginLeft="55dp"
+>>>>>>> 00bd30eba80ce48b881a3b61a770dec75abbaa7d
             android:includeFontPadding="false"
             android:text="@string/settings"
             android:textColor="@color/black"
@@ -83,8 +98,8 @@
             android:layout_width="181dp"
             android:layout_height="60dp"
             android:layout_marginBottom="36dp"
-            android:layout_marginEnd="56dp"
-            android:layout_marginStart="55dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginLeft="55dp"
             android:text="@string/exit"
             android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
             android:textColor="@color/black"
@@ -98,8 +113,8 @@
             android:id="@+id/briscola"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="67dp"
-            android:layout_marginStart="66dp"
+            android:layout_marginRight="67dp"
+            android:layout_marginLeft="66dp"
             android:layout_marginTop="64dp"
             android:text="BRISCOLA"
             android:textSize="60sp"
