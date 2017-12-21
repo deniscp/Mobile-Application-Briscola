@@ -18,11 +18,11 @@ import it.polimi.group06.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    RadioGroup colorpicker, cardpicker;
-    RadioButton red, orange, green, blue, naples, german, sicily;
+    RadioGroup cardpicker;
+    RadioButton naples, german, sicily;
     Button button;
     List<String> settingsList;
-    int whichcolor, whichcardback;
+    int whichcarddeck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_settings);
 
-        colorpicker = findViewById(R.id.colorpicker_group);
         cardpicker = findViewById(R.id.cardpicker_group);
-
-        red = findViewById(R.id.classic);
-        orange = findViewById(R.id.orange);
-        green = findViewById(R.id.green);
-        blue = findViewById(R.id.blue);
 
         naples = findViewById(R.id.naples);
         german = findViewById(R.id.german);
@@ -49,24 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         getSettings();
 
-        switch (whichcolor) {
-            case (0):
-                red.setChecked(true);
-                break;
-            case (1):
-                orange.setChecked(true);
-                break;
-            case (2):
-                green.setChecked(true);
-                break;
-            case (3):
-                blue.setChecked(true);
-                break;
-            default:
-                System.out.println("this doesn't exist");
-        }
-
-        switch (whichcardback) {
+        switch (whichcarddeck) {
             case (0):
                 naples.setChecked(true);
                 break;
@@ -80,31 +57,15 @@ public class SettingsActivity extends AppCompatActivity {
                 System.out.print("this doesn't exist");
         }
 
-        colorpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.classic) {
-                    whichcolor = 0;
-                } else if (checkedId == R.id.orange) {
-                    whichcolor = 1;
-                } else if (checkedId == R.id.green) {
-                    whichcolor = 2;
-                } else if (checkedId == R.id.blue) {
-                    whichcolor = 3;
-                }
-            }
-        });
-
         cardpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.naples){
-                    whichcardback = 0;
-                } else if (checkedId == R.id.german){
-                    whichcardback = 1;
-                } else if (checkedId == R.id.sicily){
-                    whichcardback = 2;
+                if (checkedId == R.id.naples) {
+                    whichcarddeck = 0;
+                } else if (checkedId == R.id.german) {
+                    whichcarddeck = 1;
+                } else if (checkedId == R.id.sicily) {
+                    whichcarddeck = 2;
                 }
             }
         });
@@ -113,9 +74,8 @@ public class SettingsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String towrite = String.valueOf(whichcolor + "," + whichcardback);
+                String towrite = String.valueOf(whichcarddeck + ",");
                 OutputHandler.writefile(towrite, "settings", getApplicationContext());
-                System.out.println("saveSettings" + whichcolor);
                 finish();
             }
         });
@@ -123,15 +83,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     void getSettings() {
         String str = InputHandler.getStringfromFile("settings", getApplicationContext());
-        if(str.equals("")){
-            whichcolor = 0;
-            whichcardback = 0;
-        }else{
+        if (str.equals("")) {
+            whichcarddeck = 0;
+        } else {
             settingsList = Arrays.asList(str.split(","));
-            whichcolor = Integer.parseInt(settingsList.get(0));
-            whichcardback = Integer.parseInt(settingsList.get(1));
+            whichcarddeck = Integer.parseInt(settingsList.get(0));
         }
-        System.out.println("GetSettings" + whichcolor + whichcardback);
     }
-
 }

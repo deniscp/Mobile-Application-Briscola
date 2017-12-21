@@ -8,48 +8,6 @@
     tools:context="it.polimi.group06.activities.SettingsActivity">
 
     <RadioGroup
-        android:id="@+id/colorpicker_group"
-        android:layout_width="151dp"
-        android:layout_height="530dp"
-        android:layout_margin="20dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
-        android:orientation='vertical'
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/classic"
-            android:layout_width="wrap_content"
-            android:layout_height="134dp"
-            android:drawableTop="@drawable/deck90"
-            android:gravity="center"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/orange"
-            android:layout_width="wrap_content"
-            android:layout_height="128dp"
-            android:drawableTop="@drawable/deck_orange90"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/green"
-            android:layout_width="wrap_content"
-            android:layout_height="128dp"
-            android:drawableTop="@drawable/deck_green90"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/blue"
-            android:layout_width="wrap_content"
-            android:layout_height="128dp"
-            android:drawableTop="@drawable/deck_blue90"
-            android:textSize="18sp" />
-
-    </RadioGroup>
-
-    <RadioGroup
         android:id="@+id/cardpicker_group"
         android:layout_width="129dp"
         android:layout_height="111dp"

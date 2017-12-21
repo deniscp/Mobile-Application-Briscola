@@ -165,7 +165,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardone_image.setEnabled(false);
         cardtwo_image.setEnabled(false);
 
-        if(game.getStartingPlayer()==0){
+        if (game.getStartingPlayer() == 0) {
             //set card to played card by robot
             robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
             robotcard.startAnimation(robottomiddle);
@@ -184,20 +184,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
                     endofgame();
+                } else {
+                    setHandCardImages();
+                    if (game.getStartingPlayer() == 1) {
+                        //set card to played card by robot
+                        robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
+                        robotcard.startAnimation(robottomiddle);
+                        //actually play card
+                        game.playerPlaysCard(1, 0);
+                    }
+                    cardzero_image.setEnabled(true);
+                    cardone_image.setEnabled(true);
+                    cardtwo_image.setEnabled(true);
                 }
-
-                setHandCardImages();
-                if(game.getStartingPlayer()==1){
-                    //set card to played card by robot
-                    robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
-                    robotcard.startAnimation(robottomiddle);
-                    //actually play card
-                    game.playerPlaysCard(1, 0);
-                }
-
-                cardzero_image.setEnabled(true);
-                cardone_image.setEnabled(true);
-                cardtwo_image.setEnabled(true);
             }
         }, 1000);
 
@@ -416,26 +415,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         settingsList = Arrays.asList(str.split(","));
         System.out.println("YYYY" + settingsList);
         if (!str.equals("")) {
-            color = Integer.parseInt(settingsList.get(0));
-            cardback = Integer.parseInt(settingsList.get(1));
-
-            switch (color) {
-                case (0):
-                    remaining.setBackgroundResource(R.drawable.deck);
-                    break;
-                case (1):
-                    remaining.setBackgroundResource(R.drawable.deck_orange);
-                    break;
-                case (2):
-                    remaining.setBackgroundResource(R.drawable.deck_green);
-                    break;
-                case (3):
-                    remaining.setBackgroundResource(R.drawable.deck_blue);
-                    break;
-                default:
-                    System.out.println("This color doesn't exist");
-            }
-
+            cardback = Integer.parseInt(settingsList.get(0));
             switch (cardback) {
                 case (0):
                     cardbackstring = "n";
