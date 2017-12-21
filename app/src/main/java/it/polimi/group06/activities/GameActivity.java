@@ -58,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_game_actvity);
+        setContentView(R.layout.activity_game);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -445,6 +445,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             System.out.println("XXXX" + color + cardback);
+        }
+        else{
+            cardbackstring = "n";
         }
     }
 }

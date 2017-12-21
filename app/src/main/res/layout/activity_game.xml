@@ -15,6 +15,22 @@
         android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    
+    <ImageView
+        android:id="@+id/briscolaimage"
+        android:layout_width="93dp"
+        android:layout_height="155dp"
+        android:layout_marginBottom="212dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
+        android:rotation="270"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remaining"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/remaining"
@@ -25,6 +41,7 @@
         android:background="@drawable/deck"
         android:gravity="center_vertical|center_horizontal"
         android:text="remaining"
+        android:rotation="90"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,15 +53,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/briscola"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="55dp"
-        android:layout_marginTop="376dp"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/cardzeroimage"
@@ -78,21 +86,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardoneimage" />
-
-    <ImageView
-        android:id="@+id/briscolaimage"
-        android:layout_width="93dp"
-        android:layout_height="155dp"
-        android:layout_marginBottom="212dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remaining"
-        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/humanplayed"
