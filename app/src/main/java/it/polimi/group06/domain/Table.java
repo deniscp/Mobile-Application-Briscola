@@ -57,8 +57,12 @@ public class Table {
     /**
      * Retrieve played cards for visualizing, leaving them on the table
      */
-    ArrayList<Card> getPlayedCards() {
+    public ArrayList<Card> getPlayedCards() {
         return this.playedCards;
+    }
+
+    public int getPlayedCardsAmount(){
+        return this.playedCards.size();
     }
 
     /**

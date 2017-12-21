@@ -81,6 +81,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (msg.equals("fromsaved")) {
             String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
             game = Game.initializeFromConf(config);
+            if(game.getStartingPlayer()==1 && game.getTable().getPlayedCardsAmount()==1){
+                System.out.println("fromsaved " + game.getTable().getPlayedCards().get(0).toString());
+                robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
+            }
         }
         if (msg.equals("newgame")) {
             game = new Game();
@@ -94,20 +98,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         getStatisticsFile();
         getSettingsFile();
-        System.out.println("adssdaioadsjioafirst" + cardbackstring);
-        //saveandquit.setOnClickListener(this);
 
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
-
-        briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
-        System.out.println("zzzzzfirst" + getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
+        saveandquit.setOnClickListener(this);
 
         setHandCardImages();
-
-        humancard.setImageDrawable(null);
-        robotcard.setImageDrawable(null);
+        briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
 
         tStart = System.currentTimeMillis();
     }
@@ -137,6 +135,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.savequit_button):
+                System.out.println("clicked!");
                 saveGame();
                 finish();
                 break;
@@ -201,14 +200,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         //actually play card
                         game.playerPlaysCard(1, 0);
                     }
-                    if(human.getHand().size()==3) {
+                    if (human.getHand().size() == 3) {
                         cardzero_image.setEnabled(true);
                         cardone_image.setEnabled(true);
                         cardtwo_image.setEnabled(true);
-                    } else if(human.getHand().size()==2){
+                    } else if (human.getHand().size() == 2) {
                         cardzero_image.setEnabled(true);
                         cardone_image.setEnabled(true);
-                    } else if(human.getHand().size()==1){
+                    } else if (human.getHand().size() == 1) {
                         cardzero_image.setEnabled(true);
                     }
                 }

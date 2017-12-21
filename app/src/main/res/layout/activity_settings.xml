@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_settings"
     tools:context="it.polimi.group06.activities.SettingsActivity">
 
     <RadioGroup
         android:id="@+id/cardpicker_group"
         android:layout_width="129dp"
         android:layout_height="111dp"
-        android:layout_marginBottom="360dp"
-        android:layout_marginEnd="83dp"
-        android:layout_marginStart="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/colorpicker_group"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_marginEnd="256dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <RadioButton
             android:id="@+id/naples"
@@ -59,14 +56,11 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="160dp"
-        android:text="Cardback:"
+        android:layout_marginStart="32dp"
+        android:text="Cardset:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/colorpicker_group"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/cardpicker_group"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
