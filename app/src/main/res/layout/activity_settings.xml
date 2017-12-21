@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Naples"
+            android:text="Napoletane"
             android:textSize="18sp" />
 
         <RadioButton
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="German"
+            android:text="Salzburger"
             android:textSize="18sp" />
 
         <RadioButton
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sicily"
+            android:text="Siciliane"
             android:textSize="18sp" />
     </RadioGroup>
 
