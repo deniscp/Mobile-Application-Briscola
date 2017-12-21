@@ -142,14 +142,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[0] += 1;
+                cardzero_image.setVisibility(View.INVISIBLE);
                 playCard(0, cardzero_image.getContext());
                 break;
             case (R.id.cardoneimage):
                 amountpositionwasplayed[1] += 1;
+                cardone_image.setVisibility(View.INVISIBLE);
                 playCard(1, cardone_image.getContext());
                 break;
             case (R.id.cardtwoimage):
                 amountpositionwasplayed[2] += 1;
+                cardtwo_image.setVisibility(View.INVISIBLE);
                 playCard(2, cardtwo_image.getContext());
                 break;
         }
@@ -186,6 +189,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     endofgame();
                 } else {
                     setHandCardImages();
+
+                    cardzero_image.setVisibility(View.VISIBLE);
+                    cardone_image.setVisibility(View.VISIBLE);
+                    cardtwo_image.setVisibility(View.VISIBLE);
+
                     if (game.getStartingPlayer() == 1) {
                         //set card to played card by robot
                         robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
@@ -193,9 +201,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         //actually play card
                         game.playerPlaysCard(1, 0);
                     }
-                    cardzero_image.setEnabled(true);
-                    cardone_image.setEnabled(true);
-                    cardtwo_image.setEnabled(true);
+                    if(human.getHand().size()==3) {
+                        cardzero_image.setEnabled(true);
+                        cardone_image.setEnabled(true);
+                        cardtwo_image.setEnabled(true);
+                    } else if(human.getHand().size()==2){
+                        cardzero_image.setEnabled(true);
+                        cardone_image.setEnabled(true);
+                    } else if(human.getHand().size()==1){
+                        cardzero_image.setEnabled(true);
+                    }
                 }
             }
         }, 1000);
