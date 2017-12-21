@@ -22,6 +22,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginBottom="18dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
             android:background="@drawable/btn_main"
             android:soundEffectsEnabled="false"
@@ -30,6 +31,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/load_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -37,6 +39,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginBottom="21dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
             android:background="@drawable/btn_main"
             android:soundEffectsEnabled="false"
@@ -45,6 +48,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/settings_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -52,6 +56,7 @@
             android:layout_width="300dp"
             android:layout_height="63dp"
             android:layout_marginBottom="21dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
             android:background="@drawable/btn_main"
             android:text="@string/statistics"
@@ -59,6 +64,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/quit_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -66,6 +72,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
             android:background="@drawable/btn_main"
             android:includeFontPadding="false"
@@ -74,6 +81,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/statistics_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -81,6 +89,7 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginBottom="33dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="52dp"
             android:background="@drawable/btn_main"
             android:text="@string/exit"
@@ -88,6 +97,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
 

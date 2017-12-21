@@ -60,12 +60,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_game_actvity);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
 
-        remaining = findViewById(R.id.remaining);
-        winner = findViewById(R.id.winner);
-        saveandquit = findViewById(R.id.savequit_button);
+        //remaining = findViewById(R.id.remaining);
+        //winner = findViewById(R.id.winner);
+        //saveandquit = findViewById(R.id.savequit_button);
 
         cardzero_image = findViewById(R.id.cardzeroimage);
         cardone_image = findViewById(R.id.cardoneimage);
@@ -93,7 +95,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getStatisticsFile();
         getSettingsFile();
         System.out.println("adssdaioadsjioafirst" + cardbackstring);
-        saveandquit.setOnClickListener(this);
+        //saveandquit.setOnClickListener(this);
 
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
@@ -121,23 +123,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStop() {
         super.onStop();
 
-        setStatisticsFile();
+//        setStatisticsFile();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        setStatisticsFile();
+//        setStatisticsFile();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case (R.id.savequit_button):
+            /*case (R.id.savequit_button):
                 saveGame();
                 finish();
-                break;
+                break;*/
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[0] += 1;
                 cardatpositionplayed = 0;
@@ -166,11 +168,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardone_image.setEnabled(false);
         cardtwo_image.setEnabled(false);
 
-        //set card to played card by robot
-        robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
-        robotcard.startAnimation(robottomiddle);
-        //actually play card
-        game.playerPlaysCard(1, 0);
+        if(game.getStartingPlayer()==0){
+            //set card to played card by robot
+            robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+            robotcard.startAnimation(robottomiddle);
+            //actually play card
+            game.playerPlaysCard(1, 0);
+        }
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -180,9 +184,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 robotcard.setImageDrawable(null);
 
                 game.newRound();
-                setHandCardImages();
+
                 if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
                     endofgame();
+                }
+
+                setHandCardImages();
+                if(game.getStartingPlayer()==1){
+                    //set card to played card by robot
+                    robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+                    robotcard.startAnimation(robottomiddle);
+                    //actually play card
+                    game.playerPlaysCard(1, 0);
                 }
 
                 cardzero_image.setEnabled(true);
@@ -222,7 +235,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanhand[i].setImageDrawable(null);
             }
         }
-        remaining.setText(String.valueOf(game.remainingCards()));
+        //remaining.setText(String.valueOf(game.remainingCards()));
     }
 
     int getCardDrawable(Card cardatposition, Context whichcard) {
@@ -409,7 +422,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             color = Integer.parseInt(settingsList.get(0));
             cardback = Integer.parseInt(settingsList.get(1));
 
-            switch (color) {
+            /*switch (color) {
                 case (0):
                     remaining.setBackgroundResource(R.drawable.deck);
                     break;
@@ -424,7 +437,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 default:
                     System.out.println("This color doesn't exist");
-            }
+            }*/
 
             switch (cardback) {
                 case (0):
