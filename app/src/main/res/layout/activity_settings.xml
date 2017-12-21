@@ -13,7 +13,7 @@
         android:layout_height="530dp"
         android:layout_margin="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:orientation='vertical'
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -53,9 +53,11 @@
         android:id="@+id/cardpicker_group"
         android:layout_width="129dp"
         android:layout_height="111dp"
-        android:layout_marginBottom="272dp"
+        android:layout_marginBottom="360dp"
+        android:layout_marginEnd="83dp"
         android:layout_marginStart="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colorpicker_group"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
@@ -88,20 +90,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:layout_marginEnd="143dp"
         android:layout_marginStart="140dp"
         android:text="Save Settings"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginEnd="128dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="160dp"
         android:text="Cardback:"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/colorpicker_group"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

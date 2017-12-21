@@ -7,7 +7,7 @@
     android:background="@drawable/background_settings"
     tools:context="it.polimi.group06.activities.GameActivity">
 
-    <!--<TextView
+    <TextView
         android:id="@+id/winner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
         android:background="@drawable/deck"
         android:gravity="center_vertical|center_horizontal"
         android:text="remaining"
-        android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +45,7 @@
         android:layout_marginTop="376dp"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/cardzeroimage"
@@ -91,10 +90,13 @@
         android:layout_marginBottom="212dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.908"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remaining"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/bastoni1n" />
 
     <ImageView
@@ -102,10 +104,10 @@
         android:layout_width="93dp"
         android:layout_height="155dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="220dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bastoni1n" />

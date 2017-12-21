@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     Animation robottomiddle;
 
-    int cardatpositionplayed, color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+    int color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -65,9 +65,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
 
-        //remaining = findViewById(R.id.remaining);
-        //winner = findViewById(R.id.winner);
-        //saveandquit = findViewById(R.id.savequit_button);
+        remaining = findViewById(R.id.remaining);
+        winner = findViewById(R.id.winner);
+        saveandquit = findViewById(R.id.savequit_button);
 
         cardzero_image = findViewById(R.id.cardzeroimage);
         cardone_image = findViewById(R.id.cardoneimage);
@@ -123,46 +123,43 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStop() {
         super.onStop();
 
-//        setStatisticsFile();
+        setStatisticsFile();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-//        setStatisticsFile();
+        setStatisticsFile();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case (R.id.savequit_button):
+            case (R.id.savequit_button):
                 saveGame();
                 finish();
-                break;*/
+                break;
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[0] += 1;
-                cardatpositionplayed = 0;
                 playCard(0, cardzero_image.getContext());
                 break;
             case (R.id.cardoneimage):
                 amountpositionwasplayed[1] += 1;
-                cardatpositionplayed = 1;
                 playCard(1, cardone_image.getContext());
                 break;
             case (R.id.cardtwoimage):
                 amountpositionwasplayed[2] += 1;
-                cardatpositionplayed = 2;
                 playCard(2, cardtwo_image.getContext());
                 break;
         }
     }
 
-    void playCard(int positionofcard, Context cardcontext) {
+    void playCard(final int positionofcard, Context cardcontext) {
         //set card to played card by human
-        humancard.setImageResource(getCardDrawable(human.getHand().get(cardatpositionplayed), cardcontext));
+        humancard.setImageResource(getCardDrawable(human.getHand().get(positionofcard), cardcontext));
         //actually play card
-        game.playerPlaysCard(0, cardatpositionplayed);
+        game.playerPlaysCard(0, positionofcard);
 
         cardzero_image.setEnabled(false);
         cardone_image.setEnabled(false);
@@ -170,7 +167,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         if(game.getStartingPlayer()==0){
             //set card to played card by robot
-            robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+            robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
             robotcard.startAnimation(robottomiddle);
             //actually play card
             game.playerPlaysCard(1, 0);
@@ -192,7 +189,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 setHandCardImages();
                 if(game.getStartingPlayer()==1){
                     //set card to played card by robot
-                    robotcard.setImageResource(getCardDrawable(robot.getHand().get(cardatpositionplayed), robotcard.getContext()));
+                    robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
                     robotcard.startAnimation(robottomiddle);
                     //actually play card
                     game.playerPlaysCard(1, 0);
@@ -235,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanhand[i].setImageDrawable(null);
             }
         }
-        //remaining.setText(String.valueOf(game.remainingCards()));
+        remaining.setText(String.valueOf(game.remainingCards()));
     }
 
     int getCardDrawable(Card cardatposition, Context whichcard) {
@@ -422,7 +419,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             color = Integer.parseInt(settingsList.get(0));
             cardback = Integer.parseInt(settingsList.get(1));
 
-            /*switch (color) {
+            switch (color) {
                 case (0):
                     remaining.setBackgroundResource(R.drawable.deck);
                     break;
@@ -437,7 +434,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 default:
                     System.out.println("This color doesn't exist");
-            }*/
+            }
 
             switch (cardback) {
                 case (0):

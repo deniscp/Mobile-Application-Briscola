@@ -69,7 +69,7 @@ public class StatisticsActivity extends AppCompatActivity {
             zero.setText(statList.get(0));
             one.setText(statList.get(1));
             two.setText(statList.get(2));
-            seconds.setText(statList.get(3));
+            seconds.setText(statList.get(3) + "Seconds");
             numberplayer.setText(statList.get(4));
             numberrobot.setText(statList.get(5));
             draws.setText(statList.get(6));
