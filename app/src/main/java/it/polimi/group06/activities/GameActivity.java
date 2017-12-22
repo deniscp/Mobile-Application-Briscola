@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button saveandquit;
     TextView remaining, winner;
     ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
+    ImageView robotcard1, robotcard2, robotcard3;
     List<String> settingsList;
     String cardbackstring;
 
@@ -65,6 +66,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
 
+        robotcard1 = findViewById(R.id.robothand1);
+        robotcard2 = findViewById(R.id.robothand2);
+        robotcard3 = findViewById(R.id.robothand3);
+
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
         saveandquit = findViewById(R.id.savequit_button);
@@ -81,9 +86,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (msg.equals("fromsaved")) {
             String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
             game = Game.initializeFromConf(config);
-            if(game.getStartingPlayer()==1 && game.getTable().getPlayedCardsAmount()==1){
+            if (game.getStartingPlayer() == 1 && game.getTable().getPlayedCardsAmount() == 1) {
                 System.out.println("fromsaved " + game.getTable().getPlayedCards().get(0).toString());
                 robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
+            }
+            switch (robot.getHand().size()) {
+                case (0):
+                    robotcard1.setVisibility(View.INVISIBLE);
+                    robotcard2.setVisibility(View.INVISIBLE);
+                    robotcard3.setVisibility(View.INVISIBLE);
+                    break;
+                case (1):
+                    robotcard2.setVisibility(View.INVISIBLE);
+                    robotcard3.setVisibility(View.INVISIBLE);
+                    break;
+                case (2):
+                    robotcard3.setVisibility(View.INVISIBLE);
+                    break;
+                default:
+                    break;
             }
         }
         if (msg.equals("newgame")) {
@@ -167,9 +188,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardone_image.setEnabled(false);
         cardtwo_image.setEnabled(false);
 
+        if (robot.getHand().size() > 1) {
+            robotcard2.setVisibility(View.VISIBLE);
+        }
+
         if (game.getStartingPlayer() == 0) {
             //set card to played card by robot
-            robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
+            robotcard2.setVisibility(View.INVISIBLE);
+            robotcard.setImageResource(getCardDrawable(robot.getHand().get(0), robotcard.getContext()));
             robotcard.startAnimation(robottomiddle);
             //actually play card
             game.playerPlaysCard(1, 0);
@@ -184,6 +210,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 game.newRound();
 
+                robotcard2.setVisibility(View.VISIBLE);
+
                 if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
                     endofgame();
                 } else {
@@ -195,7 +223,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (game.getStartingPlayer() == 1) {
                         //set card to played card by robot
-                        robotcard.setImageResource(getCardDrawable(robot.getHand().get(positionofcard), robotcard.getContext()));
+                        robotcard2.setVisibility(View.INVISIBLE);
+                        robotcard.setImageResource(getCardDrawable(robot.getHand().get(0), robotcard.getContext()));
                         robotcard.startAnimation(robottomiddle);
                         //actually play card
                         game.playerPlaysCard(1, 0);
@@ -218,6 +247,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     void setHandCardImages() {
         ImageView[] humanhand = {cardzero_image, cardone_image, cardtwo_image};
+        ImageView[] robotcards = {robotcard1, robotcard2, robotcard3};
         int decksize = game.getTable().getDeck().remaining();
         int handsize = human.getHand().size();
         if (decksize == 0) {
@@ -229,6 +259,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanhand[i].setImageResource(getCardDrawable(humancard, cardzero_image.getContext()));
             }
         } else if (handsize == 2) {
+            robotcards[2].setImageDrawable(null);
             humanhand[2].setImageDrawable(null);
             for (int i = 0; i < 2; i++) {
                 Card humancard = human.getHand().get(i);
@@ -239,17 +270,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < 2; i++) {
                 humanhand[i].setImageDrawable(null);
             }
+            for (int i = 2; i > 0; i--) {
+                robotcards[i].setImageDrawable(null);
+            }
             humanhand[0].setImageResource(getCardDrawable(humancard, cardtwo_image.getContext()));
         } else {
             for (int i = 0; i < 3; i++) {
                 humanhand[i].setImageDrawable(null);
+                robotcards[i].setImageDrawable(null);
             }
         }
         remaining.setText(String.valueOf(game.remainingCards()));
     }
 
     int getCardDrawable(Card cardatposition, Context whichcard) {
-        System.out.println("zzzz" + cardatposition.toString() + " zzzzz " + whichcard.toString() + "zzzzz");
         switch (cardatposition.toString()) {
             case ("1B"):
                 return whichcard.getResources().getIdentifier("bastoni1" + cardbackstring, "drawable", whichcard.getPackageName());
@@ -445,8 +479,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             System.out.println("XXXX" + color + cardback);
-        }
-        else{
+        } else {
             cardbackstring = "n";
         }
     }
