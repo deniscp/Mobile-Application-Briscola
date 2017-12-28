@@ -119,8 +119,13 @@ public class Game {
         return startingPlayer;
     }
 
-    public int getCurrentPlayer() {
+    public int getCurrentPlayerPosition() {
         return currentPlayer;
+    }
+
+    public Player getCurrentPlayer()
+    {
+        return this.getPlayers()[this.getCurrentPlayerPosition()];
     }
 
     /**
@@ -224,20 +229,20 @@ public class Game {
      */
     public void playerPlaysCard(int playerNum, int cardPos) {
         this.table.placeCard(this.players[playerNum].throwCard(cardPos));
-        this.currentPlayer = (this.getCurrentPlayer() + 1) % NUMBEROFPLAYERS;
+        this.currentPlayer = (this.getCurrentPlayerPosition() + 1) % NUMBEROFPLAYERS;
     }
 
     /**
      * Selects, knowing who is the current player,
      * which is the current choice, if the card selected by the Human
-     * or the one computed by the Robot strategy.
+     * or the one computed by the Robot's strategy.
      * It can be used with the playerPlaysCard method.
      *
      * @param humanChoice the card eventually selected by the Human
      * @return the position of the appropriate selected card
      */
-    public int currentChoice(int humanChoice){
-        Player currentPlayer = this.getPlayers()[this.getCurrentPlayer()];
+    public int getCurrentChoice(int humanChoice){
+        Player currentPlayer = this.getPlayers()[this.getCurrentPlayerPosition()];
         int choice = 0;
 
         if(currentPlayer instanceof Human)

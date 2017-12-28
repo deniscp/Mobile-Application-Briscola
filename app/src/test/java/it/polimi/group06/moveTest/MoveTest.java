@@ -1,10 +1,8 @@
 package it.polimi.group06.moveTest;
 
 import it.polimi.group06.domain.Game;
-import it.polimi.group06.domain.Parser;
 
 import static it.polimi.group06.domain.Constants.DRAW;
-import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 
 /**
  * Class containing only two static methods: moveTest and initializeFromConf
@@ -24,7 +22,7 @@ public class MoveTest {
 
         try {
             if (!briscola.gameIsOver())
-                briscola.playerPlaysCard(briscola.getCurrentPlayer(), Integer.parseInt(moveSequence.substring(0, 1)));
+                briscola.playerPlaysCard(briscola.getCurrentPlayerPosition(), Integer.parseInt(moveSequence.substring(0, 1)));
 
             if (briscola.roundIsOver())
                 briscola.newRound();
