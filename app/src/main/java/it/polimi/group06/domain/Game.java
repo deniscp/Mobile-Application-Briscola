@@ -228,6 +228,27 @@ public class Game {
     }
 
     /**
+     * Selects, knowing who is the current player,
+     * which is the current choice, if the card selected by the Human
+     * or the one computed by the Robot strategy.
+     * It can be used with the playerPlaysCard method.
+     *
+     * @param humanChoice the card eventually selected by the Human
+     * @return the position of the appropriate selected card
+     */
+    public int currentChoice(int humanChoice){
+        Player currentPlayer = this.getPlayers()[this.getCurrentPlayer()];
+        int choice = 0;
+
+        if(currentPlayer instanceof Human)
+            choice = humanChoice;
+        if(currentPlayer instanceof Robot)
+            choice = ((Robot) currentPlayer).strategy.cardPositionInHand();
+
+        return choice;
+    }
+
+    /**
      * Initializes a new round by defining the current round winner,
      * assigning the played cards to the winning player,
      * distributing new cards if still any,

@@ -243,6 +243,6 @@ public class DomainTest {
         //3. Test if the comparison between the two cards works correctly
         assertEquals(game.returnWinner(), 0);
         //4. Test the toConfiguration method:
-        assertEquals(game.toConfiguration(), "0BKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..3B5BJB.4B6BHB.1B2B.");
+        assertEquals("0BKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B..3B5BJB.4B6BHB.1B2B.", game.toConfiguration());
     }
 }
