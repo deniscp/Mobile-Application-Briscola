@@ -185,6 +185,8 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
         System.err.println("Human card Clicked!");
 
+        //Set the humanChosenCard based on what Human clicked,
+        //to be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
         switch (v.getId()) {
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[0] += 1;
@@ -203,18 +205,22 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                 break;
         }
 
-        // Set cards NOT clickable
+        // Set cards NOT clickable because the Human has chosen his card
         humanCardsClickable(false);
 
+        // It will enter the playOneRound method we just left after we hit the break;
+        // but now we skip to the next if with the humanChosenCard appropriately set
         playOneRound();
 
+        // Prepare the new round
         if(game.roundIsOver())
             game.newRound();
 
 
         if(! game.gameIsOver()) // play one more round
-            playOneRound();
-        else {
+            playOneRound();     // the next round
+        else // Game is over, no more rounds to play!
+        {
             /*
                 Print winner and stats
              */
@@ -256,7 +262,8 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                 humanCardsClickable(true);
 
                 // The human is going to click on his chosen card,
-                // we don't want this if branch to be executed again the very next time
+                // we don't want this if branch to be executed again the very next time.
+                // The next if branch will be hit next time, after the Human has chosen his card.
                 cardSetFlag = true;
 
                 // Let's break to let human choose his card
@@ -265,7 +272,7 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
             // Next time we reach this point and enter this if branch
             // we want to set the flag as false for the next round
-            // so the previous if can be reached and human can click his card
+            // so the previous if can be reached again and human can click his card
             if(game.getCurrentPlayer() instanceof Human & cardSetFlag ){
                 cardSetFlag = false;
             }
