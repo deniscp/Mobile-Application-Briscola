@@ -93,10 +93,11 @@ public class MoveTestTest {
         outputConf = "WINNER061";
         assertEquals(outputConf, MoveTest.moveTest(inputConf, inputMoves));
 
-        inputConf = new Game().toConfiguration();                                                //New game with ordered deck
-        inputMoves = "0000000000000000000000000000000000000000";
-        outputConf = "WINNER061";
-        assertEquals(outputConf, MoveTest.moveTest(inputConf, inputMoves));
+        /* Commented after we default to shuffle the deck in the standard constructor */
+//        inputConf = new Game().toConfiguration();                                                //New game with ordered deck
+//        inputMoves = "0000000000000000000000000000000000000000";
+//        outputConf = "WINNER061";
+//        assertEquals(outputConf, MoveTest.moveTest(inputConf, inputMoves));
 
         inputConf = "0B..2B3B5B.1B4B6B..JBHBKB1C2C3C4C5C6C7CJCHCKC1G2G3G4G5G6G7GJGHGKG1S2S3S4S5S6S7SJSHSKS7B";
         inputMoves = "00";
