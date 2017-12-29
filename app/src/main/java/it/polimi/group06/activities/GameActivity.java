@@ -28,8 +28,11 @@ import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Human;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.SECONDCARD;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
+import static it.polimi.group06.domain.Constants.THIRDCARD;
 
 public class GameActivity extends AppCompatActivity implements OnClickListener {
 
@@ -189,16 +192,16 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         //to be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
         switch (v.getId()) {
             case (R.id.cardzeroimage):
-                amountpositionwasplayed[0] += 1;
-                humanChosenCard = 0;
+                amountpositionwasplayed[FIRSTCARD] += 1;
+                humanChosenCard = FIRSTCARD;
                 break;
             case (R.id.cardoneimage):
-                amountpositionwasplayed[1] += 1;
-                humanChosenCard = 1;
+                amountpositionwasplayed[SECONDCARD] += 1;
+                humanChosenCard = SECONDCARD;
                 break;
             case (R.id.cardtwoimage):
-                amountpositionwasplayed[2] += 1;
-                humanChosenCard = 2;
+                amountpositionwasplayed[THIRDCARD] += 1;
+                humanChosenCard = THIRDCARD;
                 break;
             default:
                 System.err.println("What did you click on?");

@@ -7,7 +7,7 @@ import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
- * Class used to parse a configuration from a String, it need to be instantiated to be used.
+ * Class used to parse a configuration from a String, it needs to be instantiated to be used.
  *
  * @author denis
  */
