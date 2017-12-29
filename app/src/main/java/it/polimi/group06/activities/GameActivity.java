@@ -25,24 +25,38 @@ import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 import it.polimi.group06.domain.Card;
 import it.polimi.group06.domain.Game;
+import it.polimi.group06.domain.Human;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.SECONDCARD;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
+import static it.polimi.group06.domain.Constants.THIRDCARD;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
     Button saveandquit;
     TextView remaining, winner;
-    ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, robotplayed, humanplayed;
+
+    ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humanplayed, robotplayed;
     ImageView robotcard1, robotcard2, robotcard3;
     ImageView robotwon, humanwon;
+
     List<String> settingsList;
     String cardbackstring;
+
+    boolean cardSetFlag = false;
+    int humanChosenCard;
+
     Animation robottomiddle;
-    int cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+
+    int color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+
     long tStart;
     double elapsedSeconds;
     int[] amountpositionwasplayed = {0, 0, 0};
+
     Game game;
     Player human, robot;
 
@@ -50,11 +64,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Make activity_main fullscreen
-           requestWindowFeature(Window.FEATURE_NO_TITLE);
-           getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-           WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         robotplayed = findViewById(R.id.robotplayed);
         humanplayed = findViewById(R.id.humanplayed);
 
@@ -67,11 +83,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
+
         saveandquit = findViewById(R.id.savequit_button);
+
         cardzero_image = findViewById(R.id.cardzeroimage);
         cardone_image = findViewById(R.id.cardoneimage);
         cardtwo_image = findViewById(R.id.cardtwoimage);
         briscola_image = findViewById(R.id.briscolaimage);
+
+        cardSetFlag = false;
+
         Bundle extras = getIntent().getExtras();
         String msg = extras.getString("keyMessage");
         if (msg.equals("fromsaved")) {
@@ -87,14 +108,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         getStatisticsFile();
         setSettingsfromFile();
+
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
         saveandquit.setOnClickListener(this);
+
         setHandCardImages();
         setRobotCardImages();
         briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
+
         tStart = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startTheGame();
+    }
+
+    private void startTheGame() {
+        humanCardsClickable(false);
+        if (!game.gameIsOver())
+            playOneRound();
     }
 
     @Override
@@ -104,7 +140,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         setSettingsfromFile();
     }
@@ -118,11 +154,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (!savedgame.equals("")) {
                     new AlertDialog.Builder(GameActivity.this).setTitle("Overwrite Game").setMessage("There is already a game saved.\nDo you want to overwrite the save?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            saveGame();
-                            finish();
-                        }
-                    }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    saveGame();
+                                    finish();
+                                }
+                            }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             finish();
                         }
@@ -130,102 +166,160 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case (R.id.cardzeroimage):
-                amountpositionwasplayed[0] += 1;
-                cardzero_image.setVisibility(View.INVISIBLE);
-                playCard(0, cardzero_image.getContext());
+                amountpositionwasplayed[FIRSTCARD] += 1;
+                humanChosenCard = FIRSTCARD;
                 break;
             case (R.id.cardoneimage):
-                amountpositionwasplayed[1] += 1;
-                cardone_image.setVisibility(View.INVISIBLE);
-                playCard(1, cardone_image.getContext());
+                amountpositionwasplayed[SECONDCARD] += 1;
+                humanChosenCard = SECONDCARD;
                 break;
             case (R.id.cardtwoimage):
-                amountpositionwasplayed[2] += 1;
-                cardtwo_image.setVisibility(View.INVISIBLE);
-                playCard(2, cardtwo_image.getContext());
+                amountpositionwasplayed[THIRDCARD] += 1;
+                humanChosenCard = THIRDCARD;
                 break;
+            default:
+                System.err.println("What did you click on?");
+                break;
+        }
+
+        // Set cards NOT clickable because the Human has chosen his card
+        humanCardsClickable(false);
+
+        // It will enter the playOneRound method we just left after we hit the break;
+        // but now we skip to the next if with the humanChosenCard appropriately set
+        playOneRound();
+
+        // Prepare the new round
+        if (game.roundIsOver())
+            game.newRound();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                winnerandreset();
+            }
+        }, 1000);
+
+        if (!game.gameIsOver()) {
+            final Handler handlernewround = new Handler();
+            handlernewround.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    playOneRound();     // the next round
+                }
+            }, 1000);
+        } else // Game is over, no more rounds to play!
+        {
+            endofgame();
+        }
+
+    }
+
+    void playOneRound() {
+
+        int currentPlayer, currentChoice;
+
+        while (!game.roundIsOver()) {
+
+            //It is the Human turn but Human has not chosen his card yet
+            if (game.getCurrentPlayer() instanceof Human & !cardSetFlag) {
+
+                // Set cards clickable
+                humanCardsClickable(true);
+
+                // The human is going to click on his chosen card,
+                // we don't want this if branch to be executed again the very next time.
+                // Instead the next if branch will be hit next time, after the Human has chosen his card.
+                cardSetFlag = true;
+
+                // Let's break to let human choose his card
+                break;
+            }
+
+            // After Human has clicked his card we reach this point
+            // skipping the previous if and entering this if branch
+            if (game.getCurrentPlayer() instanceof Human & cardSetFlag)
+                //set the flag as false for the next round
+                // so the previous if can be reached again and human can click his next card
+                cardSetFlag = false;
+
+
+            currentPlayer = game.getCurrentPlayerPosition();
+            currentChoice = game.getCurrentChoice(humanChosenCard); // new method!
+
+            // Update the view
+            launchAnimation(currentPlayer, currentChoice);
+
+            // Update the model
+            game.playerPlaysCard(currentPlayer, currentChoice);
         }
     }
 
-    void playCard(final int positionofcard, Context cardcontext) {
-        //set card to played card by human
-        humanplayed.setImageResource(getCardDrawable(human.getHand().get(positionofcard), cardcontext));
-        //actually play card
-        game.playerPlaysCard(0, positionofcard);
+    void humanCardsClickable(boolean clickable) {
+        if (clickable) {
+            cardzero_image.setClickable(true);
+            cardone_image.setClickable(true);
+            cardtwo_image.setClickable(true);
+        } else {
+            cardzero_image.setClickable(false);
+            cardone_image.setClickable(false);
+            cardtwo_image.setClickable(false);
+        }
+    }
 
-        cardzero_image.setEnabled(false);
-        cardone_image.setEnabled(false);
-        cardtwo_image.setEnabled(false);
+    void launchAnimation(int currentPlayerPosition, int currentPlayedCard) {
 
-        if (robot.getHand().size() > 1 && game.getStartingPlayer() == 0) {
-            robotcard1.setVisibility(View.VISIBLE);
+        robotcard1.setImageDrawable(null);
+
+        switch (currentPlayedCard) {
+            case (0):
+                cardzero_image.setImageDrawable(null);
+                break;
+            case (1):
+                cardone_image.setImageDrawable(null);
+                break;
+            case (2):
+                cardtwo_image.setImageDrawable(null);
+                break;
         }
 
-        if (game.getStartingPlayer() == 0) {
-            //set card to played card by robot
-            robotcard1.setVisibility(View.INVISIBLE);
-            robotplayed.setImageResource(getCardDrawable(robot.getHand().get(0), robotplayed.getContext()));
-            robotplayed.startAnimation(robottomiddle);
-            //actually play card
-            game.playerPlaysCard(1, 0);
-        }
+        robotplayed.setImageResource(getCardDrawable(robot.getHand().get(0), robotplayed.getContext()));
+        robotplayed.startAnimation(robottomiddle);
 
-        game.newRound();
+        humanplayed.setImageResource(getCardDrawable(human.getHand().get(currentPlayedCard), humanplayed.getContext()));
+    }
 
+    void updateView() {
+        setHandCardImages();
+        setRobotCardImages();
+    }
+
+    void winnerandreset() {
         if (game.getStartingPlayer() == 0) {
             humanwon.setImageResource(R.drawable.checkmark);
         } else {
             robotwon.setImageResource(R.drawable.checkmark);
         }
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        humanplayed.setImageDrawable(null);
+        robotplayed.setImageDrawable(null);
 
-                humanplayed.setImageDrawable(null);
-                robotplayed.setImageDrawable(null);
-                robotcard1.setVisibility(View.VISIBLE);
-                if (human.getHand().size() == 0 || robot.getHand().size() == 0) {
-                    endofgame();
-                } else {
-                    setHandCardImages();
-                    cardzero_image.setVisibility(View.VISIBLE);
-                    cardone_image.setVisibility(View.VISIBLE);
-                    cardtwo_image.setVisibility(View.VISIBLE);
-                    if (game.getStartingPlayer() == 1) {
-                        //set card to played card by robot
-                        robotcard1.setVisibility(View.INVISIBLE);
-                        robotplayed.setImageResource(getCardDrawable(robot.getHand().get(0), robotplayed.getContext()));
-                        robotplayed.startAnimation(robottomiddle);
-                        //actually play card
-                        game.playerPlaysCard(1, 0);
-                    }
-                    if (human.getHand().size() == 3) {
-                        cardzero_image.setEnabled(true);
-                        cardone_image.setEnabled(true);
-                        cardtwo_image.setEnabled(true);
-                    } else if (human.getHand().size() == 2) {
-                        cardzero_image.setEnabled(true);
-                        cardone_image.setEnabled(true);
-                    } else if (human.getHand().size() == 1) {
-                        cardzero_image.setEnabled(true);
-                    }
-                }
-                robotwon.setImageResource(R.drawable.checkmark_grey);
-                humanwon.setImageResource(R.drawable.checkmark_grey);
-            }
-        }, 1000);
+        humanwon.setImageResource(R.drawable.checkmark_grey);
+        robotwon.setImageResource(R.drawable.checkmark_grey);
 
+        updateView();
     }
 
     void setHandCardImages() {
         ImageView[] humanhand = {cardzero_image, cardone_image, cardtwo_image};
         int decksize = game.getTable().getDeck().remaining();
         int handsize = human.getHand().size();
+
         if (decksize == 0) {
             briscola_image.setImageDrawable(null);
         }
+
         if (handsize == 3) {
             for (int i = 0; i < 3; i++) {
                 Card humancard = human.getHand().get(i);
@@ -238,11 +332,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanhand[i].setImageResource(getCardDrawable(humancard, cardone_image.getContext()));
             }
         } else if (handsize == 1) {
+            humanhand[2].setImageDrawable(null);
+            humanhand[1].setImageDrawable(null);
             Card humancard = human.getHand().get(0);
-            for (int i = 0; i < 2; i++) {
-                humanhand[i].setImageDrawable(null);
-            }
-
             humanhand[0].setImageResource(getCardDrawable(humancard, cardtwo_image.getContext()));
         } else {
             for (int i = 0; i < 3; i++) {
@@ -250,7 +342,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         remaining.setText(String.valueOf(game.remainingCards()));
-        setRobotCardImages();
     }
 
     void setRobotCardImages() {
@@ -362,7 +453,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void endofgame() {
         String text;
+
         saveandquit.setEnabled(false);
+
         if (game.returnWinner() == FIRSTPLAYER) {
             text = "Player wins with " + String.valueOf(human.getPlayerPoints()) + " Points";
             numberoftimesplayerwon += 1;
@@ -373,12 +466,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             text = "Draw";
             numberofdraws += 1;
         }
+
         Toast.makeText(this, "Game over!", Toast.LENGTH_SHORT).show();
+
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         elapsedSeconds += tDelta / 1000.0;
         elapsedSeconds = (double) Math.round(elapsedSeconds * 100d) / 100d;
+
         setStatisticsFile();
+
         new AlertDialog.Builder(GameActivity.this).setTitle("End of Game").setMessage(text + "\nDo you want to start a new game?").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Intent intent = getIntent();
@@ -449,7 +546,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     cardbackstring = "n";
             }
             int backgroundcolor = Integer.parseInt(settingsList.get(1));
-            switch (backgroundcolor){
+            switch (backgroundcolor) {
                 case (0):
                     getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
                     break;
