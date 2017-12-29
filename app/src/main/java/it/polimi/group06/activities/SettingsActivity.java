@@ -1,5 +1,7 @@
 package it.polimi.group06.activities;
 
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,11 +20,12 @@ import it.polimi.group06.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    RadioGroup cardpicker;
+    RadioGroup cardpicker, backpicker;
     RadioButton naples, german, sicily;
+    RadioButton defaultback, greenback, blueback;
     Button button;
     List<String> settingsList;
-    int whichcarddeck;
+    int whichcarddeck, whichbackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +39,15 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         cardpicker = findViewById(R.id.cardpicker_group);
+        backpicker = findViewById(R.id.backgroundpicker_group);
 
         naples = findViewById(R.id.naples);
         german = findViewById(R.id.german);
         sicily = findViewById(R.id.sicily);
+
+        defaultback = findViewById(R.id.defaultback);
+        greenback = findViewById(R.id.lightgreen);
+        blueback = findViewById(R.id.lightblue);
 
         getSettings();
 
@@ -54,7 +62,26 @@ public class SettingsActivity extends AppCompatActivity {
                 sicily.setChecked(true);
                 break;
             default:
+                naples.setChecked(true);
                 System.out.print("this doesn't exist");
+        }
+
+        switch (whichbackground) {
+            case (0):
+                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
+                defaultback.setChecked(true);
+                break;
+            case (1):
+                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
+                greenback.setChecked(true);
+                break;
+            case (2):
+                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
+                blueback.setChecked(true);
+                break;
+            default:
+                defaultback.setChecked(true);
+                System.out.println("this doesn't exist");
         }
 
         cardpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -70,11 +97,27 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        backpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.defaultback){
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
+                    whichbackground = 0;
+                } else if (checkedId == R.id.lightgreen){
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
+                    whichbackground = 1;
+                } else if(checkedId == R.id.lightblue){
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
+                    whichbackground = 2;
+                }
+            }
+        });
+
         button = findViewById(R.id.save_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String towrite = String.valueOf(whichcarddeck + ",");
+                String towrite = String.valueOf(whichcarddeck + "," + whichbackground);
                 OutputHandler.writefile(towrite, "settings", getApplicationContext());
                 finish();
             }
@@ -88,6 +131,7 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             settingsList = Arrays.asList(str.split(","));
             whichcarddeck = Integer.parseInt(settingsList.get(0));
+            whichbackground = Integer.parseInt(settingsList.get(1));
         }
     }
 }
