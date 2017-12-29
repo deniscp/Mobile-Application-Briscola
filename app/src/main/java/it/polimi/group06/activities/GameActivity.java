@@ -41,7 +41,6 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     String cardbackstring;
 
     boolean cardSetFlag = false;
-    /* Human cards may be set as non clickable here maybe */
     int humanChosenCard;
 
     Animation robottomiddle;
@@ -155,6 +154,7 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
     private void startTheGame()
     {
+        humanCardsClickable(false);
         if(! game.gameIsOver())
             playOneRound();
     }
@@ -256,6 +256,8 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         int currentPlayer, currentChoice;
 
         while (!game.roundIsOver()){
+
+            //It is the Human turn but Human has not chosen his card yet
             if(game.getCurrentPlayer() instanceof Human & ! cardSetFlag) {
 
                 // Set cards clickable
@@ -263,19 +265,20 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
                 // The human is going to click on his chosen card,
                 // we don't want this if branch to be executed again the very next time.
-                // The next if branch will be hit next time, after the Human has chosen his card.
+                // Instead the next if branch will be hit next time, after the Human has chosen his card.
                 cardSetFlag = true;
 
                 // Let's break to let human choose his card
                 break;
             }
 
-            // Next time we reach this point and enter this if branch
-            // we want to set the flag as false for the next round
-            // so the previous if can be reached again and human can click his card
-            if(game.getCurrentPlayer() instanceof Human & cardSetFlag ){
+            // After Human has clicked his card we reach this point
+            // skipping the previous if and entering this if branch
+            if(game.getCurrentPlayer() instanceof Human & cardSetFlag )
+                //set the flag as false for the next round
+                // so the previous if can be reached again and human can click his next card
                 cardSetFlag = false;
-            }
+
 
             currentPlayer = game.getCurrentPlayerPosition();
             currentChoice = game.getCurrentChoice(humanChosenCard); // new method!
@@ -402,15 +405,15 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     {
         if(clickable)
         {
-            cardzero_image.setVisibility(View.VISIBLE);
-            cardone_image.setVisibility(View.VISIBLE);
-            cardtwo_image.setVisibility(View.VISIBLE);
+            cardzero_image.setClickable(true);
+            cardone_image.setClickable(true);
+            cardtwo_image.setClickable(true);
         }
         else // not clickable
         {
-            cardzero_image.setVisibility(View.INVISIBLE);
-            cardone_image.setVisibility(View.INVISIBLE);
-            cardtwo_image.setVisibility(View.INVISIBLE);
+            cardzero_image.setClickable(false);
+            cardone_image.setClickable(false);
+            cardtwo_image.setClickable(false);
         }
     }
 
