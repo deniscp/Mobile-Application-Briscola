@@ -10,10 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
 
@@ -28,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-
-        setBackgroundColor();
 
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
@@ -99,34 +93,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setBackgroundColor();
-    }
-
-    int getSettings() {
-        String str = InputHandler.getStringfromFile("settings", getApplicationContext());
-        if (!str.equals("")) {
-            List<String> settingsList = Arrays.asList(str.split(","));
-            return Integer.parseInt(settingsList.get(1));
-        } else{
-            return 0;
-        }
-    }
-
-    void setBackgroundColor(){
-        switch(getSettings()){
-            case (1):
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
-                break;
-            case (2):
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
-                break;
-            default:
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
-        }
     }
 }

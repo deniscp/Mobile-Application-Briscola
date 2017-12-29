@@ -32,7 +32,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
         readStatisticsfromFile();
         setcontentofviews();
-        setBackgroundColor();
 
         Button clearstats = findViewById(R.id.clearstats);
         clearstats.setOnClickListener(new View.OnClickListener(){
@@ -42,12 +41,6 @@ public class StatisticsActivity extends AppCompatActivity {
                 setcontentofviews();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setBackgroundColor();
     }
 
     void deleteStatistics(){
@@ -82,28 +75,5 @@ public class StatisticsActivity extends AppCompatActivity {
             draws.setText(statList.get(6));
         }
 
-    }
-
-    int getSettings() {
-        String str = InputHandler.getStringfromFile("settings", getApplicationContext());
-        if (!str.equals("")) {
-            List<String> settingsList = Arrays.asList(str.split(","));
-            return Integer.parseInt(settingsList.get(1));
-        } else{
-            return 0;
-        }
-    }
-
-    void setBackgroundColor(){
-        switch(getSettings()){
-            case (1):
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
-                break;
-            case (2):
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
-                break;
-            default:
-                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
-        }
     }
 }

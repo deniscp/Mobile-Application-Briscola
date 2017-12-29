@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="it.polimi.group06.activities.SettingsActivity">
@@ -11,13 +10,10 @@
         android:id="@+id/cardpicker_group"
         android:layout_width="129dp"
         android:layout_height="111dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginRight="256dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <RadioButton
             android:id="@+id/naples"
@@ -44,82 +40,27 @@
             android:textSize="18sp" />
     </RadioGroup>
 
-    <RadioGroup
-        android:id="@+id/backgroundpicker_group"
-        android:layout_width="129dp"
-        android:layout_height="111dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="260dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/defaultback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Default"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/lightgreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Light Green"
-            android:textSize="18sp" />
-
-        <RadioButton
-            android:id="@+id/lightblue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Light Blue"
-            android:textSize="18sp" />
-    </RadioGroup>
-
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:layout_marginLeft="140dp"
         android:layout_marginRight="143dp"
+        android:layout_marginLeft="140dp"
         android:text="Save Settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginEnd="325dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginLeft="32dp"
         android:text="Cardset:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="291dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="232dp"
-        android:text="Background:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toTopOf="@+id/cardpicker_group"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

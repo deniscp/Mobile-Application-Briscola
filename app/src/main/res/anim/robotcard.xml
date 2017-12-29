@@ -7,13 +7,13 @@
         android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toDegrees="350"
+        android:toDegrees="360"
         />
 
     <translate
         android:fromXDelta="0%p"
         android:fromYDelta="0.0"
-        android:toXDelta="130%"
+        android:toXDelta="0%"
         android:toYDelta="40%p"
         android:duration="600" />
 </set>
