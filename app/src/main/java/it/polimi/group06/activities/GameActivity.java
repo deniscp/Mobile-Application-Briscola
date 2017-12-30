@@ -32,9 +32,11 @@ import it.polimi.group06.domain.Player;
 
 import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDCARD;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 import static it.polimi.group06.domain.Constants.THIRDCARD;
+import static java.lang.Thread.sleep;
 
 public class GameActivity extends AppCompatActivity implements OnClickListener {
 
@@ -188,8 +190,9 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        //Set the humanChosenCard based on what Human clicked,
-        //to be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
+        //Detect which card Human clicked
+        //Set the humanChosenCard accordingly,
+        //will be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
         switch (v.getId()) {
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[FIRSTCARD] += 1;
@@ -224,12 +227,6 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         // but now we skip to the next if with the humanChosenCard appropriately set
         playOneRound();
 
-
-        // Prepare the new round
-        if(game.roundIsOver())
-            game.newRound();
-
-        updateView();
 
 
         if(! game.gameIsOver()) // play one more round
@@ -268,9 +265,11 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         //
     }
 
-    void playOneRound(/*final int positionofcard, Context cardcontext*/) {
+    void playOneRound() {
         int currentPlayer, currentChoice;
 
+
+        Log.d("debug", "Round "+game.getRound());
         while (!game.roundIsOver()){
 
             //It is the Human turn but Human has not chosen his card yet
@@ -294,12 +293,25 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
             currentPlayer = game.getCurrentPlayerPosition();
             currentChoice = game.getCurrentChoice(humanChosenCard); // new method!
 
+
             Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
+            Log.d("debug", "Player "+currentPlayer+" Card "+currentCard);
+
+
             // Update the model
             game.playerPlaysCard(currentPlayer, currentChoice);
-            // Update the view
+            // Launch animation
             launchAnimation(currentPlayer, currentChoice, currentCard);
+
+
         }
+
+        // Prepare the new round
+        if(game.roundIsOver()) {
+            game.newRound();
+            updateView();
+        }
+
 //        //set card to played card by human
 //        humancard.setImageResource(getCardDrawable(human.getHand().get(positionofcard), cardcontext));
 //        //actually play card
@@ -431,9 +443,11 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
     void launchAnimation(int currentPlayerPosition, int currentPlayedCard, Card currentCard) {
         /* ---- Code for launching the appropriate animation
-
                 knowing who played which card
          */
+
+        ImageView humanCards[] = {cardzero_image,cardone_image,cardtwo_image};
+        ImageView robotCards[] = {robotcard1,robotcard2,robotcard3};
 
         if(currentPlayerPosition == FIRSTPLAYER)
             humancard.setImageResource(getCardDrawable(currentCard, getApplicationContext()));
@@ -442,19 +456,43 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
 
     }
 
+
+
+    /**
+     * Updates setting the remainng cards in the deck,
+     * setting the remainng cards in the hands of the players,
+     * removing cards from table after round is over...
+     */
     void updateView() {
-         /* --- Code for updating the view knowing which cards in hand of players
-                and on table remained on the game  and must be visible */
         ArrayList<Card> humanHand = game.getPlayers()[FIRSTPLAYER].getHand();
-
-        ImageView cards[] = {cardzero_image,cardone_image,cardtwo_image};
+        ArrayList<Card> robotHand = game.getPlayers()[SECONDPLAYER].getHand();
         int i;
+        ImageView humanCards[] = {cardzero_image,cardone_image,cardtwo_image};
+        ImageView robotCards[] = {robotcard1,robotcard2,robotcard3};
 
+        // Adjust Human missing cards
         for(i=0; i < humanHand.size() ; i++ )
-            cards[i].setImageResource(getCardDrawable(humanHand.get(i), getApplicationContext()));
-
+            humanCards[i].setImageResource(getCardDrawable(humanHand.get(i), getApplicationContext()));
         for( ; i < 3 ; i++)
-            cards[i].setImageDrawable(null);
+            humanCards[i].setVisibility(View.GONE);
+
+        // Adjust Robot missing cards
+        for(i=0; i < robotHand.size() ; i++ ); //Do nothing!
+        for( ; i < 3 ; i++)
+            robotCards[i].setVisibility(View.GONE);
+
+        //Set the number of remaining cards in the deck
+        remaining.setText(String.valueOf(game.remainingCards()));
+        if(game.remainingCards() == 0) // make the deck not visible
+            remaining.setVisibility(View.INVISIBLE);
+
+        //Clear the table if a new round has just started
+        //Maybe launch an animation that moves cards toward the winning player
+        if(game.getTable().getPlayedCards().size() == 0) {
+            humancard.setImageResource(0);
+            robotcard.setImageResource(0);
+        }
+
     }
 
     void setHandCardImages() {
