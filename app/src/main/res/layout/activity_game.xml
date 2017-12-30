@@ -93,8 +93,9 @@
         android:id="@+id/robotplayed"
         android:layout_width="93dp"
         android:layout_height="155dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="248dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
