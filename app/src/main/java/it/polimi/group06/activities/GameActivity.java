@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -186,8 +188,6 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        System.err.println("Human card Clicked!");
-
         //Set the humanChosenCard based on what Human clicked,
         //to be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
         switch (v.getId()) {
@@ -208,6 +208,8 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
                 break;
         }
 
+        Log.d("debug","Human card at pos "+humanChosenCard+" Clicked!");
+
         // Set cards NOT clickable because the Human has chosen his card
         humanCardsClickable(false);
 
@@ -222,9 +224,12 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         // but now we skip to the next if with the humanChosenCard appropriately set
         playOneRound();
 
+
         // Prepare the new round
         if(game.roundIsOver())
             game.newRound();
+
+        updateView();
 
 
         if(! game.gameIsOver()) // play one more round
@@ -234,6 +239,7 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
             /*
                 Print winner and stats
              */
+            endofgame();
         }
 
         //
@@ -288,10 +294,11 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
             currentPlayer = game.getCurrentPlayerPosition();
             currentChoice = game.getCurrentChoice(humanChosenCard); // new method!
 
+            Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
             // Update the model
             game.playerPlaysCard(currentPlayer, currentChoice);
             // Update the view
-            launchAnimation(currentPlayer, currentChoice);
+            launchAnimation(currentPlayer, currentChoice, currentCard);
         }
 //        //set card to played card by human
 //        humancard.setImageResource(getCardDrawable(human.getHand().get(positionofcard), cardcontext));
@@ -422,19 +429,32 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         }
     }
 
-    void launchAnimation(int currentPlayerPosition, int currentPlayedCard)
-    {
+    void launchAnimation(int currentPlayerPosition, int currentPlayedCard, Card currentCard) {
         /* ---- Code for launching the appropriate animation
 
                 knowing who played which card
          */
 
-        updateView();
+        if(currentPlayerPosition == FIRSTPLAYER)
+            humancard.setImageResource(getCardDrawable(currentCard, getApplicationContext()));
+        else if(currentPlayerPosition == SECONDPLAYER)
+            robotcard.setImageResource(getCardDrawable(currentCard, getApplicationContext()));
+
     }
 
-    void updateView(){
+    void updateView() {
          /* --- Code for updating the view knowing which cards in hand of players
                 and on table remained on the game  and must be visible */
+        ArrayList<Card> humanHand = game.getPlayers()[FIRSTPLAYER].getHand();
+
+        ImageView cards[] = {cardzero_image,cardone_image,cardtwo_image};
+        int i;
+
+        for(i=0; i < humanHand.size() ; i++ )
+            cards[i].setImageResource(getCardDrawable(humanHand.get(i), getApplicationContext()));
+
+        for( ; i < 3 ; i++)
+            cards[i].setImageDrawable(null);
     }
 
     void setHandCardImages() {
