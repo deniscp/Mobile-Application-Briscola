@@ -3,7 +3,6 @@ package it.polimi.group06.activity.helper;
 import android.view.View;
 import android.widget.ImageView;
 
-import it.polimi.group06.activities.GameActivity;
 import it.polimi.group06.activity.GameActivity;
 import it.polimi.group06.domain.Card;
 

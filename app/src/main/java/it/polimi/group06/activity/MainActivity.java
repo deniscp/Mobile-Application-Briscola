@@ -1,4 +1,4 @@
-package it.polimi.group06.activities;
+package it.polimi.group06.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

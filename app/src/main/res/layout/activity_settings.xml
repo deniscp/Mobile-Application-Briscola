@@ -5,7 +5,7 @@
     android:id="@+id/toplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="it.polimi.group06.activities.SettingsActivity">
+    tools:context="it.polimi.group06.activity.SettingsActivity">
 
     <RadioGroup
         android:id="@+id/cardpicker_group"
