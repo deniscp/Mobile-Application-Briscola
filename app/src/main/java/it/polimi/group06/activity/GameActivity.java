@@ -137,6 +137,12 @@ public class GameActivity extends AppCompatActivity implements OnClickListener {
         getStatisticsFile();
         getSettingsFile();
 
+        final int id = getApplicationContext().getResources().getIdentifier("back" + cardbackstring, "drawable", getApplicationContext().getPackageName());
+        robotcard1.setImageResource(id);
+        robotcard2.setImageResource(id);
+        robotcard3.setImageResource(id);
+        remaining.setBackgroundResource(id);
+
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
