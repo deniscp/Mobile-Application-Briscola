@@ -7,4 +7,9 @@
     <color name="black">#fc000000</color>
     <color name="blue">#660d28bd</color>
     <color name="splash_screen_color">#CD853F</color>
+
+    <!--Background colors-->
+    <color name="white">#FFFFFF</color>
+    <color name="lightgreen">#8bff79</color>
+    <color name="lightblue">#00c4ff</color>
 </resources>
