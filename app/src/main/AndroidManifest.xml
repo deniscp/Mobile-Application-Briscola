@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.polimi.group06">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/briscola_launcher"
@@ -11,25 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashScreen"
+            android:name=".activities.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"
+                    android:screenOrientation="portrait"
+                    />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.StatisticsActivity"
+            android:name=".activities.StatisticsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.GameActivity"></activity>
+        <activity android:name=".activities.GameActivity"
+            android:screenOrientation="portrait"
+           />
     </application>
 
 </manifest>
