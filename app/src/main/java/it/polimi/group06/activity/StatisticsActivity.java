@@ -1,4 +1,4 @@
-package it.polimi.group06.activities;
+package it.polimi.group06.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

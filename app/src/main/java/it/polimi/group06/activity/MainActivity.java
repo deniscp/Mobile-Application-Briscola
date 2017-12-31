@@ -1,4 +1,4 @@
-package it.polimi.group06.activities;
+package it.polimi.group06.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
