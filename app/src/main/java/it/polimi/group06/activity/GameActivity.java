@@ -4,9 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +25,8 @@ import java.util.List;
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
+import it.polimi.group06.activity.helper.LaunchCard;
+import it.polimi.group06.activity.helper.UpdateView;
 import it.polimi.group06.domain.Card;
 import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Human;
@@ -38,7 +40,7 @@ import static it.polimi.group06.domain.Constants.THIRDCARD;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String TAG = "debug";
+    final String TAG = "debug";
     Button saveandquit;
     TextView winner;
     public TextView remaining;
@@ -111,6 +113,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getStatisticsFile();
         setSettingsfromFile();
 
+        // Set the back of the card according to the deckset chosen in settings
+        final int id = getApplicationContext().getResources().getIdentifier("back" + cardbackstring, "drawable", getApplicationContext().getPackageName());
+        robotcard1.setImageResource(id);
+        robotcard2.setImageResource(id);
+        robotcard3.setImageResource(id);
+        remaining.setBackgroundResource(id);
+
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
@@ -168,6 +177,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
+        //Detect which card Human clicked
+        //Set the humanChosenCard accordingly,
+        //will be used next in the game.playerPlaysCard(currentPlayer, currentChoice); method
         switch (v.getId()) {
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[FIRSTCARD] += 1;
@@ -182,28 +195,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 humanChosenCard = THIRDCARD;
                 break;
             default:
-                System.err.println("What did you click on?");
+                Log.d(TAG,"What did you click on?");
                 break;
         }
 
+        Log.d(TAG,"Human card at pos "+humanChosenCard+" Clicked!");
+
         // Set cards NOT clickable because the Human has chosen his card
         humanCardsClickable(false);
+
+
+        // The human clicked on his chosen card, we don't want the first if branch to be executed again
+        // as soon as the execution in the playOneRound() method will be resumed.
+        // Instead the next if branch will be hit next time, because the Human has just chosen his card.
+        cardSetFlag = true;
+
 
         // It will enter the playOneRound method we just left after we hit the break;
         // but now we skip to the next if with the humanChosenCard appropriately set
         playOneRound();
 
-        // Prepare the new round
-        if (game.roundIsOver())
-            game.newRound();
-
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                winnerandreset();
-            }
-        }, 1000);
 
         if (!game.gameIsOver()) {
             final Handler handlernewround = new Handler();
@@ -224,6 +235,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         int currentPlayer, currentChoice;
 
+        final Handler handler = new Handler();
+
+        Log.d("debug", "Round " + game.getRound());
         while (!game.roundIsOver()) {
 
             //It is the Human turn but Human has not chosen his card yet
@@ -231,11 +245,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 // Set cards clickable
                 humanCardsClickable(true);
-
-                // The human is going to click on his chosen card,
-                // we don't want this if branch to be executed again the very next time.
-                // Instead the next if branch will be hit next time, after the Human has chosen his card.
-                cardSetFlag = true;
 
                 // Let's break to let human choose his card
                 break;
@@ -252,12 +261,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             currentPlayer = game.getCurrentPlayerPosition();
             currentChoice = game.getCurrentChoice(humanChosenCard); // new method!
 
-            // Update the view
-            launchAnimation(currentPlayer, currentChoice);
+
+            Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
+            Log.d("debug", "Player " + currentPlayer + " Card " + currentCard);
+
+
+            handler.post(
+                    new LaunchCard(currentPlayer, currentChoice, currentCard, this)
+            );
 
             // Update the model
             game.playerPlaysCard(currentPlayer, currentChoice);
         }
+
+        // Prepare the new round
+        if (game.roundIsOver()) {
+            game.newRound();
+//            updateView();
+
+            handler.postDelayed(
+                    new UpdateView(this),
+                    3000
+            );
+        }
+
     }
 
     void humanCardsClickable(boolean clickable) {
@@ -272,48 +299,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void launchAnimation(int currentPlayerPosition, int currentPlayedCard) {
 
-        robotcard1.setImageDrawable(null);
-
-        switch (currentPlayedCard) {
-            case (0):
-                cardzero_image.setImageDrawable(null);
-                break;
-            case (1):
-                cardone_image.setImageDrawable(null);
-                break;
-            case (2):
-                cardtwo_image.setImageDrawable(null);
-                break;
-        }
-
-        robotplayed.setImageResource(getCardDrawable(robot.getHand().get(0), robotplayed.getContext()));
-        robotplayed.startAnimation(robottomiddle);
-
-        humanplayed.setImageResource(getCardDrawable(human.getHand().get(currentPlayedCard), humanplayed.getContext()));
-    }
-
-    void updateView() {
-        setHandCardImages();
-        setRobotCardImages();
-    }
-
-    void winnerandreset() {
-        if (game.getStartingPlayer() == 0) {
-            humanwon.setImageResource(R.drawable.checkmark);
-        } else {
-            robotwon.setImageResource(R.drawable.checkmark);
-        }
-
-        humanplayed.setImageDrawable(null);
-        robotplayed.setImageDrawable(null);
-
-        humanwon.setImageResource(R.drawable.checkmark_grey);
-        robotwon.setImageResource(R.drawable.checkmark_grey);
-
-        updateView();
-    }
 
     void setHandCardImages() {
         ImageView[] humanhand = {cardzero_image, cardone_image, cardtwo_image};
@@ -353,7 +339,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int handsize = robot.getHand().size();
         if (handsize == 3) {
             for (int i = 0; i < 3; i++) {
-                robotcards[i].setImageResource(R.drawable.deck);
+                robotcards[i].setImageResource(R.drawable.back);
             }
         } else if (handsize == 2) {
             robotcards[2].setImageDrawable(null);
@@ -368,7 +354,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    int getCardDrawable(Card cardatposition, Context whichcard) {
+    public int getCardDrawable(Card cardatposition, Context whichcard) {
         switch (cardatposition.toString()) {
             case ("1B"):
                 return whichcard.getResources().getIdentifier("bastoni1" + cardbackstring, "drawable", whichcard.getPackageName());
@@ -512,7 +498,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String stats = InputHandler.getStringfromFile("statistics", getApplicationContext());
         if (!stats.equals("")) {
             List<String> statList = Arrays.asList(stats.split(","));
-            System.out.println(stats + "yyyyyy" + statList + "xxxxxxxxxx");
+            Log.d(TAG, stats + "yyyyyy" + statList + "xxxxxxxxxx");
             for (int i = 0; i < 3; i++) {
                 amountpositionwasplayed[i] = Integer.parseInt(statList.get(i));
             }
@@ -580,17 +566,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //TODO
             if (game.getTable().getPlayedCardsAmount() == 1) {
                 if (game.getStartingPlayer() == 0) {
-                    humanplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humanplayed.getContext()));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humancard.getContext()));
                 } else {
-                    robotplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotplayed.getContext()));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
                 }
             } else if (game.getTable().getPlayedCardsAmount() == 2) {
                 if (game.getStartingPlayer() == 0) {
-                    humanplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humanplayed.getContext()));
-                    robotplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), robotplayed.getContext()));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humancard.getContext()));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), robotcard.getContext()));
                 } else {
-                    robotplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotplayed.getContext()));
-                    humanplayed.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), humanplayed.getContext()));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), humancard.getContext()));
 
                 }
             }
