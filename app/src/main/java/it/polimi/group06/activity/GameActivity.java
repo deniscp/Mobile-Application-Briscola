@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -36,12 +38,12 @@ import static it.polimi.group06.domain.Constants.THIRDCARD;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
+    String TAG = "debug";
     Button saveandquit;
-    TextView remaining, winner;
-
-    ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humanplayed, robotplayed;
-    ImageView robotcard1, robotcard2, robotcard3;
-    ImageView robotwon, humanwon;
+    TextView winner;
+    public TextView remaining;
+    public ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
+    public ImageView robotcard1, robotcard2, robotcard3;
 
     List<String> settingsList;
     String cardbackstring;
@@ -57,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     double elapsedSeconds;
     int[] amountpositionwasplayed = {0, 0, 0};
 
-    Game game;
+    public Game game;
     Player human, robot;
 
     @Override
@@ -71,15 +73,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        robotplayed = findViewById(R.id.robotplayed);
-        humanplayed = findViewById(R.id.humanplayed);
+        humancard = findViewById(R.id.humanplayed);
+        robotcard = findViewById(R.id.robotplayed);
 
         robotcard1 = findViewById(R.id.robothand1);
         robotcard2 = findViewById(R.id.robothand2);
         robotcard3 = findViewById(R.id.robothand3);
 
-        robotwon = findViewById(R.id.robotwon);
-        humanwon = findViewById(R.id.humanwon);
 
         remaining = findViewById(R.id.remaining);
         winner = findViewById(R.id.winner);
@@ -91,6 +91,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardtwo_image = findViewById(R.id.cardtwoimage);
         briscola_image = findViewById(R.id.briscolaimage);
 
+        // At the beginning of the game the human player starts
+        // but has not chosen his card yet
         cardSetFlag = false;
 
         Bundle extras = getIntent().getExtras();
@@ -112,10 +114,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);
         cardtwo_image.setOnClickListener(this);
-        saveandquit.setOnClickListener(this);
+        saveandquit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View saveAndQuitButton){
+                Log.d(TAG, "Save and Quit button Clicked!");
+                String savedgame = InputHandler.getStringfromFile("savedgame", getApplicationContext());
+                if (!savedgame.equals("")) {
+                    new AlertDialog.Builder(GameActivity.this).setTitle("Overwrite Game").setMessage("There is already a game saved.\nDo you want to overwrite the save?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    saveGame();
+                                    finish();
+                                }
+                            }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    }).show();
+                }
+            }
+        });
 
         setHandCardImages();
-        setRobotCardImages();
+//        setRobotCardImages();
         briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
 
         tStart = System.currentTimeMillis();
@@ -148,23 +169,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case (R.id.savequit_button):
-                System.out.println("clicked!");
-                String savedgame = InputHandler.getStringfromFile("savedgame", getApplicationContext());
-                if (!savedgame.equals("")) {
-                    new AlertDialog.Builder(GameActivity.this).setTitle("Overwrite Game").setMessage("There is already a game saved.\nDo you want to overwrite the save?")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    saveGame();
-                                    finish();
-                                }
-                            }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
-                        }
-                    }).show();
-                }
-                break;
             case (R.id.cardzeroimage):
                 amountpositionwasplayed[FIRSTCARD] += 1;
                 humanChosenCard = FIRSTCARD;
