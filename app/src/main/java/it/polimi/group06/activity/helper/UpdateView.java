@@ -67,5 +67,8 @@ public class UpdateView implements Runnable{
         if(cAct.game.remainingCards() == 0) // make the deck not visible
             cAct.remaining.setVisibility(View.INVISIBLE);
 
+        cAct.humanCardsClickable(true);
+
+
     }
 }
