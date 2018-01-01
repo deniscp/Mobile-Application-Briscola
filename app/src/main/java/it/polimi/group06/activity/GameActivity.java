@@ -158,7 +158,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTheGame() {
-        humanCardsClickable(false);
         if (!game.gameIsOver())
             playOneRound();
     }
@@ -244,7 +243,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             if (game.getCurrentPlayer() instanceof Human & !cardSetFlag) {
 
                 // Set cards clickable
-                humanCardsClickable(true);
 
                 // Let's break to let human choose his card
                 break;
@@ -287,7 +285,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    void humanCardsClickable(boolean clickable) {
+    public void humanCardsClickable(boolean clickable) {
         if (clickable) {
             cardzero_image.setClickable(true);
             cardone_image.setClickable(true);
