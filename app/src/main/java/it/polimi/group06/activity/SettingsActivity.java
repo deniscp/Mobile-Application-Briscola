@@ -1,13 +1,17 @@
 package it.polimi.group06.activity;
 
+import android.content.Intent;
+import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
+import it.polimi.group06.activity.helper.MusicService;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -22,8 +27,10 @@ public class SettingsActivity extends AppCompatActivity {
     RadioButton naples, german, sicily;
     RadioButton defaultback, greenback, blueback;
     Button button;
+    Switch mute;
     List<String> settingsList;
     int whichcarddeck, whichbackground;
+    AudioManager backgroundaudio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,8 @@ public class SettingsActivity extends AppCompatActivity {
         defaultback = findViewById(R.id.defaultback);
         greenback = findViewById(R.id.lightgreen);
         blueback = findViewById(R.id.lightblue);
+
+        mute = findViewById(R.id.sound);
 
         getSettings();
 
@@ -118,6 +127,17 @@ public class SettingsActivity extends AppCompatActivity {
                 String towrite = String.valueOf(whichcarddeck + "," + whichbackground);
                 OutputHandler.writefile(towrite, "settings", getApplicationContext());
                 finish();
+            }
+        });
+
+        mute.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+
+                } else{
+
+                }
             }
         });
     }

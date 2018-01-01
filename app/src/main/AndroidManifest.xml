@@ -33,6 +33,7 @@
         <activity android:name=".activity.GameActivity"
             android:screenOrientation="portrait"
            />
+        <service android:name=".activity.helper.MusicService"/>
     </application>
 
 </manifest>
