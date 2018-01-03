@@ -46,6 +46,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public TextView remaining;
     public ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
     public ImageView robotcard1, robotcard2, robotcard3;
+    public TextView humanPoints, robotPoints;
 
     List<String> settingsList;
     String cardbackstring;
@@ -79,6 +80,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
+
+        humanPoints = findViewById(R.id.humanpoints);
+        robotPoints = findViewById(R.id.robotpoints);
 
         robotcard1 = findViewById(R.id.robothand1);
         robotcard2 = findViewById(R.id.robothand2);
