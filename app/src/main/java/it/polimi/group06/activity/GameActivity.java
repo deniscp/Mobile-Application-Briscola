@@ -32,6 +32,7 @@ import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Human;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.activity.helper.Constants.TAG;
 import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 import static it.polimi.group06.domain.Constants.SECONDCARD;
@@ -40,7 +41,6 @@ import static it.polimi.group06.domain.Constants.THIRDCARD;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    final String TAG = "debug";
     Button saveandquit;
     TextView winner;
     public TextView remaining;
@@ -50,10 +50,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     List<String> settingsList;
     String cardbackstring;
 
+    final Handler handler = new Handler();
+
     boolean cardSetFlag = false;
     int humanChosenCard;
 
-    Animation robottomiddle;
+    public Animation robottomiddle, humanmiddle, briscolaOut;
 
     int color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
@@ -109,6 +111,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         robottomiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.robotcard);
+        humanmiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.humanplay);
+        briscolaOut= AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
+
 
         getStatisticsFile();
         setSettingsfromFile();
@@ -144,8 +149,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        setHandCardImages();
-//        setRobotCardImages();
         briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
 
         tStart = System.currentTimeMillis();
@@ -158,6 +161,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTheGame() {
+        handler.post(new UpdateView(this ));
         if (!game.gameIsOver())
             playOneRound();
     }
@@ -215,17 +219,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         playOneRound();
 
 
-        if (!game.gameIsOver()) {
-            final Handler handlernewround = new Handler();
-            handlernewround.postDelayed(new Runnable() {
+        if (!game.gameIsOver())
+            playOneRound();     // the next round
+        else // Game is over, no more rounds to play!
+        {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    playOneRound();     // the next round
+                    endofgame();
                 }
-            }, 1000);
-        } else // Game is over, no more rounds to play!
-        {
-            endofgame();
+            },
+            3500);
         }
 
     }
@@ -234,15 +238,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         int currentPlayer, currentChoice;
 
-        final Handler handler = new Handler();
+        int delay=0;
 
         Log.d("debug", "Round " + game.getRound());
         while (!game.roundIsOver()) {
 
             //It is the Human turn but Human has not chosen his card yet
             if (game.getCurrentPlayer() instanceof Human & !cardSetFlag) {
-
-                // Set cards clickable
 
                 // Let's break to let human choose his card
                 break;
@@ -261,11 +263,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
             Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
+
+
+            if(currentPlayer==FIRSTPLAYER) //Human will will play, either as first or as second
+                delay=0;
+            else //Robot will play
+                if(currentPlayer==game.getStartingPlayer()) { //Robot will start the round
+                    Log.d(TAG, " ----------- Robot will start the round");
+                    delay = 3500;
+                }
+                else if(currentPlayer!=game.getStartingPlayer()) //Robot will end the round
+                    delay=1000;
+
             Log.d("debug", "Player " + currentPlayer + " Card " + currentCard);
 
-
-            handler.post(
-                    new LaunchCard(currentPlayer, currentChoice, currentCard, this)
+            handler.postDelayed(
+                    new LaunchCard(currentPlayer, currentChoice, currentCard, this),
+                    delay
             );
 
             // Update the model
@@ -294,61 +308,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             cardzero_image.setClickable(false);
             cardone_image.setClickable(false);
             cardtwo_image.setClickable(false);
-        }
-    }
-
-
-
-    void setHandCardImages() {
-        ImageView[] humanhand = {cardzero_image, cardone_image, cardtwo_image};
-        int decksize = game.getTable().getDeck().remaining();
-        int handsize = human.getHand().size();
-
-        if (decksize == 0) {
-            briscola_image.setImageDrawable(null);
-        }
-
-        if (handsize == 3) {
-            for (int i = 0; i < 3; i++) {
-                Card humancard = human.getHand().get(i);
-                humanhand[i].setImageResource(getCardDrawable(humancard, cardzero_image.getContext()));
-            }
-        } else if (handsize == 2) {
-            humanhand[2].setImageDrawable(null);
-            for (int i = 0; i < 2; i++) {
-                Card humancard = human.getHand().get(i);
-                humanhand[i].setImageResource(getCardDrawable(humancard, cardone_image.getContext()));
-            }
-        } else if (handsize == 1) {
-            humanhand[2].setImageDrawable(null);
-            humanhand[1].setImageDrawable(null);
-            Card humancard = human.getHand().get(0);
-            humanhand[0].setImageResource(getCardDrawable(humancard, cardtwo_image.getContext()));
-        } else {
-            for (int i = 0; i < 3; i++) {
-                humanhand[i].setImageDrawable(null);
-            }
-        }
-        remaining.setText(String.valueOf(game.remainingCards()));
-    }
-
-    void setRobotCardImages() {
-        ImageView[] robotcards = {robotcard1, robotcard1, robotcard3};
-        int handsize = robot.getHand().size();
-        if (handsize == 3) {
-            for (int i = 0; i < 3; i++) {
-                robotcards[i].setImageResource(R.drawable.back);
-            }
-        } else if (handsize == 2) {
-            robotcards[2].setImageDrawable(null);
-        } else if (handsize == 1) {
-            for (int i = 2; i > 0; i--) {
-                robotcards[i].setImageDrawable(null);
-            }
-        } else {
-            for (int i = 0; i < 3; i++) {
-                robotcards[i].setImageDrawable(null);
-            }
         }
     }
 
@@ -559,7 +518,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             human = game.getPlayers()[0];
             robot = game.getPlayers()[1];
 
-            setRobotCardImages();
+//            setRobotCardImages();
 
             //TODO
             if (game.getTable().getPlayedCardsAmount() == 1) {

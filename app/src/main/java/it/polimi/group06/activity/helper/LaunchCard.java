@@ -8,7 +8,6 @@ import it.polimi.group06.domain.Card;
 
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
-import static java.lang.Thread.sleep;
 
 /**
  * Created by denis on 30/12/17.
@@ -25,7 +24,7 @@ public class LaunchCard implements Runnable {
         cPlayer = currentPlayer;
         cChoice = currentChoice;
         cCard = currentCard;
-        this.cAct = currentActivity;
+        cAct = currentActivity;
     }
 
     @Override
@@ -41,14 +40,14 @@ public class LaunchCard implements Runnable {
         if (cPlayer == FIRSTPLAYER){
             cAct.humancard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
             humanCards[cChoice].setVisibility(View.GONE);
-        }
-        else if (cPlayer == SECONDPLAYER)
-            cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
 
-//        try {
-//            sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+            cAct.humancard.startAnimation(cAct.humanmiddle);
+
+        }
+        else if (cPlayer == SECONDPLAYER) {
+
+            cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
+            robotCards[cChoice].setVisibility(View.GONE);
+        }
     }
 }
