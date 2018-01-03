@@ -265,7 +265,11 @@ public class Game {
 
         winningPlayer = Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
 
+        // The round winner collects the cards
         this.players[winningPlayer].getPlayerPile().addAll(this.table.collectPlayedCard());
+        // The round winner updates his points
+        this.players[winningPlayer].setPlayerPoints(Rules.computePoints(this.getPlayers()[winningPlayer].getPlayerPile()));
+
 
         if (round <= 17) {
             players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());

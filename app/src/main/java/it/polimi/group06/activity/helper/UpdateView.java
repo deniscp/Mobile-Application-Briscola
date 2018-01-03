@@ -6,11 +6,13 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import it.polimi.group06.R;
 import it.polimi.group06.activity.GameActivity;
 import it.polimi.group06.domain.Card;
 
 import static it.polimi.group06.activity.helper.Constants.TAG;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
+import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
@@ -38,6 +40,7 @@ public class UpdateView implements Runnable{
         ImageView robotCards[] = {cAct.robotcard1,cAct.robotcard2,cAct.robotcard3};
 
         int playedSize = cAct.game.getTable().getPlayedCards().size();
+
         //Clear the table if a new round has just started
         //Maybe launch an animation that moves cards toward the winning player
         if(playedSize == 0 || playedSize ==1 && cAct.game.getStartingPlayer() == SECONDPLAYER) {
@@ -60,7 +63,7 @@ public class UpdateView implements Runnable{
             Log.d(TAG, "Adjusted "+robotHand.size()+" cards of human in hand");
         }
         for( ; i < 3 ; i++)
-            humanCards[i].setVisibility(View.GONE);
+            humanCards[i].setVisibility(View.INVISIBLE);
 
         // Adjust Robot missing cards
         int nRobotCards = robotHand.size();
@@ -81,10 +84,15 @@ public class UpdateView implements Runnable{
             robotCards[i].setVisibility(View.VISIBLE);
         }
         for( ; i < 3 ; i++)
-            robotCards[i].setVisibility(View.GONE);
+            robotCards[i].setVisibility(View.INVISIBLE);
 
         //Set the number of remaining cards in the deck
         cAct.remaining.setText(String.valueOf(cAct.game.remainingCards()));
+
+        //Set the points of both players
+        cAct.humanPoints.setText(String.valueOf(cAct.game.getPlayers()[FIRSTPLAYER].getPlayerPoints()));
+        cAct.robotPoints.setText(String.valueOf(cAct.game.getPlayers()[SECONDPLAYER].getPlayerPoints()));
+
 
         // make the deck not visible
         if(cAct.game.getRound() == 18) //Starting from the last but three round
@@ -96,6 +104,4 @@ public class UpdateView implements Runnable{
 
         cAct.humanCardsClickable(true);
     }
-
-
 }

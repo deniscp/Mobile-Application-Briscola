@@ -39,7 +39,7 @@ public class LaunchCard implements Runnable {
 
         if (cPlayer == FIRSTPLAYER){
             cAct.humancard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
-            humanCards[cChoice].setVisibility(View.GONE);
+            humanCards[cChoice].setVisibility(View.INVISIBLE);
 
             cAct.humancard.startAnimation(cAct.humanmiddle);
 
@@ -47,7 +47,7 @@ public class LaunchCard implements Runnable {
         else if (cPlayer == SECONDPLAYER) {
 
             cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
-            robotCards[cChoice].setVisibility(View.GONE);
+            robotCards[cChoice].setVisibility(View.INVISIBLE);
         }
     }
 }
