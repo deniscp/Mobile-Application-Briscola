@@ -123,18 +123,18 @@ public class Game {
         return currentPlayer;
     }
 
-    public Player getCurrentPlayer()
-    {
+    public Player getCurrentPlayer() {
         return this.getPlayers()[this.getCurrentPlayerPosition()];
     }
 
     /**
      * Returns how many cards can still be picked by players.
+     *
      * @return The number of cards left in the deck plus one if the briscola is still on the table
      */
-    public int remainingCards(){
+    public int remainingCards() {
         int briscola = 0;
-        if(this.getTable().getBriscola()!= null)
+        if (this.getTable().getBriscola() != null)
             briscola = 1;
         return this.getTable().getDeck().remaining() + briscola;
     }
@@ -199,7 +199,7 @@ public class Game {
      * Checks if there are still rounds to play, i.e. the game is not finished
      *
      * @return True if there is no round left to be played,
-     *         False if the game is not over
+     * False if the game is not over
      */
     public boolean gameIsOver() {
         if (this.round == 21)
@@ -212,7 +212,7 @@ public class Game {
      * Checks if there are not cards yet to be played in the current round
      *
      * @return True if all players have already played their card,
-     *         False otherwise
+     * False otherwise
      */
     public boolean roundIsOver() {
         if (this.table.getPlayedCards().size() == NUMBEROFPLAYERS)
@@ -241,13 +241,13 @@ public class Game {
      * @param humanChoice the card eventually selected by the Human
      * @return the position of the appropriate selected card
      */
-    public int getCurrentChoice(int humanChoice){
+    public int getCurrentChoice(int humanChoice) {
         Player currentPlayer = this.getPlayers()[this.getCurrentPlayerPosition()];
         int choice = 0;
 
-        if(currentPlayer instanceof Human)
+        if (currentPlayer instanceof Human)
             choice = humanChoice;
-        if(currentPlayer instanceof Robot)
+        if (currentPlayer instanceof Robot)
             choice = ((Robot) currentPlayer).strategy.cardPositionInHand();
 
         return choice;
@@ -261,31 +261,36 @@ public class Game {
      * and updating the starting and the current player
      */
     public void newRound() {
-        int winningPlayer;  //the winner of the current round
+        int winningPlayerPosition;  //the position of the current round winner
+        Player winningPlayer;    //the current round winner
 
-        winningPlayer = Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
+        winningPlayerPosition = Rules.roundWinner(this.table.getPlayedCards(), this.briscola, this.startingPlayer);
+
+        winningPlayer = this.players[winningPlayerPosition];
+
 
         // The round winner collects the cards
-        this.players[winningPlayer].getPlayerPile().addAll(this.table.collectPlayedCard());
+        winningPlayer.getPlayerPile().addAll(this.table.collectPlayedCard());
         // The round winner updates his points
-        this.players[winningPlayer].setPlayerPoints(Rules.computePoints(this.getPlayers()[winningPlayer].getPlayerPile()));
+        winningPlayer.setPlayerPoints(Rules.computePoints(winningPlayer.getPlayerPile()));
 
 
         if (round <= 17) {
-            players[winningPlayer].takeCardInHand(this.table.getDeck().drawCard());
+            players[winningPlayerPosition].takeCardInHand(this.table.getDeck().drawCard());
 
             if (round == 17)
-                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.takeBriscola());
+                players[(winningPlayerPosition + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.takeBriscola());
             else
-                players[(winningPlayer + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.getDeck().drawCard());
+                players[(winningPlayerPosition + 1) % NUMBEROFPLAYERS].takeCardInHand(this.table.getDeck().drawCard());
         }
 
         this.round++;
-        this.startingPlayer = this.currentPlayer = winningPlayer;
+        this.startingPlayer = this.currentPlayer = winningPlayerPosition;
     }
 
     /**
      * Returns the winner at the end of a game, it should be called when the game is over.
+     *
      * @return The id of the winning player.
      */
     public int returnWinner() {

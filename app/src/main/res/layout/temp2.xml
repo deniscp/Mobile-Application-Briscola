@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:weightSum="3"
+    >
+
+    <RelativeLayout
+        android:id="@+id/robot_hand"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/robothand1"
+            android:layout_width="93dp"
+            android:layout_height="164dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="15dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/robothand2"
+            android:layout_width="93dp"
+            android:layout_height="164dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/robothand1"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/robothand3"
+            android:layout_width="93dp"
+            android:layout_height="164dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/robothand2"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/robotplayed"
+            android:layout_width="93dp"
+            android:layout_height="155dp"
+            android:layout_marginTop="248dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.427"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/humanplayed"
+            android:layout_width="93dp"
+            android:layout_height="155dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="204dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/robotpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/robotpoints"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/humanpoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/humanpoints"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/deck"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/humanpoints">
+
+            <TextView
+                android:id="@+id/remaining"
+                android:layout_width="93dp"
+                android:layout_height="164dp"
+                android:layout_below="@+id/briscolaimage"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="54dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:rotation="270"
+                android:text="remaining"
+                android:textColor="@android:color/background_light"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/briscolaimage"
+                android:layout_width="93dp"
+                android:layout_height="158dp"
+                android:layout_marginBottom="220dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/human_hand"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/cardzeroimage"
+            android:layout_width="93dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="15dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/cardoneimage"
+            android:layout_width="93dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/cardzeroimage"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/cardtwoimage"
+            android:layout_width="93dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/cardoneimage"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+
+</LinearLayout>
