@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="it.polimi.group06.activity.SettingsActivity">
 
-    <RadioGroup
-        android:id="@+id/cardpicker_group"
-        android:layout_width="129dp"
-        android:layout_height="111dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="76dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:text="Cardset:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/cardpicker_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
 
         <RadioButton
             android:id="@+id/naples"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Napoletane"
             android:textSize="18sp" />
 
@@ -31,7 +38,7 @@
             android:id="@+id/german"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Salzburger"
             android:textSize="18sp" />
 
@@ -39,28 +46,31 @@
             android:id="@+id/sicily"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Siciliane"
             android:textSize="18sp" />
-    </RadioGroup>
+        </RadioGroup>
 
-    <RadioGroup
-        android:id="@+id/backgroundpicker_group"
-        android:layout_width="129dp"
-        android:layout_height="111dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="260dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="35dp"
+            android:text="Background:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
+        <RadioGroup
+            android:id="@+id/backgroundpicker_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
         <RadioButton
             android:id="@+id/defaultback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Default"
             android:textSize="18sp" />
 
@@ -68,7 +78,7 @@
             android:id="@+id/lightgreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Light Green"
             android:textSize="18sp" />
 
@@ -76,65 +86,32 @@
             android:id="@+id/lightblue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
             android:text="Light Blue"
             android:textSize="18sp" />
-    </RadioGroup>
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Save Settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Switch
+            android:id="@+id/sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="35dp"
+            android:text="Sound"
+            android:textOff="Off"
+            android:textOn="On"
+            android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1">
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Save Settings" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginEnd="325dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="52dp"
-        android:text="Cardset:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="291dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="232dp"
-        android:text="Background:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Switch
-        android:id="@+id/sound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="220dp"
-        android:layout_marginEnd="306dp"
-        android:layout_marginStart="25dp"
-        android:text="Sound"
-        android:textOff="Off"
-        android:textOn="On"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</RelativeLayout>
