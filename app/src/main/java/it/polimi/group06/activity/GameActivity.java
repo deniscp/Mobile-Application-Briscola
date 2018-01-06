@@ -32,11 +32,6 @@ import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Human;
 import it.polimi.group06.domain.Player;
 
-import static it.polimi.group06.activity.helper.Constants.DELAY1;
-import static it.polimi.group06.activity.helper.Constants.DELAY2;
-import static it.polimi.group06.activity.helper.Constants.DELAY3;
-import static it.polimi.group06.activity.helper.Constants.DELAY4;
-import static it.polimi.group06.activity.helper.Constants.DELAY5;
 import static it.polimi.group06.activity.helper.Constants.TAG;
 import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
@@ -49,7 +44,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button saveandquit;
     TextView winner;
     public TextView remaining;
-    public ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
+    public ImageView briscola_image, humancard, robotcard;
+    public ImageView[] humanHand = new ImageView[3];
     public ImageView robotcard1, robotcard2, robotcard3, pile;
     public TextView humanPoints, robotPoints;
 
@@ -99,11 +95,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         saveandquit = findViewById(R.id.savequit_button);
 
-        cardzero_image = findViewById(R.id.cardzeroimage);
-        cardone_image = findViewById(R.id.cardoneimage);
-        cardtwo_image = findViewById(R.id.cardtwoimage);
         briscola_image = findViewById(R.id.briscolaimage);
         pile=findViewById(R.id.pile);
+
+        humanHand[FIRSTCARD]=findViewById(R.id.cardzeroimage);
+        humanHand[SECONDCARD]=findViewById(R.id.cardoneimage);
+        humanHand[THIRDCARD]=findViewById(R.id.cardtwoimage);
 
         // At the beginning of the game the human player starts
         // but has not chosen his card yet
@@ -136,9 +133,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard3.setImageResource(id);
         pile.setBackgroundResource(id);
 
-        cardzero_image.setOnClickListener(this);
-        cardone_image.setOnClickListener(this);
-        cardtwo_image.setOnClickListener(this);
+        for (int position = 0; position < 3; position++)
+            humanHand[position].setOnClickListener(this);
+
         saveandquit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View saveAndQuitButton){
@@ -240,7 +237,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     endofgame();
                 }
             },
-            DELAY5);
+            3500);
         }
 
     }
@@ -276,15 +273,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
 
 
-            if(currentPlayer==FIRSTPLAYER) //Human will play, either as first or as second
-                delay = DELAY1;
+            if(currentPlayer==FIRSTPLAYER) //Human will will play, either as first or as second
+                delay=0;
             else //Robot will play
                 if(currentPlayer==game.getStartingPlayer()) { //Robot will start the round
                     Log.d(TAG, " ----------- Robot will start the round");
-                    delay = DELAY2;
+                    delay = 3500;
                 }
                 else if(currentPlayer!=game.getStartingPlayer()) //Robot will end the round
-                    delay = DELAY3;
+                    delay=1000;
 
             Log.d("debug", "Player " + currentPlayer + " Card " + currentCard);
 
@@ -304,7 +301,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             handler.postDelayed(
                     new UpdateView(this),
-                    DELAY4
+                    3000
             );
         }
 
@@ -312,13 +309,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void humanCardsClickable(boolean clickable) {
         if (clickable) {
-            cardzero_image.setClickable(true);
-            cardone_image.setClickable(true);
-            cardtwo_image.setClickable(true);
+            humanHand[FIRSTCARD].setClickable(true);
+            humanHand[SECONDCARD].setClickable(true);
+            humanHand[THIRDCARD].setClickable(true);
         } else {
-            cardzero_image.setClickable(false);
-            cardone_image.setClickable(false);
-            cardtwo_image.setClickable(false);
+            humanHand[FIRSTCARD].setClickable(false);
+            humanHand[SECONDCARD].setClickable(false);
+            humanHand[THIRDCARD].setClickable(false);
         }
     }
 
