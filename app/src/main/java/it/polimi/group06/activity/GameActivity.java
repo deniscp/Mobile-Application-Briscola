@@ -510,6 +510,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
                     break;
                 case (2):
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.orange));
+                    break;
+                case (3):
                     getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
                     break;
             }

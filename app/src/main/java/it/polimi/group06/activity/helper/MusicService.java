@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import it.polimi.group06.R;
 
+
 /**
  * Created by Timo Zandonella on 01.01.2018.
  */
@@ -32,10 +33,13 @@ public class MusicService extends Service {
         return START_STICKY;
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
 
         background.stop();
     }
+
+
 }

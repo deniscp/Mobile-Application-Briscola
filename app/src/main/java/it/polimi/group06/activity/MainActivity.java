@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setBackgroundColor();
 
         startService(new Intent(this, MusicService.class));
+        stopService(new Intent(this, MusicService.class));// added by roza for a short time
 
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                 finish();
                                 System.exit(0);
                             }
+
                         })
                         .setNegativeButton(android.R.string.no, null).show();
             }
@@ -128,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
                 break;
             case (2):
+                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.orange));
+                break;
+            case (3):
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
                 break;
             default:

@@ -15,22 +15,22 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <TextView
             android:id="@+id/briscola"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
+            android:background="@drawable/briscola_title"
             android:gravity="center"
-            android:text="BRISCOLA"
             android:textSize="60sp" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/start_button"
-        android:layout_width="160dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@android:color/holo_orange_light"
@@ -38,46 +38,58 @@
         android:soundEffectsEnabled="false"
         android:text="@string/start"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:drawablePadding="-30dp"
+        android:background="@drawable/btn"/>
 
     <Button
         android:id="@+id/load_button"
-        android:layout_width="160dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
+        android:drawablePadding="-23dp"
         android:drawableLeft="@drawable/ic_file_upload"
         android:soundEffectsEnabled="false"
         android:text="load"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/btn"/>
 
     <Button
         android:id="@+id/statistics_button"
-        android:layout_width="160dp"
+
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
         android:drawableLeft="@drawable/ic_chart"
         android:text="@string/statistics"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:drawablePadding="-20dp"
+        android:textSize="20sp"
+        android:background="@drawable/btn"/>
 
     <Button
         android:id="@+id/settings_button"
-        android:layout_width="160dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
         android:drawableLeft="@drawable/ic_settings"
+        android:drawablePadding="-20dp"
         android:text="@string/settings"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/btn"
+        />
 
     <Button
         android:id="@+id/quit_button"
-        android:layout_width="160dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginBottom="46dp"
         android:drawableLeft="@drawable/ic_exit_app"
+        android:drawablePadding="-30dp"
         android:text="@string/exit"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:background="@drawable/btn"/>
 </LinearLayout>

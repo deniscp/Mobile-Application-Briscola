@@ -1,6 +1,5 @@
 package it.polimi.group06.activity;
 
-import android.content.Intent;
 import android.media.AudioManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,13 +18,12 @@ import java.util.List;
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
-import it.polimi.group06.activity.helper.MusicService;
 
 public class SettingsActivity extends AppCompatActivity {
 
     RadioGroup cardpicker, backpicker;
     RadioButton naples, german, sicily;
-    RadioButton defaultback, greenback, blueback;
+    RadioButton default_bg, green_bg, blue_bg, orange_bg;
     Button button;
     Switch mute;
     List<String> settingsList;
@@ -50,9 +48,10 @@ public class SettingsActivity extends AppCompatActivity {
         german = findViewById(R.id.german);
         sicily = findViewById(R.id.sicily);
 
-        defaultback = findViewById(R.id.defaultback);
-        greenback = findViewById(R.id.lightgreen);
-        blueback = findViewById(R.id.lightblue);
+        default_bg = findViewById(R.id.default_bg);
+        green_bg = findViewById(R.id.green_bg);
+        orange_bg =findViewById(R.id.orange_bg);
+        blue_bg = findViewById(R.id.light_blue_bg);
 
         mute = findViewById(R.id.sound);
 
@@ -76,18 +75,22 @@ public class SettingsActivity extends AppCompatActivity {
         switch (whichbackground) {
             case (0):
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
-                defaultback.setChecked(true);
+                default_bg.setChecked(true);
                 break;
             case (1):
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
-                greenback.setChecked(true);
+                green_bg.setChecked(true);
                 break;
-            case (2):
+            case(2):
+                getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.orange));
+                orange_bg.setChecked(true);
+                break;
+            case (3):
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
-                blueback.setChecked(true);
+                blue_bg.setChecked(true);
                 break;
             default:
-                defaultback.setChecked(true);
+                default_bg.setChecked(true);
                 System.out.println("this doesn't exist");
         }
 
@@ -107,15 +110,18 @@ public class SettingsActivity extends AppCompatActivity {
         backpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.defaultback){
+                if(checkedId == R.id.default_bg){
                     getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.white));
                     whichbackground = 0;
-                } else if (checkedId == R.id.lightgreen){
+                } else if (checkedId == R.id.green_bg){
                     getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
                     whichbackground = 1;
-                } else if(checkedId == R.id.lightblue){
-                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
+                } else if (checkedId == R.id.orange_bg){
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.orange));
                     whichbackground = 2;
+                } else if(checkedId == R.id.light_blue_bg){
+                    getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightblue));
+                    whichbackground = 3;
                 }
             }
         });

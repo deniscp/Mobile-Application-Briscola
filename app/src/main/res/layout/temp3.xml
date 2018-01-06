@@ -12,14 +12,14 @@
         android:id="@+id/robot_hand"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="0.8"
         android:gravity="center_horizontal|top"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/robotplayed"
@@ -39,6 +39,7 @@
             android:layout_height="190dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
+            app:srcCompat="@drawable/coppe1s"
             tools:ignore="ContentDescription,NestedWeights" />
 
         <ImageView
@@ -61,22 +62,31 @@
     </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/robotpoints"
-        android:layout_width="28dp"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_gravity="left"
-        android:layout_weight="0.15"
-        android:background="@drawable/c4"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:text="20"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:ignore="HardcodedText" />
+        android:layout_weight="0.19">
 
 
+        <TextView
+            android:id="@+id/robotpoints"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/c4"
+            android:fontFamily="monospace"
+
+            android:gravity="center"
+            android:scaleType="centerCrop"
+            android:text="120"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,1:1"
+            tools:ignore="HardcodedText" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <RelativeLayout
         android:id="@+id/table"
@@ -110,57 +120,90 @@
         <RelativeLayout
             android:id="@+id/deck"
             android:layout_width="50dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="11dp">
+
+
+            <ImageView
+                android:id="@+id/briscolaimage"
+                android:layout_width="93dp"
+                android:layout_height="190dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="45dp"
+                android:layout_toLeftOf="@+id/remaining"
+                app:srcCompat="@drawable/denari1n"
+                android:rotation="270"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/pile"
+                android:layout_width="93dp"
+                android:layout_height="190dp"
+                android:layout_alignLeft="@+id/briscolaimage"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="47dp"
+                app:srcCompat="@drawable/backn"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/remaining"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@+id/briscolaimage"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="27dp"
+                android:layout_marginRight="38dp"
+                android:background="@drawable/c4"
+                android:gravity="center"
+                android:text="-40-"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/briscolaimage"
-            android:layout_width="93dp"
-            android:layout_height="190dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="69dp"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/remaining"
-            android:layout_width="193dp"
-            android:layout_height="164dp"
-            android:layout_alignBottom="@+id/briscolaimage"
-            android:layout_marginLeft="25dp"
-            android:layout_toRightOf="@+id/briscolaimage"
-            android:rotation="270"
-            android:text="-40-"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/humanpoints"
-        android:layout_width="28dp"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_gravity="left"
-        android:layout_weight="0.15"
-        android:background="@drawable/c4"
-        android:fontFamily="monospace"
-        android:gravity="center"
-        android:text="20"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:ignore="HardcodedText" />
+        android:layout_weight="0.19"
+        android:gravity="top">
+
+
+        <TextView
+            android:id="@+id/humanpoints"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/c4"
+            android:fontFamily="monospace"
+            android:gravity="center"
+
+            android:scaleType="centerCrop"
+            android:text="120"
+
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/human_hand"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_weight="0.8"
         android:gravity="center_horizontal|bottom"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -172,10 +215,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="204dp"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/cardzeroimage"
@@ -183,6 +226,7 @@
             android:layout_height="190dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
+            app:srcCompat="@drawable/coppe1s"
             tools:ignore="ContentDescription,NestedWeights" />
 
         <ImageView

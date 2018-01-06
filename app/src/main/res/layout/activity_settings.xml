@@ -26,33 +26,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp">
 
-        <RadioButton
-            android:id="@+id/naples"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Napoletane"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/naples"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Napoletane"
+                android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/german"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Salzburger"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/german"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Salzburger"
+                android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/sicily"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Siciliane"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/sicily"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Siciliane"
+                android:textSize="18sp" />
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/background_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -66,29 +66,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp">
-        <RadioButton
-            android:id="@+id/defaultback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Default"
-            android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/lightgreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Light Green"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/default_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Default"
+                android:textSize="18sp" />
 
-        <RadioButton
-            android:id="@+id/lightblue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="Light Blue"
-            android:textSize="18sp" />
+            <RadioButton
+                android:id="@+id/green_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Light Green"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/orange_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Orange"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/light_blue_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Light Blue"
+                android:textSize="18sp" />
         </RadioGroup>
 
         <Switch
@@ -101,16 +110,19 @@
             android:textOff="Off"
             android:textOn="On"
             android:textSize="18sp" />
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1">
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Save Settings" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="180dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/btn"
+                android:text="Save Settings" />
         </RelativeLayout>
 
     </LinearLayout>

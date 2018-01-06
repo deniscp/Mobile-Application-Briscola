@@ -2,14 +2,16 @@
 <resources>
     <color name="colorPrimary">#008000</color>
     <color name="colorPrimaryDark">#006400</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ef706c60</color>
     <color name="black_overlay">#66000000</color>
     <color name="black">#fc000000</color>
-    <color name="blue">#660d28bd</color>
-    <color name="splash_screen_color">#CD853F</color>
+    <color name="dark_blue">#660d28bd</color>
+    <color name="light_chocolate">#CD853F</color>
+    <color name="light_brown">#5df5a402</color>>
 
     <!--Background colors-->
     <color name="white">#FFFFFF</color>
-    <color name="lightgreen">#8bff79</color>
-    <color name="lightblue">#00c4ff</color>
+    <color name="lightgreen">#d488f744</color>
+    <color name="lightblue">#e06bdbfd</color>
+    <color name="orange">#cdf5a402</color>
 </resources>
