@@ -145,26 +145,30 @@
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
-            <ImageView
-                android:id="@+id/humanplayed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pile"
-                android:layout_alignLeft="@+id/robotplayed"
-                android:layout_marginLeft="55dp"
-                android:rotation="20"/>
-
-            <ImageView
-                android:id="@+id/robotplayed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="44dp"
-                android:rotation="-20"/>
-
-
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/humanplayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_alignLeft="@+id/robotplayed"
+            android:layout_marginLeft="58dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="15dp"
+            android:rotation="20" />
+
+        <ImageView
+            android:id="@+id/robotplayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="44dp"
+            android:layout_marginBottom="10dp"
+            android:rotation="-20"/>
+
 
     </RelativeLayout>
 
