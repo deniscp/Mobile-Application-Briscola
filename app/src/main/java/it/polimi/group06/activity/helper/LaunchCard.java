@@ -39,9 +39,9 @@ public class LaunchCard implements Runnable {
 
         if (cPlayer == FIRSTPLAYER){
             cAct.humancard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
-            humanCards[cChoice].setVisibility(View.INVISIBLE);
+            //humanCards[cChoice].setVisibility(View.INVISIBLE);
 
-            cAct.humancard.startAnimation(cAct.humanmiddle);
+            humanCards[cChoice].startAnimation(cAct.humanmiddle);
 
         }
         else if (cPlayer == SECONDPLAYER) {

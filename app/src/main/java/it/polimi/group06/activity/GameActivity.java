@@ -32,6 +32,11 @@ import it.polimi.group06.domain.Game;
 import it.polimi.group06.domain.Human;
 import it.polimi.group06.domain.Player;
 
+import static it.polimi.group06.activity.helper.Constants.DELAY1;
+import static it.polimi.group06.activity.helper.Constants.DELAY2;
+import static it.polimi.group06.activity.helper.Constants.DELAY3;
+import static it.polimi.group06.activity.helper.Constants.DELAY4;
+import static it.polimi.group06.activity.helper.Constants.DELAY5;
 import static it.polimi.group06.activity.helper.Constants.TAG;
 import static it.polimi.group06.domain.Constants.FIRSTCARD;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
@@ -233,7 +238,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     endofgame();
                 }
             },
-            3500);
+            DELAY5);
         }
 
     }
@@ -269,15 +274,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Card currentCard = game.getCurrentPlayer().getHand().get(currentChoice);
 
 
-            if(currentPlayer==FIRSTPLAYER) //Human will will play, either as first or as second
-                delay=0;
+            if(currentPlayer==FIRSTPLAYER) //Human will play, either as first or as second
+                delay = DELAY1;
             else //Robot will play
                 if(currentPlayer==game.getStartingPlayer()) { //Robot will start the round
                     Log.d(TAG, " ----------- Robot will start the round");
-                    delay = 3500;
+                    delay = DELAY2;
                 }
                 else if(currentPlayer!=game.getStartingPlayer()) //Robot will end the round
-                    delay=1000;
+                    delay = DELAY3;
 
             Log.d("debug", "Player " + currentPlayer + " Card " + currentCard);
 
@@ -297,7 +302,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             handler.postDelayed(
                     new UpdateView(this),
-                    3000
+                    DELAY4
             );
         }
 

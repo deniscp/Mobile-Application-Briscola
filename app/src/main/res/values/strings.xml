@@ -89,7 +89,5 @@
     <string name="start">Start</string>
     <string name="exit">Exit</string>
     <string name="sound">Sound</string>
-    <string name="robotpoints">RobotPoints</string>
-    <string name="humanpoints">HumanPoints</string>
     <string name="save_quit">Save + Quit</string>
 </resources>

@@ -83,7 +83,7 @@
             android:id="@+id/robotpoints"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/robotpoints"
+            android:text="120"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/humanpoints"
+            android:text="120"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <RelativeLayout
