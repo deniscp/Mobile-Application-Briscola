@@ -18,11 +18,15 @@ public class CardAnimation {
 
     public static AnimatorSet getViewToViewScalingAnimator(final /*RelativeLayout*/ ViewGroup parentView,
                                                            final ImageView viewToAnimate,
-                                                           final Rect fromViewRect,
-                                                           final Rect toViewRect,
+                                                           final View fromView,
+                                                           final View toView,
                                                            final long duration,
                                                            final long startDelay) {
 
+        Rect fromViewRect = new Rect();
+        Rect toViewRect = new Rect();
+        fromView.getGlobalVisibleRect(fromViewRect);
+        toView.getGlobalVisibleRect(toViewRect);
 
         // get all coordinates at once
         final Rect parentViewRect = new Rect(), viewToAnimateRect = new Rect();
@@ -69,12 +73,14 @@ public class CardAnimation {
         // moving of the object on Y-axis
         ObjectAnimator translateAnimatorY = ObjectAnimator.ofFloat(viewToAnimate, "Y", fromViewRect.top - parentViewRect.top, toViewRect.top - parentViewRect.top);
 
+        // rotating the view
+        ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(viewToAnimate, "rotation", fromView.getRotation(), toView.getRotation());
+
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setInterpolator(new DecelerateInterpolator(1f));
         animatorSet.setDuration(duration); // can be decoupled for each animator separately
         animatorSet.setStartDelay(startDelay); // can be decoupled for each animator separately
-        animatorSet.playTogether(valueAnimatorWidth, valueAnimatorHeight, translateAnimatorX, translateAnimatorY);
-
+        animatorSet.playTogether(valueAnimatorWidth, valueAnimatorHeight, translateAnimatorX, translateAnimatorY,rotateAnimator);
         return animatorSet;
     }
 
