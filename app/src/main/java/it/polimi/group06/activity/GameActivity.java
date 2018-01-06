@@ -44,7 +44,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     Button saveandquit;
     TextView winner;
     public TextView remaining;
-    public ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
+    public ImageView briscola_image, humancard, robotcard;
+    public ImageView[] humanHand = new ImageView[3];
     public ImageView robotcard1, robotcard2, robotcard3;
 
     List<String> settingsList;
@@ -90,10 +91,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         saveandquit = findViewById(R.id.savequit_button);
 
-        cardzero_image = findViewById(R.id.cardzeroimage);
-        cardone_image = findViewById(R.id.cardoneimage);
-        cardtwo_image = findViewById(R.id.cardtwoimage);
         briscola_image = findViewById(R.id.briscolaimage);
+
+        humanHand[FIRSTCARD]=findViewById(R.id.cardzeroimage);
+        humanHand[SECONDCARD]=findViewById(R.id.cardoneimage);
+        humanHand[THIRDCARD]=findViewById(R.id.cardtwoimage);
 
         // At the beginning of the game the human player starts
         // but has not chosen his card yet
@@ -125,9 +127,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard3.setImageResource(id);
         remaining.setBackgroundResource(id);
 
-        cardzero_image.setOnClickListener(this);
-        cardone_image.setOnClickListener(this);
-        cardtwo_image.setOnClickListener(this);
+        for (int position = 0; position < 3; position++)
+            humanHand[position].setOnClickListener(this);
+
         saveandquit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View saveAndQuitButton){
@@ -301,13 +303,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void humanCardsClickable(boolean clickable) {
         if (clickable) {
-            cardzero_image.setClickable(true);
-            cardone_image.setClickable(true);
-            cardtwo_image.setClickable(true);
+            humanHand[FIRSTCARD].setClickable(true);
+            humanHand[SECONDCARD].setClickable(true);
+            humanHand[THIRDCARD].setClickable(true);
         } else {
-            cardzero_image.setClickable(false);
-            cardone_image.setClickable(false);
-            cardtwo_image.setClickable(false);
+            humanHand[FIRSTCARD].setClickable(false);
+            humanHand[SECONDCARD].setClickable(false);
+            humanHand[THIRDCARD].setClickable(false);
         }
     }
 

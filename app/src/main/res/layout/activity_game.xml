@@ -2,15 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="it.polimi.group06.activity.GameActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+    <ImageView
+        android:id="@+id/shuttle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/winner"
@@ -103,8 +105,8 @@
         android:layout_width="93dp"
         android:layout_height="164dp"
         android:layout_marginStart="25dp"
-        android:layout_y="-150dp"
         android:layout_x="-100dp"
+        android:layout_y="-150dp"
         app:layout_constraintEnd_toStartOf="@+id/robothand2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

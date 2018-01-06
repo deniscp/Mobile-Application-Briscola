@@ -6,4 +6,5 @@ package it.polimi.group06.activity.helper;
 
 public class Constants {
     public static final String TAG = "debug";
+    public static final int CARDVELOCITY = 400;
 }
