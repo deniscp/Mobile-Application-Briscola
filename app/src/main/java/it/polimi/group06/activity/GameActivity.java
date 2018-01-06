@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     TextView winner;
     public TextView remaining;
     public ImageView cardzero_image, cardone_image, cardtwo_image, briscola_image, humancard, robotcard;
-    public ImageView robotcard1, robotcard2, robotcard3;
+    public ImageView robotcard1, robotcard2, robotcard3, pile;
     public TextView humanPoints, robotPoints;
 
     List<String> settingsList;
@@ -103,6 +103,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         cardone_image = findViewById(R.id.cardoneimage);
         cardtwo_image = findViewById(R.id.cardtwoimage);
         briscola_image = findViewById(R.id.briscolaimage);
+        pile=findViewById(R.id.pile);
 
         // At the beginning of the game the human player starts
         // but has not chosen his card yet
@@ -124,6 +125,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         briscolaOut= AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
 
 
+
         getStatisticsFile();
         setSettingsfromFile();
 
@@ -132,7 +134,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard1.setImageResource(id);
         robotcard2.setImageResource(id);
         robotcard3.setImageResource(id);
-        remaining.setBackgroundResource(id);
+        pile.setBackgroundResource(id);
 
         cardzero_image.setOnClickListener(this);
         cardone_image.setOnClickListener(this);

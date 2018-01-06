@@ -21,17 +21,6 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/robotplayed"
-            android:layout_width="93dp"
-            android:layout_height="155dp"
-            android:layout_marginTop="248dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.427"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/robothand1"
@@ -39,15 +28,14 @@
             android:layout_height="190dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/coppe1s"
             tools:ignore="ContentDescription,NestedWeights" />
 
         <ImageView
             android:id="@+id/robothand2"
             android:layout_width="0dp"
             android:layout_height="190dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
@@ -73,10 +61,8 @@
             android:id="@+id/robotpoints"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-
             android:background="@drawable/c4"
             android:fontFamily="monospace"
-
             android:gravity="center"
             android:scaleType="centerCrop"
             android:text="120"
@@ -119,47 +105,63 @@
 
         <RelativeLayout
             android:id="@+id/deck"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="11dp">
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/savequit_button">
 
 
             <ImageView
                 android:id="@+id/briscolaimage"
-                android:layout_width="93dp"
-                android:layout_height="190dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="45dp"
-                android:layout_toLeftOf="@+id/remaining"
-                app:srcCompat="@drawable/denari1n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_alignRight="@+id/remaining"
+                android:layout_marginRight="12dp"
                 android:rotation="270"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:id="@+id/pile"
-                android:layout_width="93dp"
-                android:layout_height="190dp"
-                android:layout_alignLeft="@+id/briscolaimage"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="25dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="47dp"
-                app:srcCompat="@drawable/backn"
                 tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/remaining"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignBottom="@+id/briscolaimage"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@+id/pile"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="27dp"
-                android:layout_marginRight="38dp"
+                android:layout_marginBottom="45dp"
+                android:layout_marginRight="25dp"
                 android:background="@drawable/c4"
                 android:gravity="center"
                 android:text="-40-"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/humanplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/pile"
+                android:layout_alignLeft="@+id/robotplayed"
+                android:layout_marginLeft="55dp"
+                android:rotation="20"/>
+
+            <ImageView
+                android:id="@+id/robotplayed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="44dp"
+                android:rotation="-20"/>
 
 
         </RelativeLayout>
@@ -181,10 +183,8 @@
             android:background="@drawable/c4"
             android:fontFamily="monospace"
             android:gravity="center"
-
             android:scaleType="centerCrop"
             android:text="120"
-
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintDimensionRatio="H,1:1"
@@ -208,17 +208,6 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/humanplayed"
-            android:layout_width="93dp"
-            android:layout_height="155dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="204dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/cardzeroimage"
@@ -226,15 +215,14 @@
             android:layout_height="190dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/coppe1s"
             tools:ignore="ContentDescription,NestedWeights" />
 
         <ImageView
             android:id="@+id/cardoneimage"
             android:layout_width="0dp"
             android:layout_height="190dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
