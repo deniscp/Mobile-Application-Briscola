@@ -50,7 +50,6 @@ public class LaunchCard implements Runnable {
             final View toView = cAct.findViewById(R.id.humanplayed);
             final ImageView shuttleView = cAct.findViewById(R.id.shuttle);
 
-
             AnimatorSet animatorSet = getViewToViewScalingAnimator(rootView, shuttleView, fromView, toView, CARDVELOCITY , 0);
 
             animatorSet.addListener(new Animator.AnimatorListener() {
