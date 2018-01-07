@@ -19,6 +19,12 @@ import it.polimi.group06.InputHandler;
 import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 
+/**
+ * This class represents the Settings activity which provides users list of different backgrounds
+ * and decks in order to make UI more attractive.
+ * Moreover this class is connected to activity "setting_main.xml"
+ * @author Group6
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     RadioGroup cardpicker, backpicker;
@@ -40,6 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_settings);
+
+        /**
+         * initializes RadioButtons and buttons to the view components.
+         */
 
         cardpicker = findViewById(R.id.cardpicker_group);
         backpicker = findViewById(R.id.backgroundpicker_group);
@@ -94,6 +104,10 @@ public class SettingsActivity extends AppCompatActivity {
                 System.out.println("this doesn't exist");
         }
 
+        /**
+         * Set the type of deck for the game activity according to
+         * the selection of deck preference in the Setting activity.
+         */
         cardpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -107,6 +121,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Set the color background for the main activity according to
+         * the selection of background preference in the Setting activity.
+         */
         backpicker.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -126,6 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        //Saving the preferences before leaving the setting activity
         button = findViewById(R.id.save_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

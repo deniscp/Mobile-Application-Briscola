@@ -39,6 +39,13 @@ import static it.polimi.group06.domain.Constants.SECONDCARD;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 import static it.polimi.group06.domain.Constants.THIRDCARD;
 
+/**
+ * This class implements the game card activity which provides users to play cards
+ * by interacting with all available components in layout of game activity.
+ * Moreover this class is connected to activity "activity_game.xml"
+ * @author Group6
+ */
+
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button saveandquit;
@@ -71,6 +78,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Make activity_main fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -79,6 +87,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        /**
+         * initializes image views and text views.
+         */
         humancard = findViewById(R.id.humanplayed);
         robotcard = findViewById(R.id.robotplayed);
 
@@ -127,7 +138,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getStatisticsFile();
         setSettingsfromFile();
 
-        // Set the back of the card according to the deckset chosen in settings
+        // Set the back of the card according to the deckSet preference in settings
         final int id = getApplicationContext().getResources().getIdentifier("back" + cardbackstring, "drawable", getApplicationContext().getPackageName());
         robotcard1.setImageResource(id);
         robotcard2.setImageResource(id);
@@ -303,11 +314,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             game.playerPlaysCard(currentPlayer, currentChoice);
         }
 
-        // Prepare the new round
-        if (game.roundIsOver()) {
-            game.newRound();
-//            updateView();
+            // Prepare the new round
+            if (game.roundIsOver()) {
+                game.newRound();
 
+            // updateView();
             handler.postDelayed(
                     new UpdateView(this),
                     3000
@@ -327,6 +338,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             humanHand[THIRDCARD].setClickable(false);
         }
     }
+
+    /**
+     * Id and type of cards in string will return by given card object this method
+     */
 
     public int getCardDrawable(Card cardatposition, Context whichcard) {
         switch (cardatposition.toString()) {
@@ -415,6 +430,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return 0;
     }
 
+    /**
+     * This method returns the result of game in every round in order to show the winner
+     * or the game ends in draw.
+     */
     public void endofgame() {
         String text;
 
@@ -491,6 +510,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Set the background for the back of cards according to
+     * the selection of background preference in the Setting activity.
+     */
     void setSettingsfromFile() {
         String str = InputHandler.getStringfromFile("settings", getApplicationContext());
         settingsList = Arrays.asList(str.split(","));
@@ -509,6 +532,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 default:
                     cardbackstring = "n";
             }
+
+            /**
+             * Set the color background for the main activity according to
+             * the selection of background preference in Setting activity.
+             */
             int backgroundcolor = Integer.parseInt(settingsList.get(1));
             switch (backgroundcolor) {
                 case (0):
@@ -538,7 +566,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             human = game.getPlayers()[0];
             robot = game.getPlayers()[1];
 
-//            setRobotCardImages();
+            /**
+             * setRobotCardImages();
+             */
 
             //TODO
             if (game.getTable().getPlayedCardsAmount() == 1) {
