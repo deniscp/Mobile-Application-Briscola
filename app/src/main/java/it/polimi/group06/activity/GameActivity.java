@@ -1,9 +1,9 @@
 package it.polimi.group06.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -64,9 +64,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     boolean cardSetFlag = false;
     int humanChosenCard;
 
-    public Animation robottomiddle, humanmiddle, briscolaTaken, showBriscola;
+    public Animation robottomiddle, briscolaTaken, showBriscola;
 
-    int color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
+    int cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
     long tStart;
     double elapsedSeconds;
@@ -129,7 +129,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         robottomiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.robotcard);
-        humanmiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.humanplay);
         briscolaTaken = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
         showBriscola = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.show_briscola);
 
@@ -177,7 +176,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola(), briscola_image.getContext()));
+        briscola_image.setImageResource(getCardDrawable(game.getTable().getBriscola()));
 
         tStart = System.currentTimeMillis();
     }
@@ -343,88 +342,92 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      * Id and type of cards in string will return by given card object this method
      */
 
-    public int getCardDrawable(Card cardatposition, Context whichcard) {
+    public int getCardDrawable(Card cardatposition) {
+
+        Resources resources = getApplicationContext().getResources();
+        String packageName = getApplicationContext().getPackageName();
+
         switch (cardatposition.toString()) {
             case ("1B"):
-                return whichcard.getResources().getIdentifier("bastoni1" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni1" + cardbackstring, "drawable", packageName);
             case ("2B"):
-                return whichcard.getResources().getIdentifier("bastoni2" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni2" + cardbackstring, "drawable", packageName);
             case ("3B"):
-                return whichcard.getResources().getIdentifier("bastoni3" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni3" + cardbackstring, "drawable", packageName);
             case ("4B"):
-                return whichcard.getResources().getIdentifier("bastoni4" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni4" + cardbackstring, "drawable", packageName);
             case ("5B"):
-                return whichcard.getResources().getIdentifier("bastoni5" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni5" + cardbackstring, "drawable", packageName);
             case ("6B"):
-                return whichcard.getResources().getIdentifier("bastoni6" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni6" + cardbackstring, "drawable", packageName);
             case ("7B"):
-                return whichcard.getResources().getIdentifier("bastoni7" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni7" + cardbackstring, "drawable", packageName);
             case ("JB"):
-                return whichcard.getResources().getIdentifier("bastoni8" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni8" + cardbackstring, "drawable", packageName);
             case ("HB"):
-                return whichcard.getResources().getIdentifier("bastoni9" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni9" + cardbackstring, "drawable", packageName);
             case ("KB"):
-                return whichcard.getResources().getIdentifier("bastoni10" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("bastoni10" + cardbackstring, "drawable", packageName);
             case ("1S"):
-                return whichcard.getResources().getIdentifier("spade1" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade1" + cardbackstring, "drawable", packageName);
             case ("2S"):
-                return whichcard.getResources().getIdentifier("spade2" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade2" + cardbackstring, "drawable", packageName);
             case ("3S"):
-                return whichcard.getResources().getIdentifier("spade3" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade3" + cardbackstring, "drawable", packageName);
             case ("4S"):
-                return whichcard.getResources().getIdentifier("spade4" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade4" + cardbackstring, "drawable", packageName);
             case ("5S"):
-                return whichcard.getResources().getIdentifier("spade5" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade5" + cardbackstring, "drawable", packageName);
             case ("6S"):
-                return whichcard.getResources().getIdentifier("spade6" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade6" + cardbackstring, "drawable", packageName);
             case ("7S"):
-                return whichcard.getResources().getIdentifier("spade7" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade7" + cardbackstring, "drawable", packageName);
             case ("JS"):
-                return whichcard.getResources().getIdentifier("spade8" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade8" + cardbackstring, "drawable", packageName);
             case ("HS"):
-                return whichcard.getResources().getIdentifier("spade9" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade9" + cardbackstring, "drawable", packageName);
             case ("KS"):
-                return whichcard.getResources().getIdentifier("spade10" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("spade10" + cardbackstring, "drawable", packageName);
             case ("1C"):
-                return whichcard.getResources().getIdentifier("coppe1" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe1" + cardbackstring, "drawable", packageName);
             case ("2C"):
-                return whichcard.getResources().getIdentifier("coppe2" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe2" + cardbackstring, "drawable", packageName);
             case ("3C"):
-                return whichcard.getResources().getIdentifier("coppe3" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe3" + cardbackstring, "drawable", packageName);
             case ("4C"):
-                return whichcard.getResources().getIdentifier("coppe4" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe4" + cardbackstring, "drawable", packageName);
             case ("5C"):
-                return whichcard.getResources().getIdentifier("coppe5" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe5" + cardbackstring, "drawable", packageName);
             case ("6C"):
-                return whichcard.getResources().getIdentifier("coppe6" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe6" + cardbackstring, "drawable", packageName);
             case ("7C"):
-                return whichcard.getResources().getIdentifier("coppe7" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe7" + cardbackstring, "drawable", packageName);
             case ("JC"):
-                return whichcard.getResources().getIdentifier("coppe8" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe8" + cardbackstring, "drawable", packageName);
             case ("HC"):
-                return whichcard.getResources().getIdentifier("coppe9" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe9" + cardbackstring, "drawable", packageName);
             case ("KC"):
-                return whichcard.getResources().getIdentifier("coppe10" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("coppe10" + cardbackstring, "drawable", packageName);
             case ("1G"):
-                return whichcard.getResources().getIdentifier("denari1" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari1" + cardbackstring, "drawable", packageName);
             case ("2G"):
-                return whichcard.getResources().getIdentifier("denari2" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari2" + cardbackstring, "drawable", packageName);
             case ("3G"):
-                return whichcard.getResources().getIdentifier("denari3" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari3" + cardbackstring, "drawable", packageName);
             case ("4G"):
-                return whichcard.getResources().getIdentifier("denari4" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari4" + cardbackstring, "drawable", packageName);
             case ("5G"):
-                return whichcard.getResources().getIdentifier("denari5" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari5" + cardbackstring, "drawable", packageName);
             case ("6G"):
-                return whichcard.getResources().getIdentifier("denari6" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari6" + cardbackstring, "drawable", packageName);
             case ("7G"):
-                return whichcard.getResources().getIdentifier("denari7" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari7" + cardbackstring, "drawable", packageName);
             case ("JG"):
-                return whichcard.getResources().getIdentifier("denari8" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari8" + cardbackstring, "drawable", packageName);
             case ("HG"):
-                return whichcard.getResources().getIdentifier("denari9" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari9" + cardbackstring, "drawable", packageName);
             case ("KG"):
-                return whichcard.getResources().getIdentifier("denari10" + cardbackstring, "drawable", whichcard.getPackageName());
+                return resources.getIdentifier("denari10" + cardbackstring, "drawable", packageName);
         }
         System.out.println("not in switch");
         return 0;
@@ -573,17 +576,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             //TODO
             if (game.getTable().getPlayedCardsAmount() == 1) {
                 if (game.getStartingPlayer() == 0) {
-                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humancard.getContext()));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0)));
                 } else {
-                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0)));
                 }
             } else if (game.getTable().getPlayedCardsAmount() == 2) {
                 if (game.getStartingPlayer() == 0) {
-                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), humancard.getContext()));
-                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), robotcard.getContext()));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0)));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1)));
                 } else {
-                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0), robotcard.getContext()));
-                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1), humancard.getContext()));
+                    robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0)));
+                    humancard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(1)));
 
                 }
             }

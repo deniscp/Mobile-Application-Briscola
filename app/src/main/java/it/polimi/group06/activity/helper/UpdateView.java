@@ -53,7 +53,7 @@ public class UpdateView implements Runnable{
 
         // Adjust Human missing cards
         for(i=0; i < humanHand.size() ; i++ ) {
-            humanCards[i].setImageResource(cAct.getCardDrawable(humanHand.get(i), cAct.getApplicationContext()));
+            humanCards[i].setImageResource(cAct.getCardDrawable(humanHand.get(i)));
             humanCards[i].setVisibility(View.VISIBLE);
             Log.d(TAG, "Adjusted "+robotHand.size()+" cards of human in hand");
         }

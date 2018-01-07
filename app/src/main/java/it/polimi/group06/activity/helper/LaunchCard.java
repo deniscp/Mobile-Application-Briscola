@@ -40,7 +40,6 @@ public class LaunchCard implements Runnable {
                 knowing who played which card
          */
 
-        final ImageView humanCards[] = cAct.humanHand;
         ImageView robotCards[] = {cAct.robotcard1, cAct.robotcard2, cAct.robotcard3};
 
         if (cPlayer == FIRSTPLAYER) {
@@ -55,7 +54,7 @@ public class LaunchCard implements Runnable {
             animatorSet.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    shuttleView.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
+                    shuttleView.setImageResource(cAct.getCardDrawable(cCard));
                     shuttleView.setVisibility(View.VISIBLE);
                     fromView.setVisibility(View.INVISIBLE);
                 }
@@ -80,7 +79,7 @@ public class LaunchCard implements Runnable {
 
         } else if (cPlayer == SECONDPLAYER) {
 
-            cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard, cAct.getApplicationContext()));
+            cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard));
             robotCards[cChoice].setVisibility(View.INVISIBLE);
         }
     }
