@@ -25,8 +25,32 @@ public class CardAnimation {
 
         Rect fromViewRect = new Rect();
         Rect toViewRect = new Rect();
+        float actualRotation, toActualLeft, toActualTop;
+        int toActualHeight, toActualWidth;
+
         fromView.getGlobalVisibleRect(fromViewRect);
+
+        //Store actual rotation
+        actualRotation=toView.getRotation();
+
+        //Pretend no rotation
+        toView.setRotation(0f);
         toView.getGlobalVisibleRect(toViewRect);
+
+//        toViewRect.height  toViewRect.width
+        toActualHeight=toViewRect.height();
+        toActualWidth=toViewRect.width();
+
+//        toViewRect.left  toViewRect.top
+        toActualLeft=toViewRect.left;
+        toActualTop=toViewRect.top;
+
+        //Restore previous actual rotation
+        toView.setRotation(actualRotation);
+        toView.getGlobalVisibleRect(toViewRect);
+
+
+
 
         // get all coordinates at once
         final Rect parentViewRect = new Rect(), viewToAnimateRect = new Rect();
@@ -37,7 +61,7 @@ public class CardAnimation {
         viewToAnimate.setScaleY(1f);
 
         // rescaling of the object on X-axis
-        final ValueAnimator valueAnimatorWidth = ValueAnimator.ofInt(fromViewRect.width(), toViewRect.width());
+        final ValueAnimator valueAnimatorWidth = ValueAnimator.ofInt(fromViewRect.width(), toActualWidth);
         valueAnimatorWidth.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -53,7 +77,7 @@ public class CardAnimation {
         });
 
         // rescaling of the object on Y-axis
-        final ValueAnimator valueAnimatorHeight = ValueAnimator.ofInt(fromViewRect.height(), toViewRect.height());
+        final ValueAnimator valueAnimatorHeight = ValueAnimator.ofInt(fromViewRect.height(), toActualHeight);
         valueAnimatorHeight.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -68,10 +92,10 @@ public class CardAnimation {
         });
 
         // moving of the object on X-axis
-        ObjectAnimator translateAnimatorX = ObjectAnimator.ofFloat(viewToAnimate, "X", fromViewRect.left - parentViewRect.left, toViewRect.left - parentViewRect.left);
+        ObjectAnimator translateAnimatorX = ObjectAnimator.ofFloat(viewToAnimate, "X", fromViewRect.left - parentViewRect.left, toActualLeft - parentViewRect.left);
 
         // moving of the object on Y-axis
-        ObjectAnimator translateAnimatorY = ObjectAnimator.ofFloat(viewToAnimate, "Y", fromViewRect.top - parentViewRect.top, toViewRect.top - parentViewRect.top);
+        ObjectAnimator translateAnimatorY = ObjectAnimator.ofFloat(viewToAnimate, "Y", fromViewRect.top - parentViewRect.top, toActualTop - parentViewRect.top);
 
         // rotating the view
         ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(viewToAnimate, "rotation", fromView.getRotation(), toView.getRotation());
