@@ -1,16 +1,14 @@
 package it.polimi.group06.activity;
 
 import android.media.AudioManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +29,6 @@ public class SettingsActivity extends AppCompatActivity {
     RadioButton naples, german, sicily;
     RadioButton default_bg, green_bg, blue_bg, orange_bg;
     Button button;
-    Switch mute;
     List<String> settingsList;
     int whichcarddeck, whichbackground;
     AudioManager backgroundaudio;
@@ -63,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
         orange_bg =findViewById(R.id.orange_bg);
         blue_bg = findViewById(R.id.light_blue_bg);
 
-        mute = findViewById(R.id.sound);
 
         getSettings();
 
@@ -155,18 +151,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        mute.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-
-                } else{
-
-                }
-            }
-        });
     }
-
     void getSettings() {
         String str = InputHandler.getStringfromFile("settings", getApplicationContext());
         if (str.equals("")) {

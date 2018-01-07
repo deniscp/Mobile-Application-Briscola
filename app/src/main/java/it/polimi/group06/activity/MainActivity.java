@@ -15,7 +15,6 @@ import java.util.List;
 
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
-import it.polimi.group06.activity.helper.MusicService;
 
 /**
  * Main activity of the app , This class represents main menu of the game which provides users to select
@@ -38,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setBackgroundColor();
-
-        startService(new Intent(this, MusicService.class));
-        stopService(new Intent(this, MusicService.class));// added by roza for a short time
-
 
         /**
          * initializes start button.
@@ -81,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         /**
          * initializes statistics button.
@@ -123,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle(R.string.app_quit_title)
                         .setMessage(R.string.app_quit_message)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.drawable.sad_emoji)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 finish();
