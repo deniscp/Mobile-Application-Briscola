@@ -3,9 +3,6 @@ package it.polimi.group06.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +15,6 @@ import java.util.List;
 
 import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
-import it.polimi.group06.activity.helper.MusicService;
 
 /**
  * Main activity of the app , This class represents main menu of the game which provides users to select
@@ -41,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setBackgroundColor();
-
-        startService(new Intent(this, MusicService.class));
-        stopService(new Intent(this, MusicService.class));// added by roza for a short time
-
 
         /**
          * initializes start button.
@@ -84,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         /**
          * initializes statistics button.
@@ -126,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Exit")
                         .setMessage("Do you really want to close the funnest game BRISCOLA ?Seriously?! :/ ")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.drawable.sad_emoji)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 finish();

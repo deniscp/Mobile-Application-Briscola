@@ -100,17 +100,6 @@
                 android:textSize="18sp" />
         </RadioGroup>
 
-        <Switch
-            android:id="@+id/sound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="35dp"
-            android:text="Sound"
-            android:textOff="Off"
-            android:textOn="On"
-            android:textSize="18sp" />
-
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dip"

@@ -24,11 +24,9 @@ public class UpdateView implements Runnable{
     public UpdateView(GameActivity currentActivity){
         cAct = currentActivity;
     }
-
-
     /**
-     * Updates setting the remainng cards in the deck,
-     * setting the remainng cards in the hands of the players,
+     * Updates setting the remaining cards in the deck,
+     * setting the remaining cards in the hands of the players,
      * removing cards from table after round is over...
      */
     public void run() {
@@ -49,7 +47,6 @@ public class UpdateView implements Runnable{
             cAct.robotcard.setImageResource(0);
             shuttleView.setImageResource(0);
         }
-
 
         // Adjust Human missing cards
         for(i=0; i < humanHand.size() ; i++ ) {
