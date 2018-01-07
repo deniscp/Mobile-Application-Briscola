@@ -3,9 +3,6 @@ package it.polimi.group06.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.AsyncTask;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -124,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         exit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Exit")
-                        .setMessage(R.string.quit_message)
+                        .setTitle(R.string.app_quit_title)
+                        .setMessage(R.string.app_quit_message)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {

@@ -72,8 +72,6 @@ public class UpdateView implements Runnable{
             else if (cAct.game.getRound()== 20)
                 nRobotCards=1;
 
-
-
         for(i=0; i < nRobotCards ; i++ ){
             Log.d(TAG, "Adjusted the "+i+"th cards of robot in hand");
             robotCards[i].setVisibility(View.VISIBLE);
@@ -87,6 +85,7 @@ public class UpdateView implements Runnable{
         //Set the points of both players
         cAct.humanPoints.setText(String.valueOf(cAct.game.getPlayers()[FIRSTPLAYER].getPlayerPoints()));
         cAct.robotPoints.setText(String.valueOf(cAct.game.getPlayers()[SECONDPLAYER].getPlayerPoints()));
+        Log.d(TAG,"points updated");
 
 
         // make the deck not visible and fade briscola

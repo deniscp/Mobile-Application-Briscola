@@ -83,6 +83,12 @@ public class Game {
             gameFromConf.getPlayers()[i].replacePlayerPile(parser.piles()[i]);
 
 
+        /* Update the points of the players
+         */
+        for (int i = 0; i < NUMBEROFPLAYERS; i++)
+            gameFromConf.getPlayers()[i].setPlayerPoints(Rules.computePoints(gameFromConf.getPlayers()[i].getPlayerPile()));
+
+
         /* Set the table replacing the briscola and the deck
          */
         gameFromConf.getTable().setBriscola(parser.briscola());

@@ -89,6 +89,11 @@
     <string name="start">Start</string>
     <string name="exit">Exit</string>
     <string name="sound">Sound</string>
-    <string name="save_quit">Save + Quit</string>
-    <string name="quit_message">Do you really want to close the funniest BRISCOLA game?\nSeriously?! :/</string>
+    <string name="app_quit_title">Exit</string>
+    <string name="app_quit_message">Do you really want to close the funniest BRISCOLA game?\nSeriously?! :/</string>
+    <string name="game_quit_title">Quitting without saving...</string>
+    <string name="game_quit_message">You are about to leave the current game.\nDo you want to save before exit?</string>
+    <string name="game_end_title">End of Game</string>
+    <string name="game_end_message">You are about to leave the current game.\nDo you want to save before exit?</string>
+
 </resources>

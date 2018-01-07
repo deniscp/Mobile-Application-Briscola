@@ -91,17 +91,6 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <Button
-                android:id="@+id/savequit_button"
-                android:layout_width="115dp"
-                android:layout_height="37dp"
-                android:layout_marginLeft="288dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="168dp"
-                android:text="@string/save_quit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/winner"
