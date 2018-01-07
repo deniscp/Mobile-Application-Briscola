@@ -12,7 +12,6 @@ import it.polimi.group06.domain.Card;
 
 import static it.polimi.group06.activity.helper.Constants.TAG;
 import static it.polimi.group06.domain.Constants.FIRSTPLAYER;
-import static it.polimi.group06.domain.Constants.NUMBEROFPLAYERS;
 import static it.polimi.group06.domain.Constants.SECONDPLAYER;
 
 /**
@@ -90,12 +89,13 @@ public class UpdateView implements Runnable{
         cAct.robotPoints.setText(String.valueOf(cAct.game.getPlayers()[SECONDPLAYER].getPlayerPoints()));
 
 
-        // make the deck not visible
+        // make the deck not visible and fade briscola
         if(cAct.game.getRound() == 18) //Starting from the last but three round
         {
             cAct.remaining.setVisibility(View.INVISIBLE);
+            cAct.pile.setVisibility(View.INVISIBLE);
             //fade the briscola
-            cAct.briscola_image.startAnimation(cAct.briscolaOut);
+            cAct.briscola_image.startAnimation(cAct.briscolaTaken);
         }
 
         cAct.humanCardsClickable(true);

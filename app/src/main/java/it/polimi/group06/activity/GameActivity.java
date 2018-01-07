@@ -57,7 +57,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     boolean cardSetFlag = false;
     int humanChosenCard;
 
-    public Animation robottomiddle, humanmiddle, briscolaOut;
+    public Animation robottomiddle, humanmiddle, briscolaTaken, showBriscola;
 
     int color, cardback, numberoftimesplayerwon, numberoftimesrobotwon, numberofdraws;
 
@@ -119,7 +119,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         robottomiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.robotcard);
         humanmiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.humanplay);
-        briscolaOut= AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
+        briscolaTaken = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
+        showBriscola = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.show_briscola);
 
 
 
@@ -132,6 +133,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         robotcard2.setImageResource(id);
         robotcard3.setImageResource(id);
         pile.setBackgroundResource(id);
+
+        pile.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pile.startAnimation(showBriscola);
+                remaining.startAnimation(showBriscola);
+            }
+        });
 
         for (int position = 0; position < 3; position++)
             humanHand[position].setOnClickListener(this);
