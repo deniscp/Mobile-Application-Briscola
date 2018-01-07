@@ -90,4 +90,5 @@
     <string name="exit">Exit</string>
     <string name="sound">Sound</string>
     <string name="save_quit">Save + Quit</string>
+    <string name="quit_message">Do you really want to close the funniest BRISCOLA game?\nSeriously?! :/</string>
 </resources>

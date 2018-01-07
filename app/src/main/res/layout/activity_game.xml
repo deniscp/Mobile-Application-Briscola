@@ -99,7 +99,6 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="168dp"
                 android:text="@string/save_quit"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -118,8 +117,7 @@
                 android:id="@+id/deck"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
-                android:layout_toRightOf="@+id/savequit_button">
+                android:gravity="right|center_vertical">
 
 
                 <ImageView

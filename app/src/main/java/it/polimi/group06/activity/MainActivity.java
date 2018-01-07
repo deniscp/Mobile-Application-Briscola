@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Exit")
-                        .setMessage("Do you really want to close the funnest game BRISCOLA ?Seriously?! :/ ")
+                        .setMessage(R.string.quit_message)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
