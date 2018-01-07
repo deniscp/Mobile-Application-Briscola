@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * This class implements Splash Screen activity which is the first class when application
+ * will run, main goal is show the organization provider of app.
+ * @author Group6
+ */
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -23,6 +28,7 @@ public class SplashScreen extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        //It starts main activity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

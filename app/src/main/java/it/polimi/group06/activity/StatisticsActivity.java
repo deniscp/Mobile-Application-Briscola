@@ -15,6 +15,13 @@ import it.polimi.group06.InputHandler;
 import it.polimi.group06.OutputHandler;
 import it.polimi.group06.R;
 
+/**
+ * This class represents the history and statistics of the played game in order to
+ * tacking previous game's scores convenient.
+ * Moreover this class is connected to activity "statistics_game.xml"
+ * @author Group6
+ */
+
 public class StatisticsActivity extends AppCompatActivity {
 
     List<String> statList;
@@ -33,6 +40,11 @@ public class StatisticsActivity extends AppCompatActivity {
         readStatisticsfromFile();
         setcontentofviews();
         setBackgroundColor();
+
+        /**
+         *Initialize clear stats button and set Listener method in order to delete current
+         *statistics and then reading and updating the content
+         */
 
         Button clearstats = findViewById(R.id.clearstats);
         clearstats.setOnClickListener(new View.OnClickListener(){
@@ -63,6 +75,9 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *Initialize and set Text method for all text views in Statistics activity.
+     */
     void setcontentofviews(){
         TextView zero = findViewById(R.id.zero);
         TextView one = findViewById(R.id.one);
@@ -94,6 +109,10 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set the color background for the main activity according to
+     * the selection of background preference in the Setting activity.
+     */
     void setBackgroundColor(){
         switch(getSettings()){
             case (1):

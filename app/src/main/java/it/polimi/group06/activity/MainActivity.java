@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +20,19 @@ import it.polimi.group06.InputHandler;
 import it.polimi.group06.R;
 import it.polimi.group06.activity.helper.MusicService;
 
+/**
+ * Main activity of the app , This class represents main menu of the game which provides users to select
+ * among available buttons in order to reach the relevant activity in the game.
+ * Moreover this class is connected to activity "activity_main.xml"
+ * @@author Group6
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Make activity_main fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -36,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         startService(new Intent(this, MusicService.class));
         stopService(new Intent(this, MusicService.class));// added by roza for a short time
 
+
+        /**
+         * initializes start button.
+         * Run method setOnClickListener, whenever start_button is clicked,
+         * Then it starts GameActivity.
+         */
         final Button start_button = findViewById(R.id.start_button);
         start_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -70,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /**
+         * initializes statistics button.
+         * Run method setOnClickListener, whenever statistics_button is clicked,
+         * Then it starts StatisticsActivity.
+         */
+
         final Button statistics_button = findViewById(R.id.statistics_button);
         statistics_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * initializes settings button.
+         * Run method setOnClickListener, whenever settings_button is clicked,
+         * Then it starts StatisticsActivity.
+         */
         final Button settings_button = findViewById(R.id.settings_button);
         settings_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -87,12 +114,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * initializes exit button and Run method setOnClickListener, whenever quite_button is clicked.
+         * It appears exit dialog.
+         * By clicking on "Exit" it close the game completely.
+         * By clicking on "cancel" the dialog disappear without doing anything.
+         */
         final Button exit_button = findViewById(R.id.quit_button);
         exit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Exit")
-                        .setMessage("Do you want to close the App?")
+                        .setMessage("Do you really want to close the funnest game BRISCOLA ?Seriously?! :/ ")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -118,13 +151,17 @@ public class MainActivity extends AppCompatActivity {
         if (!str.equals("")) {
             List<String> settingsList = Arrays.asList(str.split(","));
             return Integer.parseInt(settingsList.get(1));
-        } else{
+        } else {
             return 0;
         }
     }
 
-    void setBackgroundColor(){
-        switch(getSettings()){
+    /**
+     * Set the color background for the main activity according to
+     * the selection of background preference in Setting activity.
+     */
+    void setBackgroundColor() {
+        switch (getSettings()) {
             case (1):
                 getWindow().getDecorView().setBackgroundColor(getApplicationContext().getResources().getColor(R.color.lightgreen));
                 break;
