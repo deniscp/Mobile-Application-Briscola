@@ -597,8 +597,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             for (i = 0; i < game.getPlayers()[FIRSTPLAYER].getHand().size(); i++) {
                 Log.d(TAG, "Adjusted the " + i + "th cards of human in hand");
+
                 humanHand[i].setImageResource(getCardDrawable(game.getPlayers()[FIRSTPLAYER].getHand().get(i)));
-                humanHand[i].setVisibility(View.VISIBLE);
             }
             for (; i < 3; i++)
                 humanHand[i].setVisibility(View.INVISIBLE);
