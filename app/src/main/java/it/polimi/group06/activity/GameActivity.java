@@ -121,14 +121,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Bundle extras = getIntent().getExtras();
         String msg = extras.getString("keyMessage");
-        if (msg.equals("fromsaved")) {
-            gamefromsavedfile();
-        }
-        if (msg.equals("newgame")) {
+        if (msg.equals("fromsaved"))
+            gameFromSavedFile();
+        if (msg.equals("newgame"))
             game = new Game();
-            human = game.getPlayers()[0];
-            robot = game.getPlayers()[1];
-        }
+
+        human = game.getPlayers()[0];
+        robot = game.getPlayers()[1];
 
         robottomiddle = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.robotcard);
         briscolaTaken = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadebriscola);
@@ -169,11 +168,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTheGame() {
-        Intent intent = getIntent();
-        String msg = intent.getExtras().getString("keyMessage");
-
-        if (msg.equals("newgame"))
-            handler.post(new UpdateView(this));
+        handler.post(new UpdateView(this));
         if (!game.gameIsOver())
             playOneRound();
     }
@@ -194,23 +189,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if(game.getRound()<18) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setCancelable(false)
-                .setTitle(R.string.game_quit_title)
-                .setMessage(R.string.game_quit_message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        saveGame();
-                        finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        finish();
-                    }
-                }).setCancelable(false).create().show();
-
+            builder.setCancelable(false)
+                    .setTitle(R.string.game_quit_title)
+                    .setMessage(R.string.game_quit_message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            saveGame();
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    }).setCancelable(false).create().show();
+        }
+        else
+            finish();
     }
 
 
@@ -569,39 +567,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void gamefromsavedfile() {
+    void gameFromSavedFile() {
         String config = InputHandler.getStringfromFile("savedgame", getApplicationContext());
         if (!config.equals("")) {
 
             game = Game.initializeFromConf(config);
-            int i;
-
-            new UpdateView(this).run();
 
             //If the Robot has already started the round and played its card
             if (game.getCurrentPlayer() == game.getPlayers()[FIRSTPLAYER] && game.getCurrentPlayerPosition() != game.getStartingPlayer()) {
-                Log.d(TAG, "we restore robot card");
-                robotcard.setImageResource(getCardDrawable(game.getTable().getPlayedCards().get(0)));
-                Log.d(TAG, game.getTable().getPlayedCards().get(0).toString());
-                robotcard.setVisibility(View.VISIBLE);
 
-                for (i = 0; i < game.getPlayers()[SECONDPLAYER].getHand().size(); i++) {
-                    Log.d(TAG, "Adjusted the " + i + "th cards of robot in hand");
-                    robotHand[i].setVisibility(View.VISIBLE);
-                }
-                for (; i < 3; i++)
-                    robotHand[i].setVisibility(View.INVISIBLE);
-
+                handler.postDelayed(new LaunchCard(game.getStartingPlayer(),0, game.getTable().getPlayedCards().get(0),this),600);
 
             }
-
-            for (i = 0; i < game.getPlayers()[FIRSTPLAYER].getHand().size(); i++) {
-                Log.d(TAG, "Adjusted the " + i + "th cards of human in hand");
-
-                humanHand[i].setImageResource(getCardDrawable(game.getPlayers()[FIRSTPLAYER].getHand().get(i)));
-            }
-            for (; i < 3; i++)
-                humanHand[i].setVisibility(View.INVISIBLE);
 
         }
     }

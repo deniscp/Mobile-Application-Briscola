@@ -36,6 +36,7 @@ public class UpdateView implements Runnable{
         ImageView humanCards[] = cAct.humanHand;
         ImageView robotCards[] = {cAct.robotcard1,cAct.robotcard2,cAct.robotcard3};
         final ImageView shuttleView = cAct.findViewById(R.id.shuttle);
+        final ImageView shuttleRobotView = cAct.findViewById(R.id.shuttle_robot);
 
 
         int playedSize = cAct.game.getTable().getPlayedCards().size();
@@ -44,7 +45,7 @@ public class UpdateView implements Runnable{
         //Maybe launch an animation that moves cards toward the winning player
         if(playedSize == 0 || playedSize ==1 && cAct.game.getStartingPlayer() == SECONDPLAYER) {
 
-            cAct.robotcard.setImageResource(0);
+            shuttleRobotView.setImageResource(0);
             shuttleView.setImageResource(0);
         }
 

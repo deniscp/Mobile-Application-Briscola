@@ -35,21 +35,23 @@ public class LaunchCard implements Runnable {
 
     @Override
     public void run() {
-//    void launchAnimation(int currentPlayerPosition, int currentPlayedCard, Card currentCard) {
         /* ---- Code for launching the appropriate animation
                 knowing who played which card
          */
 
-        ImageView robotCards[] = {cAct.robotcard1, cAct.robotcard2, cAct.robotcard3};
+        final ImageView shuttleView = cAct.findViewById(R.id.shuttle);
+        final ImageView shuttleRobotView = cAct.findViewById(R.id.shuttle_robot);
+
 
         if (cPlayer == FIRSTPLAYER) {
+            shuttleView.bringToFront();
+
 
             final ViewGroup rootView = cAct.findViewById(R.id.root_view);
             final View fromView = cAct.humanHand[cChoice];
             final View toView = cAct.findViewById(R.id.humanplayed);
-            final ImageView shuttleView = cAct.findViewById(R.id.shuttle);
 
-            AnimatorSet animatorSet = getViewToViewScalingAnimator(rootView, shuttleView, fromView, toView, CARDVELOCITY , 0);
+            AnimatorSet animatorSet = getViewToViewScalingAnimator(rootView, shuttleView, fromView, toView, CARDVELOCITY, 0);
 
             animatorSet.addListener(new Animator.AnimatorListener() {
                 @Override
@@ -79,8 +81,39 @@ public class LaunchCard implements Runnable {
 
         } else if (cPlayer == SECONDPLAYER) {
 
-            cAct.robotcard.setImageResource(cAct.getCardDrawable(cCard));
-            robotCards[cChoice].setVisibility(View.INVISIBLE);
+            shuttleRobotView.bringToFront();
+
+
+            final ViewGroup rootView = cAct.findViewById(R.id.root_view);
+            final View fromView = cAct.robotHand[cChoice];
+            final View toView = cAct.findViewById(R.id.robotplayed);
+
+            AnimatorSet animatorSet = getViewToViewScalingAnimator(rootView, shuttleRobotView, fromView, toView, CARDVELOCITY, 0);
+
+            animatorSet.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    shuttleRobotView.setImageResource(cAct.getCardDrawable(cCard));
+                    shuttleRobotView.setVisibility(View.VISIBLE);
+                    fromView.setVisibility(View.INVISIBLE);
+                }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+//                    shuttleView.setVisibility(View.GONE);
+//                    fromView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+            animatorSet.start();
         }
     }
 }

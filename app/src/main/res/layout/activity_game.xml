@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/shuttle"
+        android:id="@+id/shuttle_robot"
+        android:src="@drawable/bastoni1g"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/shuttle"
+        android:src="@drawable/bastoni1g"
+        android:layout_width="2dp"
+        android:layout_height="2dp"
+        android:visibility="gone"
+        android:contentDescription="TODO" />
+
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -135,7 +147,8 @@
                     android:layout_alignBottom="@+id/pile"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="45dp"
-                    android:layout_marginRight="24.6dp"                    android:background="@drawable/c4"
+                    android:layout_marginRight="24.8dp"
+                    android:background="@drawable/c4"
                     android:gravity="center"
                     android:text="-40-"
                     android:textSize="15sp"
@@ -163,6 +176,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
+                android:background="@drawable/bastoni6n"
+                android:visibility="invisible"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
